@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <tawseel.com.tajertawseel.CustomBoldTextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/mainColor"
+        android:text="Products"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_margin="5dp"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ll"
+            android:padding="30dp">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rg1">
+
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:id="@+id/btn_back" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="OK"
+            android:layout_margin="5dp"
+            android:textAllCaps="false"
+            android:background="@color/mainColor"
+            android:textColor="@android:color/white"
+            android:id="@+id/btn_ok" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

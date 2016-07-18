@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">TAJERTAWSEEL</string>
+
+
+    <string name="drawer_option1">طلبات العملاء</string>
+    <string name="drawer_option2">مجموعات التوصيل</string>
+    <string name="drawer_option3">تاريخ التوصيلات</string>
+    <string name="drawer_option4">المندوبﻴﻦ المفضلﻴﻦ</string>
+    <string name="drawer_opton5">كيف تستخدم التطبيق</string>
+    <string name="drawer_option6">من نحن</string>
+    <string name="drawer_option7">عندك ملاحظة؟</string>
+
+
+    <string name="post_your_request">أضف طلب</string>
+    <string name="number_of_requests">عدد الطلبات:</string>
+
+    <string name="start_delivery">ابدأ التوصيل</string>
+    <string name="products">منتجات</string>
+    <string name="more">أكﺜﺮ</string>
+    <string name="number_of_groups">عدد المجموعات:</string>
+
+    <string name="add_demand_for_basket">اضف الطلب للسلة</string>
+
+
+    <string name="pick_set">اختيار مجموعة</string>
+    <string name="agents">عملاء</string>
+    
+    
+    <string name="group_success">تم اضافة الطلب
+للمجموعة بنجاح</string>
+    <string name="dilevery_begin">بدأ التوصيل حالاً</string>
+
+    <string name="pose">لاحقا</string>
+
+
+    <string name="pricing_scale">نطاق التسعﻴﺮ</string>
+    <string name="payment_when_recieving">الدفع عند الاستلام</string>
+    <string name="payment_method">طريقة الدفع</string>
+    <string name="ryal_20">قيب ( 20 ريال)ا</string>
+    <string name="total_price_products">السعر الاجﻤﺎلي للمنتجات</string>
+    <string name="total_request_price">السعر الإجﻤﺎلي للطلب</string>
+    <string name="delivery_Price">سعر التوصيل</string>
+
+
+    <string name="productItemString">سماعة سوني SDK قوة 4000 واط 3100</string>
+    <string name="productItemString2">صوت عالي الجودة صناعة المانية</string>
+
+    <string name="less">أقل</string>
+
+
+    <string name="post_data_from_lab">أضف البيانات من تاجرلاب</string>
+    <string name="add_new_order">إضافة طلب جديد</string>
+
+    <string name="customer_details">بيانات العميل</string>
+    <string name="customer_name">اسم العميل</string>
+    <string name="customer_phone">رقم الهاتف</string>
+    <string name="email">البريد الإلكتروﻧﻲ</string>
+
+
+    <string name="add_whatsapp">إضف من الوتساب</string>
+    <string name="location_on_the_map">الموقع على الخريطة</string>
+    <string name="title_activity_maps">Map</string>
+
+
+    <string name="post_your_new_product">أضف منتج جديد</string>
+    <string name="products_to_connect">منتجات للتوصيل</string>
+    <string name ="wire_transfer">تحويل بنﻜﻲ</string>
+    <string name = "payment_on_delivery">دفع عند الاستلام</string>
+    <string name="total_price_summary">اجﻤﺎلي ملخص الاسعار</string>
+
+
+    <string name="cancellation">إلغاء</string>
+    <string name="connt">متابعة</string>
+    <string name="protection">حفظ</string>
+
+
+    <string name="add_product_demand">إضافة منتج للطلب</string>
+    <string name="product_price">سعر المنتج</string>
+    <string name="product_image">صورة المنتج</string>
+
+    <string name="ryal30">متوسط ( 30 ريال)ا</string>
+    <string name="ryal40">بعيد ( 40 ريال)ا</string>
+    <string name="ryal50">بعيد جدًا ( 50 ريال)ا</string>
+
+
+    <string-array name="ryal_array">
+
+        <item>قريب ( 20 ريال)</item>
+        <item>متوسط ( 30 ريال)ا</item>
+        <item>بعيد ( 40 ريال)ا</item>
+        <item>بعيد جدًا ( 50 ريال)ا</item>
+    </string-array>
+</resources>

@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/mainColor</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+
+    </style>
+
+
+    <style name="EditTextStyle" parent="android:Widget.EditText">
+
+        <item name="colorControlNormal">#cccc</item>
+        <item name="colorControlActivated">#cccc</item>
+    </style>
+
+
+    <style name="RadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+
+        <item name="colorControlNormal">#cccc</item>
+        <item name="colorControlActivated">#cccc</item>
+    </style>
+
+
+
+
+
+</resources>
