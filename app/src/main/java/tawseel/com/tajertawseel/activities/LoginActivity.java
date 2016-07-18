@@ -32,12 +32,13 @@ import tawseel.com.tajertawseel.R;
  */
 public class LoginActivity extends BaseActivity {
     ProgressDialog progress;
-   static String LoginID;
+    static String LoginID;
     EditText email_ET, pass_ET;
     private RequestQueue requestQueue;
     private static final String URL = functions.add + "login.php";
     private StringRequest request;
-
+    public static String uname;
+    public static String email;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                final String email = email_ET.getText().toString();
+                email = email_ET.getText().toString();
                 final String pass = pass_ET.getText().toString();
                 if (functions.isEmailTrue(email, getApplicationContext()) || functions.isPasswordTrue(pass,getApplicationContext())) {
                     progress = ProgressDialog.show(LoginActivity.this, "Loading",
@@ -70,9 +71,10 @@ public class LoginActivity extends BaseActivity {
                                 try {
                                     if (jsonObject.names().get(0).equals("success")) {
                                      LoginID=jsonObject.getString("success");
+                                        uname=jsonObject.getString("uname");
                                         //if success
                                         progress.dismiss();
-                                        Toast.makeText(getApplicationContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                         startActivity(i);
                                         finish();
