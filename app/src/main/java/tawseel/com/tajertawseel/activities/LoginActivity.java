@@ -59,8 +59,16 @@ public class LoginActivity extends BaseActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginID=1+"";
+                uname="tajer";
+                //if success
+              //  progress.dismiss();
+                Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(i);
+                finish();
 
-                email = email_ET.getText().toString();
+           /*     email = email_ET.getText().toString();
                 final String pass = pass_ET.getText().toString();
                 if (functions.isEmailTrue(email, getApplicationContext()) || functions.isPasswordTrue(pass,getApplicationContext())) {
                     progress = ProgressDialog.show(LoginActivity.this, "Loading",
@@ -115,8 +123,10 @@ public class LoginActivity extends BaseActivity {
                             return hashMap;
                         }
                     };
-                    requestQueue.add(request);
-                }
+                    requestQueue.add(request);}
+                    */
+
+
             }
         });
     }

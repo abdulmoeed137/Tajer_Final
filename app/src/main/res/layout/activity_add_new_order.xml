@@ -241,7 +241,10 @@
                     android:textSize="18dp"
 
                     android:layout_marginBottom="10dp"
-                    />
+                    android:clickable="true"
+                    android:contextClickable="false"
+                    android:id="@+id/whatsappId"
+                    android:onClick="onClick" />
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_marginLeft="2dp"

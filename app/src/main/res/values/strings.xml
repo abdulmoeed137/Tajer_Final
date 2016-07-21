@@ -78,6 +78,15 @@
     <string name="product_price">سعر المنتج</string>
     <string name="product_image">صورة المنتج</string>
 
+
+
+    <string name="post_group">أضف مجموعة</string>
+    <string name="group_name">اسم المجموعة</string>
+    <string name="create_new_group">إنشاء مجموعة جديدة</string>
+    <string name="delivery_start">بدء التوصيل</string>
+
+
+
     <string name="ryal30">متوسط ( 30 ريال)ا</string>
     <string name="ryal40">بعيد ( 40 ريال)ا</string>
     <string name="ryal50">بعيد جدًا ( 50 ريال)ا</string>
@@ -90,4 +99,24 @@
         <item>بعيد ( 40 ريال)ا</item>
         <item>بعيد جدًا ( 50 ريال)ا</item>
     </string-array>
+
+
+    <string name="waiting_for_acceptance">انتظار قبول مندوب rep</string>
+    <string name="cancelling_order">إلغاء الطلب</string>
+    <string name="title_activity_sample">sample</string>
+
+
+
+    <string name="delegates_available">المندوبﻴﻦ المتاحﻴﻦ:</string>
+    <string name = "number_of_votes">عدد التقييﻤﺎت</string>
+
+    <string name = "name">الاسم</string>
+    <string name="the_car">السيارة</string>
+    <string name="model">موديل</string>
+    <string name = "motherBoard">اللوحة</string>
+    <string name="alTwsil">للتواصل</string>
+
+    <string name="more2">المزيد</string>
+
+    <string name="choose_deligate">اختيار المندوب</string>
 </resources>
