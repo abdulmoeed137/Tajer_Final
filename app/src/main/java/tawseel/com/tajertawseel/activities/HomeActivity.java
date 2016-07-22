@@ -62,7 +62,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         {
             Intent i = new Intent (HomeActivity.this,CustomerRequestActivity.class);
             startActivity(i);
-            //abcd
         }
         else if(v.getId() == R.id.option2)
         {
