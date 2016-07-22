@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:id="@+id/buttonLayout"
+
+        android:layout_alignParentBottom="true">
+
+
+
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancelling_order"
+            android:textSize="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/mainColor"
+            android:background="@drawable/rectangle"
+
+            />
+    </LinearLayout>
+
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonLayout"
+        android:layout_below="@+id/toolbar"
+
+        tools:context="tawseel.com.tajertawseel.activities.WaitingForAcceptanceActivity" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/myLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignBottom="@+id/map"
+        android:layout_alignParentRight="true"
+        android:tint="@android:color/background_dark"
+        android:src="@android:drawable/ic_menu_mylocation"
+       android:backgroundTint="#d3efda"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/plus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        fab:fabSize="mini"
+
+        android:src="@drawable/black_add"
+
+        android:layout_alignTop="@+id/map"
+
+
+        android:backgroundTint="#d3efda"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/minus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        fab:fabSize="mini"
+        android:src="@drawable/munis"
+        android:layout_below="@+id/plus_button"
+        android:backgroundTint="#d3efda"/>
+
+
+
+</RelativeLayout>

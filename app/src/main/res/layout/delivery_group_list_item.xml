@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/container"
+        >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:minHeight="90dp">
+
+
+
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/circle_border"
+                android:orientation="vertical"
+                android:gravity="center"
+
+                android:id="@+id/products_container"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="1dp">
+
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="5"
+                    android:textSize="16dp"
+                    android:textColor="@color/mainColor"/>
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/agents"
+                    android:textSize="16dp"
+                    android:textColor="@color/mainColor"/>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/dialog_tick_icon"
+                android:layout_alignBottom="@id/products_container"
+                android:layout_marginLeft="60dp"
+                android:id="@+id/tick_view"
+                android:visibility="invisible"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp">
+
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mainColor"
+                    android:textSize="16dp"
+                    android:layout_gravity="right"
+                    android:textDirection="rtl"
+                    android:text="فساتين بنات ج...  "
+                    />
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mainColor"
+                    android:textSize="12dp"
+                    android:layout_gravity="right"
+                    android:text="1#" />
+
+
+
+
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+
+            android:background="#cccc"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+
+
+            <tawseel.com.tajertawseel.CustomBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="@string/start_delivery"
+                android:gravity="center"
+                android:background="@color/mainColor"
+                android:textColor="@android:color/white"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/start_delivery_button"
+                android:paddingLeft="10dp"
+                />
+
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delivery_Price"
+                    android:textSize="14dp"/>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mainColor"
+                        android:text="SR"
+                        />
+
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mainColor"
+                        android:text="20"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
+
+
+                </LinearLayout>
+
+
+<View
+    android:layout_width="1dp"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="#cccc"/>
+
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product_price"
+                    android:textSize="14dp"/>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mainColor"
+                        android:text="SR"
+                        />
+
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mainColor"
+                        android:text="800"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

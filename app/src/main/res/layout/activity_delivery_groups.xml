@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/mainColorLight">
+
+
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/post_group"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+
+            android:id="@+id/postText"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:id="@+id/post_group_button"
+            android:layout_height="30dp"
+            android:background="@drawable/solid_circle"
+            android:src="@drawable/plus_icon"
+            android:layout_toRightOf="@+id/postText"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            />
+
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/number_of_groups"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="18dp"
+            android:layout_marginRight="10dp"
+
+            android:id="@+id/req_countText"/>
+
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/req_countText"
+            android:id="@+id/request_count"
+            android:text="4"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:layout_marginRight="4dp"
+            android:layout_alignBottom="@+id/req_countText"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/group_list_view"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:divider="@android:color/transparent"></ListView>
+</LinearLayout>
