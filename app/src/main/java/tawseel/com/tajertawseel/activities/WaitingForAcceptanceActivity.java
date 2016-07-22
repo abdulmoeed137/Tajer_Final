@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +33,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceptance_waiting);
 
+        Toast.makeText(WaitingForAcceptanceActivity.this,kmDistanceBetweenPoints(24.915460, 67.034923,24.964350, 67.066641)+"",Toast.LENGTH_SHORT).show();
         setUpToolbar();
         setupMap();
     }
@@ -71,6 +73,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         addMarker(24.9575,67.0639,"Car", R.drawable.car_marker);
         addMarker(24.9333,67.0333,"Car", R.drawable.car_marker);
 
+
     }
 
     private void addMarker(double lat, double lng, String title,int markericon) {
@@ -100,8 +103,8 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
                     Intent i = new Intent (WaitingForAcceptanceActivity.this,ChooseDelegateActivity.class);
                     i.putExtra("destLat",24.9033f);
                     i.putExtra("destLng", 67.0346f);
-                    i.putExtra("lat",(float)latitude);
-                    i.putExtra("lng",(float)longitude);
+                    i.putExtra("lat",(double)latitude);
+                    i.putExtra("lng",(double)longitude);
                     startActivity(i);
                 }
                 return false;
@@ -111,5 +114,20 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
 //        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, Application.DEFAULT_ZOOM);
 //        mMap.animateCamera(update);
 
+    }
+    private double kmDistanceBetweenPoints(double lat_a, double lng_a, double lat_b, double lng_b) {
+        double pk = (double) (180.f/Math.PI);
+
+        double a1 = lat_a / pk;
+        double a2 = lng_a / pk;
+        double b1 = lat_b / pk;
+        double b2 = lng_b / pk;
+
+        double t1 = Math.cos(a1)*Math.cos(a2)*Math.cos(b1)*Math.cos(b2);
+        double t2 = Math.cos(a1)*Math.sin(a2)*Math.cos(b1)*Math.sin(b2);
+        double t3 = Math.sin(a1)*Math.sin(b1);
+        double tt = Math.acos(t1 + t2 + t3);
+
+        return (6366000*tt)/1000;
     }
 }

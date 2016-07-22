@@ -41,7 +41,8 @@
                     android:layout_gravity="center"
                     android:text="5"
                     android:textSize="16dp"
-                    android:textColor="@color/mainColor"/>
+                    android:textColor="@color/mainColor"
+                    android:id="@+id/quantity_customer" />
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
                     android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
                     android:layout_gravity="right"
                     android:textDirection="rtl"
                     android:text="فساتين بنات ج...  "
-                    />
+                    android:id="@+id/group_name" />
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
                     android:layout_width="wrap_content"

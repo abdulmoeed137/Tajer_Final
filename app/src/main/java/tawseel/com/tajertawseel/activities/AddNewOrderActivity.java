@@ -34,9 +34,11 @@ import com.akexorcist.googledirection.GoogleDirection;
 import com.akexorcist.googledirection.constant.TransportMode;
 import com.akexorcist.googledirection.model.Direction;
 import com.akexorcist.googledirection.util.DirectionConverter;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -186,9 +188,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-  //      googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 14));
-        // Add a marker in Sydney and move the camera
-
+  //
 
     }
 
@@ -204,9 +204,10 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onDirectionSuccess(Direction direction, String rawBody) {
         if (direction.isOK()) {
-            mMap.addMarker(new MarkerOptions().position(origin));
-            mMap.addMarker(new MarkerOptions().position(destination));
 
+            mMap.addMarker(new MarkerOptions().position(origin).title("Seller") );
+            mMap.addMarker(new MarkerOptions().position(destination).title("Customer").icon(BitmapDescriptorFactory.fromResource(R.drawable.destination_marker)));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 15));
             ArrayList<LatLng> directionPositionList = direction.getRouteList().get(0).getLegList().get(0).getDirectionPoint();
             mMap.addPolyline(DirectionConverter.createPolyline(this, directionPositionList, 3, Color.RED));
 
