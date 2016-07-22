@@ -9,15 +9,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,8 +27,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
 
@@ -90,7 +85,7 @@ public class ProductList extends BaseActivity {
         });
         progress = ProgressDialog.show(this, "Loading",
                 "Please Wait..", true);
-       URL =functions.add + "showProduct.php?id="+LoginActivity.LoginID;
+       URL = functions.add + "showProduct.php?id="+ LoginActivity.LoginID;
         requestQueue = Volley.newRequestQueue(this);
         //json to get information
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL,

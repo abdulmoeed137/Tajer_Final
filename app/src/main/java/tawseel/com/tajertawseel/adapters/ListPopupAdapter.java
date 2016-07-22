@@ -17,7 +17,7 @@ public class ListPopupAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private String[] Ryals;
-    private int[] circleIds  = {R.drawable.solid_green_circle,R.drawable.orange_circle,R.drawable.red_circle,R.drawable.maroon_circle};
+    private int[] circleIds  = {R.drawable.solid_green_circle, R.drawable.orange_circle, R.drawable.red_circle, R.drawable.maroon_circle};
 
     public ListPopupAdapter (Context c)
     {
