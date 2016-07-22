@@ -55,7 +55,7 @@ import tawseel.com.tajertawseel.adapters.NewOrderProductAdapter;
  * Created by Junaid-Invision on 7/10/2016.
  */
 public class AddNewOrderActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback, DirectionCallback, android.location.LocationListener {
-
+//okw
 
     private ProgressDialog progress;
     private String serverKey = "AIzaSyCBGMz8LNPmst35x_GK50FU-tj_E8q0EDw";
