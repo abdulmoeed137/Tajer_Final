@@ -8,7 +8,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -133,6 +134,17 @@ public class PickSetActivity extends BaseActivity {
                 lp.gravity = Gravity.CENTER;
                 lp.dimAmount = 0.3f;
                 dialog.show();
+
+            }
+        });
+
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                RelativeLayout container = (RelativeLayout)view.findViewById(R.id.container);
+                container.setBackgroundColor(getResources().getColor(R.color.grey));
 
             }
         });

@@ -18,6 +18,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.akexorcist.googledirection.GoogleDirection;
 import com.akexorcist.googledirection.constant.TransportMode;
 import com.akexorcist.googledirection.model.Direction;
 import com.akexorcist.googledirection.util.DirectionConverter;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,6 +54,7 @@ import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.adapters.ListPopupAdapter;
 import tawseel.com.tajertawseel.adapters.NewOrderProductAdapter;
+import tawseel.com.tajertawseel.utils.PathRequest;
 
 /**
  * Created by Junaid-Invision on 7/10/2016.
@@ -188,6 +191,9 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+        Log.d("Map Ready","Map is ready");
+
+
   //
 
     }
@@ -224,6 +230,19 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onLocationChanged(Location location) {
         origin = new LatLng(location.getLatitude(), location.getLongitude());
+
+        addMarker(origin.latitude,origin.longitude,"Destination",R.drawable.destination_marker);
+        addMarker(24.92,67.0297,"Destination",R.drawable.destination_marker);
+
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(origin,16);
+        mMap.animateCamera(update);
+
+
+
+
+        PathRequest request = new PathRequest();
+        request.makeUrl(origin.latitude,origin.longitude,24.92,67.0297,this,mMap);
+
     }
 
     @Override
@@ -315,6 +334,18 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         }
 
 progress.dismiss();
+    }
+
+
+
+    private void addMarker(double lat, double lng, String title,int markericon) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions
+                .position(new LatLng(lat, lng))
+                .title(title)
+                .anchor(.5f, 1f).icon(BitmapDescriptorFactory.fromResource(markericon));
+
+        mMap.addMarker(markerOptions);
     }
 
 

@@ -8,4 +8,6 @@
     <color name="mainColor">#26a9e0</color>
     <color name="mainColorLight">#44b1df</color>
     <color name="green">#5cbc6b</color>
+
+    <color name="grey">#f1f1f2</color>
 </resources>

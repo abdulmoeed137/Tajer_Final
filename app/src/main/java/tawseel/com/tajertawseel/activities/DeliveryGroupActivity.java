@@ -25,7 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
@@ -42,6 +41,10 @@ public class DeliveryGroupActivity extends BaseActivity {
     private TextView total_groups;
     private RequestQueue requestQueue;
     private StringRequest request;
+    private int count= 0 ;
+    CustomBoldTextView title;
+    ImageView deleteIcon;
+    boolean longClick = false;
 
     ArrayList<DeliveryGroupData> list= new ArrayList<>();
 
@@ -92,6 +95,9 @@ try {
                         Log.e("Volley", "Error");
                     }
                 });
+
+        //dummy Adapter
+       // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
         requestQueue.add(jsonObjectRequest);
         total_groups.setText(list.size()+"");
 
@@ -101,29 +107,82 @@ try {
         postGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DeliveryGroupActivity.this,PostGroupActivity.class);
+                Intent i = new Intent(DeliveryGroupActivity.this,PostNewGroupActivity.class);
+                i.putExtra("status","new");
                 startActivity(i);
             }
         });
 
 
+//        groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//        });
+
         groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+               if(!longClick){
+                Intent i = new Intent(DeliveryGroupActivity.this,PostGroupActivity.class);
+                   i.putExtra("status","exists");
+                startActivity(i);}
+                else
+               {
+                   longClick = false;
+               }
+            }
+        });
+
+
+
+        groupListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 ImageView tickView = (ImageView)view.findViewById(R.id.tick_view);
 
+                longClick = true;
                 LinearLayout layout = (LinearLayout) view.findViewById(R.id.container);
                 if(tickView.getVisibility() == View.INVISIBLE)
                 {
 
                     tickView.setVisibility(View.VISIBLE);
+                    layout.setBackgroundColor(getResources().getColor(R.color.grey));
+                    count = count+1;
+
+                    if(count>0)
+                    {
+                        title.setText(""+count);
+                        if(deleteIcon.getVisibility() == View.INVISIBLE)
+                        {
+                            deleteIcon.setVisibility(View.VISIBLE);
+                        }
+                    }
                   //  layout.setBackgroundColor(getResources().getColor(R.color.));
                 }
                 else
                 {
                     tickView.setVisibility(View.INVISIBLE);
-                   // layout.setBackgroundColor(Color.WHITE);
+                    count = count-1;
+                    layout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+                    if(count >= 1)
+                    {
+                        title.setText(""+count);
+                    }
+                    else
+                    {
+                        title.setText(getString(R.string.drawer_option2));
+                        deleteIcon.setVisibility(View.INVISIBLE);
+                    }
+
                 }
+
+
+
+                return false;
             }
         });
     }
@@ -132,12 +191,13 @@ try {
     private void setUpToolbar ()
     {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        CustomBoldTextView title = (CustomBoldTextView)toolbar.findViewById(R.id.title_text);
+        title = (CustomBoldTextView)toolbar.findViewById(R.id.title_text);
         title.setText(getString(R.string.drawer_option2));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        deleteIcon = (ImageView)toolbar.findViewById(R.id.delete_icon);
 
     }
     private void getData()
