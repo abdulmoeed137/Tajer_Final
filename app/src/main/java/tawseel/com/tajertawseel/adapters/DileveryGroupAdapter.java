@@ -2,6 +2,7 @@ package tawseel.com.tajertawseel.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,21 +53,29 @@ public class DileveryGroupAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+ViewHolder holder ;
+        if (convertView==null) {
+            convertView = inflater.inflate(R.layout.delivery_group_list_item, null, false);
+            holder = new ViewHolder();
+           holder.name = (TextView) convertView.findViewById(R.id.group_name);
+            holder.noOfOrders  = (TextView) convertView.findViewById(R.id.quantity_customer);
+            holder.btn = (TextView) convertView.findViewById(R.id.start_delivery_button);
+            holder.ItemPrice = (TextView) convertView.findViewById(R.id.ItemsPrice);
+            holder.PriceRange = (TextView) convertView.findViewById(R.id.PriceRange);
+            holder.grpID = (TextView) convertView.findViewById(R.id.GroupID);
+            convertView.setTag(holder);
+        }
+        else
+              holder=(ViewHolder)convertView.getTag();
 
-        convertView  = inflater.inflate(R.layout.delivery_group_list_item,null,false);
-        TextView grpName = (TextView)convertView.findViewById(R.id.group_name);
-        TextView qty_cust= (TextView)convertView.findViewById(R.id.quantity_customer);
-        TextView btn = (TextView) convertView.findViewById(R.id.start_delivery_button);
-        TextView ItemPrice = (TextView)convertView.findViewById(R.id.ItemsPrice);
-        TextView PriceRange= (TextView)convertView.findViewById(R.id.PriceRange);
-        TextView GroupID = (TextView) convertView.findViewById(R.id.GroupID);
         DeliveryGroupData data = (DeliveryGroupData)getItem(position);
-        grpName.setText(data.getName());
-        qty_cust.setText(data.getNoOfOrders());
-        ItemPrice.setText(data.getItemPrice());
-        PriceRange.setText(data.getPriceRange());
-        GroupID.setText(data.getGrpID());
-        btn.setTag(data.getGrpID());
+
+         holder.name.setText(data.getName());
+        holder.noOfOrders.setText(data.getNoOfOrders());
+        holder.ItemPrice.setText(data.getItemPrice());
+        holder.PriceRange.setText(data.getPriceRange());
+        holder.grpID.setText(data.getGrpID());
+         holder.btn.setTag(data.getGrpID());
 
 
 

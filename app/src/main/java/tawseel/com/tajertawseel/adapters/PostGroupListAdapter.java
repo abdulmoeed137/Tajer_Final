@@ -56,49 +56,49 @@ public class PostGroupListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v  = inflater.inflate(R.layout.post_group_item,null,false);
 
+      final  ViewHolder holder;
+        final PostGroupData data = (PostGroupData) getItem(position);
+        if (convertView == null) {
+            holder = new ViewHolder();
 
-        TextView CustomerName = (TextView) v.findViewById(R.id.CustomerName);
-    TextView email = (TextView) v.findViewById(R.id.Email);
-    TextView phone = (TextView) v.findViewById(R.id.Phone);
-    final PostGroupData data = (PostGroupData) getItem(position);
-    CustomerName.setText(data.getCustomerName());
-    email.setText(data.getCustomerEmail());
-    phone.setText(data.getCustomerPhone());
+        convertView= inflater.inflate(R.layout.post_group_item, null, false);
 
+            holder.CustomerName = (TextView) convertView.findViewById(R.id.CustomerName);
+            holder.CustomerEmail = (TextView) convertView.findViewById(R.id.Email);
+            holder.CustomerPhone = (TextView) convertView.findViewById(R.id.Phone);
+            convertView.setTag(holder);
 
-    final TextView moreView = (TextView) v.findViewById(R.id.moreButton);
-    ExpandablePanel panel = (ExpandablePanel) v.findViewById(R.id.expandableLayout);
+         final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton);
+        ExpandablePanel panel = (ExpandablePanel) convertView.findViewById(R.id.expandableLayout);
 
 
     panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
         @Override
         public void onExpand(View handle, View content) {
             moreView.setText(content.getResources().getString(R.string.less));
-            View PriceRange = (View) content.findViewById(R.id.PriceMark);
-            TextView riyalPrice = (TextView) content.findViewById(R.id.riyalPrice);
-            TextView ItemPrice = (TextView) content.findViewById(R.id.ItemsPrice);
-            TextView PriceRangeText = (TextView) content.findViewById(R.id.PriceRange);
-            TextView TotalPrice = (TextView) content.findViewById(R.id.TotalPrice);
-            ItemPrice.setText(data.getItemsPrice());
-            PriceRangeText.setText(data.getPriceRange());
-            TotalPrice.setText(Integer.parseInt(data.getItemsPrice()) + (Integer.parseInt(data.getPriceRange())) + "");
+           holder.PriceRangeIcon = (View) content.findViewById(R.id.PriceMark);
+            holder.PriceRange2 = (TextView) content.findViewById(R.id.riyalPrice);
+            holder.ItemsPrice = (TextView) content.findViewById(R.id.ItemsPrice);
+           holder.PriceRangeText = (TextView) content.findViewById(R.id.PriceRange);
+            holder.TotalPrice= (TextView) content.findViewById(R.id.TotalPrice);
+            holder.ItemsPrice.setText(data.getItemsPrice());
+            holder.PriceRangeText.setText(data.getPriceRange());
+            holder.TotalPrice.setText(Integer.parseInt(data.getItemsPrice()) + (Integer.parseInt(data.getPriceRange())) + "");
             if (data.getPriceRange().equals("20")) {
-                PriceRange.setBackgroundResource(R.drawable.solid_green_circle);
-                riyalPrice.setText(R.string.ryal_20);
+                holder.PriceRangeIcon.setBackgroundResource(R.drawable.solid_green_circle);
+                holder.PriceRange2.setText(R.string.ryal_20);
 
             } else if (data.getPriceRange().equals("30")) {
-                PriceRange.setBackgroundResource(R.drawable.orange_circle);
-                riyalPrice.setText(R.string.ryal30);
+                holder.PriceRangeIcon.setBackgroundResource(R.drawable.orange_circle);
+                holder.PriceRange2.setText(R.string.ryal30);
             } else if (data.getPriceRange().equals("40")) {
-                PriceRange.setBackgroundResource(R.drawable.maroon_circle);
-                riyalPrice.setText(R.string.ryal40);
+                holder.PriceRangeIcon.setBackgroundResource(R.drawable.maroon_circle);
+                holder.PriceRange2.setText(R.string.ryal40);
             } else if (data.getPriceRange().equals("50")) {
-                PriceRange.setBackgroundResource(R.drawable.red_circle);
-                riyalPrice.setText(R.string.ryal50);
+                holder.PriceRangeIcon.setBackgroundResource(R.drawable.red_circle);
+                holder.PriceRange2.setText(R.string.ryal50);
             }
-
 
         }
 
@@ -113,7 +113,7 @@ public class PostGroupListAdapter extends BaseAdapter {
 
     //  CustomBoldTextView textView = (CustomBoldTextView) v.findViewById(R.id.start_delivery_button);
 
-    ListView productsList = (ListView) v.findViewById(R.id.product_list);
+    ListView productsList = (ListView) convertView.findViewById(R.id.product_list);
     productsList.setAdapter(new ProductItemAdapter(context));
 
 
@@ -126,9 +126,14 @@ public class PostGroupListAdapter extends BaseAdapter {
             return false;
         }
     });
+        }
+        else
+            holder=(ViewHolder) convertView.getTag();
+         holder.CustomerName.setText(data.getCustomerName());
+        holder.CustomerEmail.setText(data.getCustomerEmail());
+        holder.CustomerPhone.setText(data.getCustomerPhone());
 
-
-    return v;
+         return convertView;
 
     }
 
