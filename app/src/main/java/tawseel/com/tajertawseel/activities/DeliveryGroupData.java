@@ -4,7 +4,7 @@ package tawseel.com.tajertawseel.activities;
  * Created by AbdulMoeed on 7/22/2016.
  */
 public class DeliveryGroupData {
-    private String name ,noOfOrders,grpID;
+    private String name ,noOfOrders,grpID,ItemPrice,PriceRange;
 
     public String getName() {
         return name;
@@ -28,5 +28,21 @@ public class DeliveryGroupData {
 
     public void setGrpID(String grpID) {
         this.grpID = grpID;
+    }
+
+    public String getItemPrice() {
+        return ItemPrice;
+    }
+
+    public void setItemPrice(String itemPrice) {
+        ItemPrice = itemPrice;
+    }
+
+    public String getPriceRange() {
+        return PriceRange;
+    }
+
+    public void setPriceRange(String priceRange) {
+        PriceRange = priceRange;
     }
 }

@@ -160,7 +160,8 @@
                     android:textColor="@color/mainColor"
                     android:text="820"
                     android:textSize="35dp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/abc" />
 
             </LinearLayout>
 

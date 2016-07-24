@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,13 +47,14 @@ public class DeliveryGroupActivity extends BaseActivity {
     ImageView deleteIcon;
     boolean longClick = false;
 
-    ArrayList<DeliveryGroupData> list= new ArrayList<>();
+    ArrayList<DeliveryGroupData> list = new ArrayList<>();;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_groups);
+
      total_groups = (TextView)findViewById(R.id.request_count);
         requestQueue = Volley.newRequestQueue(this);
         setUpToolbar();
@@ -65,9 +67,6 @@ public class DeliveryGroupActivity extends BaseActivity {
     {
         groupListView = (ListView)findViewById(R.id.group_list_view);
 
-
-
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/info_grp.php?id=1",
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -75,15 +74,20 @@ public class DeliveryGroupActivity extends BaseActivity {
 try {
 
                             JSONArray jsonArr=response.getJSONArray("info");
+                         total_groups.setText(jsonArr.length()+"");
                             for(int i=0;i<jsonArr.length();i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
                                 DeliveryGroupData item= new DeliveryGroupData();
                                 item.setName(jsonObj.getString("name"));
                                 item.setNoOfOrders(jsonObj.getString("members"));
                                 item.setGrpID(jsonObj.getString("groupID"));
-                                list.add(item);
+                                item.setItemPrice(jsonObj.getString("ItemsPrice"));
+                                item.setPriceRange(jsonObj.getString("PriceRange"));
+
+                               list.add(item);
                             }
-    groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+                         groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         };
@@ -99,7 +103,6 @@ try {
         //dummy Adapter
        // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
         requestQueue.add(jsonObjectRequest);
-        total_groups.setText(list.size()+"");
 
         postGroup = (ImageView)findViewById(R.id.post_group_button);
 
@@ -125,9 +128,12 @@ try {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                if(!longClick){
-                Intent i = new Intent(DeliveryGroupActivity.this,PostGroupActivity.class);
-                   i.putExtra("status","exists");
-                startActivity(i);}
+               Intent i = new Intent(DeliveryGroupActivity.this,PostGroupActivity.class);
+
+                i.putExtra("id",list.get(position).getGrpID()+"");
+                 startActivity(i);
+
+                   }
                 else
                {
                    longClick = false;

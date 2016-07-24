@@ -9,7 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.DeliveryGroupData;
+import tawseel.com.tajertawseel.activities.PostGroupData;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
 
 /**
@@ -20,25 +25,26 @@ public class PostGroupListAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
+    ArrayList<PostGroupData>List;
 
 
-
-    public PostGroupListAdapter (Context c)
+    public PostGroupListAdapter (Context c   ,ArrayList<PostGroupData> list)
     {
         context = c;
         inflater = LayoutInflater.from(c);
+        List=list;
     }
 
 
 
     @Override
     public int getCount() {
-        return 4;
+        return List.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return List.get(position);
     }
 
     @Override
@@ -51,14 +57,19 @@ public class PostGroupListAdapter extends BaseAdapter {
         View v  = inflater.inflate(R.layout.post_group_item,null,false);
 
 
+
+
+
         final TextView moreView = (TextView) v.findViewById(R.id.moreButton);
         ExpandablePanel panel = (ExpandablePanel)v.findViewById(R.id.expandableLayout);
+
 
         panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             @Override
             public void onExpand(View handle, View content) {
 
                 moreView.setText(content.getResources().getString(R.string.less));
+
 
             }
 

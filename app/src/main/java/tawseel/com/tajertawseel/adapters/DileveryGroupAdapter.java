@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.DeliveryGroupActivity;
 import tawseel.com.tajertawseel.activities.DeliveryGroupData;
 import tawseel.com.tajertawseel.activities.WaitingForAcceptanceActivity;
 
@@ -51,18 +52,24 @@ public class DileveryGroupAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (convertView == null)
-        {
-            convertView  = inflater.inflate(R.layout.delivery_group_list_item,null,false);
-            TextView grpName = (TextView)convertView.findViewById(R.id.group_name);
-            TextView qty_cust= (TextView)convertView.findViewById(R.id.quantity_customer);
-           TextView btn = (TextView) convertView.findViewById(R.id.start_delivery_button);
-            DeliveryGroupData data = (DeliveryGroupData)getItem(position);
-            btn.setTag("lol");
-            grpName.setText(data.getName());
-            qty_cust.setText(data.getNoOfOrders());
 
-        }
+        convertView  = inflater.inflate(R.layout.delivery_group_list_item,null,false);
+        TextView grpName = (TextView)convertView.findViewById(R.id.group_name);
+        TextView qty_cust= (TextView)convertView.findViewById(R.id.quantity_customer);
+        TextView btn = (TextView) convertView.findViewById(R.id.start_delivery_button);
+        TextView ItemPrice = (TextView)convertView.findViewById(R.id.ItemsPrice);
+        TextView PriceRange= (TextView)convertView.findViewById(R.id.PriceRange);
+        TextView GroupID = (TextView) convertView.findViewById(R.id.GroupID);
+        DeliveryGroupData data = (DeliveryGroupData)getItem(position);
+        grpName.setText(data.getName());
+        qty_cust.setText(data.getNoOfOrders());
+        ItemPrice.setText(data.getItemPrice());
+        PriceRange.setText(data.getPriceRange());
+        GroupID.setText(data.getGrpID());
+        btn.setTag(data.getGrpID());
+
+
+
 
 
         final TextView startDeliveryButton = (TextView)convertView.findViewById(R.id.start_delivery_button);
@@ -73,7 +80,7 @@ public class DileveryGroupAdapter extends BaseAdapter {
 
 
                Intent i = new Intent(context, WaitingForAcceptanceActivity.class);
-                i.putExtra("grpId",v.getId()+"abcd");
+                i.putExtra("grpId",v.getTag()+"");
                 context.startActivity(i);
 
             }

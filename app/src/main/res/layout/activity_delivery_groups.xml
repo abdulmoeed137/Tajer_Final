@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/req_countText"
             android:id="@+id/request_count"
-            android:text="4"
+            android:text="0"
             android:textColor="@android:color/white"
             android:textSize="18dp"
             android:layout_marginRight="4dp"
