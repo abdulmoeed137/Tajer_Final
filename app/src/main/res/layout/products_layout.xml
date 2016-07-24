@@ -32,7 +32,7 @@
             android:text="@string/ryal_20"
             android:layout_marginRight="10dp"
 
-            />
+            android:id="@+id/riyalPrice" />
 
 
 
@@ -40,7 +40,9 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/solid_green_circle"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:id="@+id/PriceMark"
+            android:clickable="false" />
 
         <View
             android:layout_width="1dp"
@@ -82,7 +84,7 @@
             android:text="@string/payment_when_recieving"
             android:layout_marginRight="10dp"
 
-            />
+            android:id="@+id/PaymentType" />
 
 
 
@@ -161,7 +163,7 @@
                     android:text="820"
                     android:textSize="35dp"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/abc" />
+                    android:id="@+id/TotalPrice" />
 
             </LinearLayout>
 
@@ -216,7 +218,8 @@
                     android:textColor="@color/mainColor"
                     android:text="800"
                     android:textSize="20dp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/ItemsPrice" />
 
             </LinearLayout>
 
@@ -259,7 +262,8 @@
                     android:textColor="@color/mainColor"
                     android:text="20"
                     android:textSize="20dp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/PriceRange" />
 
             </LinearLayout>
 

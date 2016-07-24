@@ -72,6 +72,7 @@ public class PostGroupActivity extends BaseActivity {
                                 item.setItemsPrice(jsonObj.getString("ItemsPrice"));
                                 item.setPayMethod(jsonObj.getString("PayMethod"));
 
+
                                 list.add(item);
                             }
                             productList.setAdapter(new PostGroupListAdapter(PostGroupActivity.this,list));
