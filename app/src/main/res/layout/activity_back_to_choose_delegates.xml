@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar" android:id="@+id/toolbar" />
+
+
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        >
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="tawseel.com.tajertawseel.activities.BackToChooseNewDelegatesActivity" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+
+
+            <tawseel.com.tajertawseel.CustomBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance_and_time"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/mainColor"/>
+        </RelativeLayout>
+        
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#cccc"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/driver_picture"
+                android:src="@drawable/profile_pic_icon"/>
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
+                android:id="@+id/info_container"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Khalid Ahmed Ali"
+                        android:textColor="@color/mainColor"
+                        android:layout_marginRight="10dp" />
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name"
+                        android:layout_marginRight="10dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Camery"
+                        android:textColor="@color/mainColor"
+                        android:layout_marginRight="10dp" />
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/the_car"
+                        android:layout_marginRight="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2016"
+                        android:textColor="@color/mainColor"
+                        android:layout_marginRight="10dp" />
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/model"
+                        android:layout_marginRight="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ABF - 2541"
+                        android:textColor="@color/mainColor"
+                        android:layout_marginRight="10dp" />
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/motherBoard"
+                        android:layout_marginRight="10dp" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cccc"
+                android:layout_below="@+id/info_container"
+                android:layout_marginTop="10dp"
+                android:id="@+id/divider_2"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/divider_2"
+                android:layout_alignParentRight="true"
+                android:id="@+id/contact_container">
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alTwsil"
+                    android:layout_gravity="right"
+                    android:textColor="@color/mainColor"
+                    android:layout_marginRight="10dp" />
+
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0550044536"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/contact_container"
+                android:src="@drawable/phone_tjr_icon"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cccc"
+                android:layout_below="@+id/contact_container"
+                android:layout_marginTop="10dp"
+                android:id="@+id/divider_3"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/divider_3"
+                android:layout_marginTop="10dp">
+
+                <RatingBar
+                    android:layout_width="70dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/driver_picture"
+
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/votes"
+                    android:numStars="5"/>
+
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vote_count"
+                    android:text="27"
+                    android:layout_alignBottom="@+id/votes"
+                    android:layout_toRightOf="@+id/votes"
+                    android:layout_marginLeft="5dp"
+                    />
+
+
+                <tawseel.com.tajertawseel.CustomBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_of_votes"
+                    android:layout_toRightOf="@+id/vote_count"
+                    android:layout_alignBottom="@+id/vote_count"
+                    android:layout_marginLeft="5dp"
+                    />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        </ScrollView>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+
+            <tawseel.com.tajertawseel.CustomBoldTextView
+                android:layout_width="80dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/cancel_button"
+                android:textSize="16dp"
+                android:layout_height="40dp"
+                android:background="@drawable/grey_rectangle"
+                android:gravity="center"
+                android:text="@string/cancellation"
+                />
+
+
+            <tawseel.com.tajertawseel.CustomBoldTextView
+                android:layout_width="80dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/continue_button"
+                android:layout_alignParentRight="true"
+                android:textSize="16dp"
+                android:textColor="@android:color/white"
+                android:layout_height="40dp"
+                android:background="@color/mainColor"
+                android:gravity="center"
+                android:text="@string/delivery_start"
+                />
+
+
+            <tawseel.com.tajertawseel.CustomBoldTextView
+                android:layout_width="80dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/protection_button"
+                android:textSize="16dp"
+                android:layout_toLeftOf="@+id/continue_button"
+                android:layout_height="40dp"
+                android:background="@drawable/rectangle"
+                android:gravity="center"
+                android:text="@string/protection"
+                />
+
+
+
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

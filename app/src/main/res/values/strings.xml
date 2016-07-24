@@ -119,4 +119,6 @@
     <string name="more2">المزيد</string>
 
     <string name="choose_deligate">اختيار المندوب</string>
+    <string name = "distance_and_time">المسافة و الوقت</string>
+    <string name="back_to_choose_delegates">الرجوع لاختيار مندوب</string>
 </resources>

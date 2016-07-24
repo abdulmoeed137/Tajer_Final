@@ -1,8 +1,11 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +34,16 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
         setContentView(R.layout.activity_choose_delegate);
         setUpToolbar();
         setupMap();
+
+
+        LinearLayout moreButton_layout = (LinearLayout)findViewById(R.id.moreLayout);
+        moreButton_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i  = new Intent (ChooseDelegateActivity.this,BackToChooseNewDelegatesActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 

@@ -49,6 +49,7 @@
         <activity android:name=".activities.WaitingForAcceptanceActivity" />
         <activity android:name=".activities.ChooseDelegateActivity"/>
         <activity android:name=".activities.PostNewGroupActivity"/>
+        <activity android:name=".activities.BackToChooseNewDelegatesActivity"/>
         <activity
             android:name=".activities.sample"
             android:label="@string/title_activity_sample"
