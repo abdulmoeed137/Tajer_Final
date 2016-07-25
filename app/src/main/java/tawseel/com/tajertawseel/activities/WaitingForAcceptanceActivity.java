@@ -33,7 +33,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceptance_waiting);
 
-        Toast.makeText(WaitingForAcceptanceActivity.this,getIntent().getExtras().getString("grpId"),Toast.LENGTH_SHORT).show();
+        Toast.makeText(WaitingForAcceptanceActivity.this,kmDistanceBetweenPoints(24.915460, 67.034923,24.964350, 67.066641)+"",Toast.LENGTH_SHORT).show();
         setUpToolbar();
         setupMap();
     }

@@ -1,7 +1,14 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,6 +23,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,20 +47,58 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
 /**
  * Created by Junaid-Invision on 7/12/2016.
  */
-public class PostGroupActivity extends BaseActivity {
+public class PostGroupActivity extends BaseActivity implements OnMapReadyCallback, android.location.LocationListener{
 
     ListView productList;
     private RequestQueue requestQueue;
     ArrayList<PostGroupData> list = new ArrayList<>();;
     private TextView total_orders;
+    private GoogleMap mMap;
+    LocationManage lm;
+    LocationManager locationManager;
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_post_group);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Toast.makeText(PostGroupActivity.this, "Location Permission Required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                this);
+        try
+        {
+            lm.setOrigin(new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude()));
+
+        }
+        catch (Exception e)
+        {
+
+            Toast.makeText(PostGroupActivity.this,"No Old Location Saved",Toast.LENGTH_SHORT).show();
+        }
+
         requestQueue = Volley.newRequestQueue(this);
         total_orders = (TextView)findViewById(R.id.request_count);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
         setUpToolbar();
         setUpComponents();
 
@@ -73,8 +127,14 @@ public class PostGroupActivity extends BaseActivity {
                                 item.setPayMethod(jsonObj.getString("PayMethod"));
                                 item.setOrderProductQuantity(jsonObj.getString("OrderMember"));
                                 item.setOrderID(jsonObj.getString("OrderID"));
+                                item.setLatitude(jsonObj.getString("Latitude"));
+                                item.setLongitude(jsonObj.getString("Longitude"));
 
                                 list.add(item);
+                            }
+                            for (int i=0;i<list.size();i++)
+                            {
+                                addMarker(Double.parseDouble(list.get(i).getLatitude()),Double.parseDouble(list.get(i).getLongitude()),"Customer", R.drawable.person_marker);
                             }
                             productList.setAdapter(new PostGroupListAdapter(PostGroupActivity.this,list));
 
@@ -115,5 +175,55 @@ public class PostGroupActivity extends BaseActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng positionUpdate = lm.getOrigin();
+        Toast.makeText(PostGroupActivity.this,lm.getOrigin().latitude+lm.getOrigin().longitude+"",Toast.LENGTH_SHORT).show();
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate,9);
+        mMap.animateCamera(update);
+
+
+        addMarker(24.9033f,67.0346f,"Seller", R.drawable.destination_marker);
+
+
+
+    }
+
+    private void addMarker(double lat, double lng, String title,int markericon) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions
+                .position(new LatLng(lat, lng))
+                .title(title)
+                .anchor(.5f, 1f).icon(BitmapDescriptorFactory.fromResource(markericon));
+
+
+
+
+        mMap.addMarker(markerOptions);
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }

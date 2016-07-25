@@ -56,7 +56,7 @@ public class ProductItemAdapter extends BaseAdapter {
         } else
             holder = (ViewHolder) convertView.getTag();
         PostGroupListData data = (PostGroupListData) getItem(position);
-        holder.ProductName.setText(data.getProductName());
+        holder.ProductName.setText(data.getQuantity()+" - "+data.getProductName());
         holder.ProductPrice.setText(data.getPrice());
         holder.Description.setText(data.getDescription());
         return convertView;

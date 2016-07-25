@@ -84,6 +84,13 @@ public class PostGroupListAdapter extends BaseAdapter {
             holder.CustomerPhone = (TextView) convertView.findViewById(R.id.Phone);
             holder.OrderProductQuantity= (TextView)convertView.findViewById(R.id.OrderProductQuantity);
             convertView.setTag(holder);
+        }
+        else
+            holder=(ViewHolder) convertView.getTag();
+        holder.CustomerName.setText(data.getCustomerName());
+        holder.CustomerEmail.setText(data.getCustomerEmail());
+        holder.CustomerPhone.setText(data.getCustomerPhone());
+        holder.OrderProductQuantity.setText(data.getOrderProductQuantity());
 
          final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton);
         ExpandablePanel panel = (ExpandablePanel) convertView.findViewById(R.id.expandableLayout);
@@ -188,13 +195,7 @@ public class PostGroupListAdapter extends BaseAdapter {
     //  CustomBoldTextView textView = (CustomBoldTextView) v.findViewById(R.id.start_delivery_button);
 
 
-        }
-        else
-            holder=(ViewHolder) convertView.getTag();
-         holder.CustomerName.setText(data.getCustomerName());
-        holder.CustomerEmail.setText(data.getCustomerEmail());
-        holder.CustomerPhone.setText(data.getCustomerPhone());
-        holder.OrderProductQuantity.setText(data.getOrderProductQuantity());
+
 
          return convertView;
 
