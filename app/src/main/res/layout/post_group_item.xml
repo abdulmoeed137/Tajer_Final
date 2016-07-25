@@ -33,7 +33,7 @@
                     android:background="@color/mainColor"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:id="@+id/back"
+                    android:id="@+id/BtnMove"
                     android:src="@drawable/back_arrow"
                     android:padding="6dp"/>
 
@@ -45,8 +45,8 @@
                     android:layout_marginLeft="3dp"
                     android:src="@drawable/delete_icon"
                     android:padding="6dp"
-                    android:layout_toRightOf="@+id/back"
-                    android:id="@+id/del"/>
+                    android:layout_toRightOf="@+id/BtnMove"
+                    android:id="@+id/BtnDelete"/>
                 
 
 

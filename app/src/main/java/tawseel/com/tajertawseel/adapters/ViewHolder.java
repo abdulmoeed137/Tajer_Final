@@ -1,6 +1,7 @@
 package tawseel.com.tajertawseel.adapters;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -12,7 +13,9 @@ public class ViewHolder {
      //PostGroupAdapter
      TextView PriceRange2,PayMethod,ItemsPrice,CustomerName,CustomerEmail,CustomerPhone,OrderID,PriceRangeText,TotalPrice,OrderProductQuantity;
      View PriceRangeIcon;
+     ImageView OrderMoveButton,OrderDeleteButton;
      //product GroupList
 
      TextView Quantity ,ProductID ,ProductName, ProductPrice ,Description;
+
 }

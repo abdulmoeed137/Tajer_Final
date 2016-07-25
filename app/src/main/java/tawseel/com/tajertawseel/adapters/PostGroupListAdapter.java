@@ -1,22 +1,33 @@
 package tawseel.com.tajertawseel.adapters;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -24,10 +35,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.DeliveryGroupData;
+import tawseel.com.tajertawseel.activities.HASH;
+import tawseel.com.tajertawseel.activities.LoginActivity;
 import tawseel.com.tajertawseel.activities.PostGroupData;
 import tawseel.com.tajertawseel.activities.PostGroupListData;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
@@ -70,7 +85,7 @@ public class PostGroupListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
       final  ViewHolder holder;
         final PostGroupData data = (PostGroupData) getItem(position);
@@ -83,6 +98,8 @@ public class PostGroupListAdapter extends BaseAdapter {
             holder.CustomerEmail = (TextView) convertView.findViewById(R.id.Email);
             holder.CustomerPhone = (TextView) convertView.findViewById(R.id.Phone);
             holder.OrderProductQuantity= (TextView)convertView.findViewById(R.id.OrderProductQuantity);
+          holder.OrderMoveButton = (ImageView) convertView.findViewById(R.id.BtnMove);
+           holder.OrderDeleteButton = (ImageView) convertView.findViewById(R.id.BtnDelete);
             convertView.setTag(holder);
         }
         else
@@ -91,6 +108,8 @@ public class PostGroupListAdapter extends BaseAdapter {
         holder.CustomerEmail.setText(data.getCustomerEmail());
         holder.CustomerPhone.setText(data.getCustomerPhone());
         holder.OrderProductQuantity.setText(data.getOrderProductQuantity());
+        holder.OrderDeleteButton.setTag(data.getID());
+       holder.OrderMoveButton.setTag(data.getID());
 
          final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton);
         ExpandablePanel panel = (ExpandablePanel) convertView.findViewById(R.id.expandableLayout);
@@ -195,7 +214,91 @@ public class PostGroupListAdapter extends BaseAdapter {
 
     //  CustomBoldTextView textView = (CustomBoldTextView) v.findViewById(R.id.start_delivery_button);
 
+      holder.OrderMoveButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Toast.makeText(context,v.getTag()+"",Toast.LENGTH_SHORT).show();
 
+
+          }
+      });
+
+        holder.OrderDeleteButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                final String w=v.getTag()+"";
+                final RequestQueue requestQueue;
+
+                requestQueue = Volley.newRequestQueue(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Are You Sure?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog progress;
+                        StringRequest request;
+                        progress = ProgressDialog.show(context, "Deleting",
+                                "Please Wait..", true);
+                        request = new StringRequest(Request.Method.POST, "http://192.168.0.100/ms/DeleteOrderFromGroup.php", new Response.Listener<String>() {
+                            //if response
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+
+                                    try {
+                                        if (jsonObject.names().get(0).equals("success")) {
+                                        List.remove(position);
+                                            notifyDataSetChanged();
+                                            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                                            progress.dismiss();
+                                        } else {
+                                            progress.dismiss();
+                                            Toast.makeText(context, jsonObject.getString("Error while Deleting"), Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+                                    } catch (JSONException e) {
+                                        progress.dismiss();
+                                        e.printStackTrace();
+                                    }
+
+                                } catch (JSONException e) {
+                                    progress.dismiss();
+                                    e.printStackTrace();
+                                }
+
+
+                            }// in case error
+                        }, new Response.ErrorListener() {
+                            public void onErrorResponse(VolleyError error) {
+                                progress.dismiss();
+                                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                            //send data to server using POST
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                HashMap<String, String> hashMap = new HashMap<String, String>();
+                                hashMap.put("id",w);
+                                hashMap.put("hash", HASH.getHash());
+                                return hashMap;
+                            }
+                        };
+                        requestQueue.add(request);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+        });
 
 
          return convertView;

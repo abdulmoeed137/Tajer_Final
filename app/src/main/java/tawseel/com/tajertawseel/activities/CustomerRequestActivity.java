@@ -78,7 +78,7 @@ public class CustomerRequestActivity extends BaseActivity {
                                 ProductLayoutData pld=new ProductLayoutData();
                                 pld.setItems(pdlist);
                                 pld.setPay_method(jsonObj.getString("PayMethod"));
-                                pld.setDelivery_charges(Long.parseLong(jsonObj.getString("PriceRange")));
+                                pld.setDelivery_charges(120);
                                 itemList.add(pld);
                                 pdlist.clear();
                             }

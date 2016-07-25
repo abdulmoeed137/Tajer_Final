@@ -129,6 +129,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
                                 item.setOrderID(jsonObj.getString("OrderID"));
                                 item.setLatitude(jsonObj.getString("Latitude"));
                                 item.setLongitude(jsonObj.getString("Longitude"));
+                                item.setID(jsonObj.getString("ID"));
 
                                 list.add(item);
                             }
