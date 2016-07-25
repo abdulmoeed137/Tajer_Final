@@ -77,7 +77,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
 
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-    LocationManage lm;
+    LatLng origin;
 
 
 
@@ -86,7 +86,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_new_order);
-      lm = new LocationManage();
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -106,7 +106,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 this);
         try
         {
-             lm.setOrigin(new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude()));
+            origin=new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude());
 
         }
         catch (Exception e)
@@ -203,7 +203,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     public void requestDirection() {
 
         GoogleDirection.withServerKey(serverKey)
-                .from(lm.getOrigin())
+                .from(origin)
                 .to(destination)
                 .transportMode(TransportMode.DRIVING)
                 .execute(this);
@@ -213,9 +213,9 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     public void onDirectionSuccess(Direction direction, String rawBody) {
         if (direction.isOK()) {
 
-            mMap.addMarker(new MarkerOptions().position(lm.getOrigin()).title("Seller") );
+            mMap.addMarker(new MarkerOptions().position(origin).title("Seller") );
             mMap.addMarker(new MarkerOptions().position(destination).title("Customer").icon(BitmapDescriptorFactory.fromResource(R.drawable.destination_marker)));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lm.getOrigin(), 15));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 15));
             ArrayList<LatLng> directionPositionList = direction.getRouteList().get(0).getLegList().get(0).getDirectionPoint();
             mMap.addPolyline(DirectionConverter.createPolyline(this, directionPositionList, 3, Color.RED));
 
@@ -231,7 +231,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onLocationChanged(Location location) {
-        lm.setOrigin( new LatLng(location.getLatitude(), location.getLongitude()));
+        origin= new LatLng(location.getLatitude(), location.getLongitude());
 
 
     }

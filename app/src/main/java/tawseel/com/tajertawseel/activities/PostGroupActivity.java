@@ -54,7 +54,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
     ArrayList<PostGroupData> list = new ArrayList<>();;
     private TextView total_orders;
     private GoogleMap mMap;
-    LocationManage lm;
+    LatLng origin ;
     LocationManager locationManager;
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -85,7 +85,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
                 this);
         try
         {
-            lm.setOrigin(new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude()));
+           origin= new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude());
 
         }
         catch (Exception e)
@@ -181,13 +181,12 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng positionUpdate = lm.getOrigin();
-        Toast.makeText(PostGroupActivity.this,lm.getOrigin().latitude+lm.getOrigin().longitude+"",Toast.LENGTH_SHORT).show();
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate,9);
+        LatLng positionUpdate = origin;
+     CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate,9);
         mMap.animateCamera(update);
 
 
-        addMarker(24.9033f,67.0346f,"Seller", R.drawable.destination_marker);
+        addMarker(origin.latitude,origin.longitude,"Seller", R.drawable.destination_marker);
 
 
 
@@ -209,6 +208,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationChanged(Location location) {
+        origin= new LatLng(location.getLatitude(),location.getLongitude());
 
     }
 
