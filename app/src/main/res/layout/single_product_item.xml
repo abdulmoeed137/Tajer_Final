@@ -23,14 +23,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainColor"
-                android:text="@string/productItemString"/>
+                android:text="@string/productItemString"
+                android:id="@+id/ProductName" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainColor"
-                android:text="@string/productItemString2"/>
+                android:text="@string/productItemString2"
+                android:id="@+id/ProductDescription" />
 
            <LinearLayout
                android:layout_width="wrap_content"
@@ -48,7 +50,8 @@
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="5dp"
                    android:textSize="16dp"
-                   android:text="800"/>
+                   android:text="800"
+                   android:id="@+id/ProductPrice" />
 
 
 

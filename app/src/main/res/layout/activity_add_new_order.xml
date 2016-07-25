@@ -519,7 +519,7 @@
                 android:text="@string/wire_transfer"
                 android:layout_marginRight="15dp"
                 android:theme="@style/RadioButtonStyle"
-                />
+                android:checked="false" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -528,7 +528,7 @@
                 android:text="@string/payment_on_delivery"
                 android:layout_marginRight="15dp"
                 android:theme="@style/RadioButtonStyle"
-                />
+                android:checked="false" />
         </RadioGroup>
 
 </LinearLayout>

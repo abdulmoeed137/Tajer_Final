@@ -3,6 +3,7 @@ package tawseel.com.tajertawseel.adapters;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,12 +12,24 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.DeliveryGroupData;
 import tawseel.com.tajertawseel.activities.PostGroupData;
+import tawseel.com.tajertawseel.activities.PostGroupListData;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
 
 /**
@@ -28,11 +41,13 @@ public class PostGroupListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<PostGroupData>List;
-
+    private RequestQueue requestQueue;
+    ArrayList<PostGroupListData> list = new ArrayList<>();
 
     public PostGroupListAdapter (Context c   ,ArrayList<PostGroupData> list)
     {
         context = c;
+        requestQueue = Volley.newRequestQueue(context);
         inflater = LayoutInflater.from(c);
         List=list;
     }
@@ -67,13 +82,15 @@ public class PostGroupListAdapter extends BaseAdapter {
             holder.CustomerName = (TextView) convertView.findViewById(R.id.CustomerName);
             holder.CustomerEmail = (TextView) convertView.findViewById(R.id.Email);
             holder.CustomerPhone = (TextView) convertView.findViewById(R.id.Phone);
+            holder.OrderProductQuantity= (TextView)convertView.findViewById(R.id.OrderProductQuantity);
             convertView.setTag(holder);
 
          final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton);
         ExpandablePanel panel = (ExpandablePanel) convertView.findViewById(R.id.expandableLayout);
 
 
-    panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+            final View finalConvertView = convertView;
+            panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
         @Override
         public void onExpand(View handle, View content) {
             moreView.setText(content.getResources().getString(R.string.less));
@@ -82,9 +99,18 @@ public class PostGroupListAdapter extends BaseAdapter {
             holder.ItemsPrice = (TextView) content.findViewById(R.id.ItemsPrice);
            holder.PriceRangeText = (TextView) content.findViewById(R.id.PriceRange);
             holder.TotalPrice= (TextView) content.findViewById(R.id.TotalPrice);
+            holder.PayMethod= (TextView)content.findViewById(R.id.PaymentType) ;
             holder.ItemsPrice.setText(data.getItemsPrice());
             holder.PriceRangeText.setText(data.getPriceRange());
             holder.TotalPrice.setText(Integer.parseInt(data.getItemsPrice()) + (Integer.parseInt(data.getPriceRange())) + "");
+            if (data.getPayMethod().equals("1"))
+            {
+                holder.PayMethod.setText(R.string.wire_transfer);
+            }
+            else if (data.getPayMethod().equals("2"))
+            {
+                holder.PayMethod.setText(R.string.payment_on_delivery);
+            }
             if (data.getPriceRange().equals("20")) {
                 holder.PriceRangeIcon.setBackgroundResource(R.drawable.solid_green_circle);
                 holder.PriceRange2.setText(R.string.ryal_20);
@@ -99,6 +125,54 @@ public class PostGroupListAdapter extends BaseAdapter {
                 holder.PriceRangeIcon.setBackgroundResource(R.drawable.red_circle);
                 holder.PriceRange2.setText(R.string.ryal50);
             }
+            final ListView productsList = (ListView) finalConvertView.findViewById(R.id.product_list);
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/OrderDetails.php?id="+data.getOrderID(),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+
+                                JSONArray jsonArr=response.getJSONArray("info");
+
+                                for(int i=0;i<jsonArr.length();i++) {
+                                    final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                                    PostGroupListData item= new PostGroupListData();
+                                    item.setProductID(jsonObj.getString("ProductID"));
+                                    item.setDescription(jsonObj.getString("Description"));
+                                    item.setPrice(jsonObj.getString("Price"));
+                                    item.setProductName(jsonObj.getString("ProductName"));
+                                    item.setQuantity(jsonObj.getString("Quantity"));
+
+                                    list.add(item);
+                                }
+                                productsList.setAdapter(new ProductItemAdapter(context,list));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            };
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("Volley", "Error");
+                        }
+                    });
+
+            //dummy Adapter
+            // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+            requestQueue.add(jsonObjectRequest);
+
+            productsList.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
 
         }
 
@@ -113,25 +187,14 @@ public class PostGroupListAdapter extends BaseAdapter {
 
     //  CustomBoldTextView textView = (CustomBoldTextView) v.findViewById(R.id.start_delivery_button);
 
-    ListView productsList = (ListView) convertView.findViewById(R.id.product_list);
-    productsList.setAdapter(new ProductItemAdapter(context));
 
-
-    productsList.setOnTouchListener(new View.OnTouchListener() {
-        // Setting on Touch Listener for handling the touch inside ScrollView
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            // Disallow the touch request for parent scroll on touch of child view
-            v.getParent().requestDisallowInterceptTouchEvent(true);
-            return false;
-        }
-    });
         }
         else
             holder=(ViewHolder) convertView.getTag();
          holder.CustomerName.setText(data.getCustomerName());
         holder.CustomerEmail.setText(data.getCustomerEmail());
         holder.CustomerPhone.setText(data.getCustomerPhone());
+        holder.OrderProductQuantity.setText(data.getOrderProductQuantity());
 
          return convertView;
 

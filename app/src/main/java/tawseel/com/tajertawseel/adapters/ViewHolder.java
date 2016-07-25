@@ -10,6 +10,9 @@ public class ViewHolder {
      //DeliverGroupAdapter
      TextView name ,noOfOrders,btn,grpID,ItemPrice,PriceRange;
      //PostGroupAdapter
-     TextView PriceRange2,PayMethod,ItemsPrice,CustomerName,CustomerEmail,CustomerPhone,OrderID,PriceRangeText,TotalPrice;
+     TextView PriceRange2,PayMethod,ItemsPrice,CustomerName,CustomerEmail,CustomerPhone,OrderID,PriceRangeText,TotalPrice,OrderProductQuantity;
      View PriceRangeIcon;
+     //product GroupList
+
+     TextView Quantity ,ProductID ,ProductName, ProductPrice ,Description;
 }

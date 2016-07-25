@@ -78,7 +78,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
 
 
         ListView productsList = (ListView)v.findViewById(R.id.product_list);
-        productsList.setAdapter(new ProductItemAdapter(context));
+        productsList.setAdapter(new ProductItemAdapter(context,null));
 
 
         productsList.setOnTouchListener(new View.OnTouchListener() {

@@ -71,7 +71,8 @@ public class PostGroupActivity extends BaseActivity {
                                 item.setCustomerPhone(jsonObj.getString("Mobile"));
                                 item.setItemsPrice(jsonObj.getString("ItemsPrice"));
                                 item.setPayMethod(jsonObj.getString("PayMethod"));
-
+                                item.setOrderProductQuantity(jsonObj.getString("OrderMember"));
+                                item.setOrderID(jsonObj.getString("OrderID"));
 
                                 list.add(item);
                             }
