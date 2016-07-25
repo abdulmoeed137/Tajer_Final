@@ -90,7 +90,13 @@ public class PathRequest {
                     PolylineOptions pathLine  =     makeMarkerOptions(routes);
 //                    map.addPolyline(pathLine);
 //                    paths.addAll(pathLine.getPoints());
-                    map.addPolyline(pathLine);
+
+                    try{
+                    map.addPolyline(pathLine);}
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
 
                    // Log.d("Paths .size",""+paths.size());vvv
 

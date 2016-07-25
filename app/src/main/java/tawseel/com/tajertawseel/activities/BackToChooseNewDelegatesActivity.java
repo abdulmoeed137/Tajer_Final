@@ -17,6 +17,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_back_to_choose_delegates);
 
+        setUpToolbar();
     }
 
 
