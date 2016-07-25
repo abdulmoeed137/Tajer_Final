@@ -24,6 +24,7 @@ import tawseel.com.tajertawseel.R;
  * mm
  */
 public class LoginActivity extends BaseActivity {
+
     ProgressDialog progress;
     static String LoginID;
     EditText email_ET, pass_ET;

@@ -52,6 +52,7 @@ public class PickSetAdapter extends BaseAdapter {
         TextView gname=(TextView)v.findViewById(R.id.gname);
         TextView gorders=(TextView)v.findViewById(R.id.gorders);
         PickSet_data data=(PickSet_data) getItem(position);
+        v.setId(Integer.parseInt(data.getGid()));
         gid.setText(data.getGid());
         gname.setText(data.getGname());
         gorders.setText(data.getGmembers());

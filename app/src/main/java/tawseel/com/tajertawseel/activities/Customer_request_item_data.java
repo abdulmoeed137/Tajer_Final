@@ -43,6 +43,16 @@ public class Customer_request_item_data {
     private String number;
     private String email;
     private String no_of_items;
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
+    private String orderID;
 }
 
 

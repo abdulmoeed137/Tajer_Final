@@ -17,6 +17,7 @@ import tawseel.com.tajertawseel.activities.PostGroupListData;
  * Created by Junaid-Invision on 7/9/2016.
  */
 public class ProductItemAdapter extends BaseAdapter {
+
     ArrayList<PostGroupListData> List;
     private LayoutInflater inflater;
     private Context context;

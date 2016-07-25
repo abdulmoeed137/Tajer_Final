@@ -8,21 +8,21 @@ import java.util.ArrayList;
 
 public class ProductLayoutData {
 
-    public ArrayList<ProductData> getItems() {
+    public ArrayList<PostGroupListData> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<ProductData> items) {
+    public void setItems(ArrayList<PostGroupListData> items) {
         this.items = items;
         for (int i=0;i<items.size();i++)
-            total+=items.get(i).getPrice();
+            total+=Long.parseLong(items.get(i).getPrice());
     }
 
-    private ArrayList<ProductData> items;
+    private ArrayList<PostGroupListData> items;
 
     public ProductLayoutData()
     {
-        items=new ArrayList<ProductData>();
+        items=new ArrayList<PostGroupListData>();
     }
 
     public String getPay_method() {

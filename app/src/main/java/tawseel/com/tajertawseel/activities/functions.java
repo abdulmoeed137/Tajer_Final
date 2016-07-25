@@ -8,8 +8,8 @@ import android.widget.Toast;
  * Created by AbdulMoeed on 7/13/2016.
  */
 public class functions {
-    public static String add="http://192.168.0.100/ms/";
-  static public   boolean isPasswordTrue(String name,Context context)
+    public static String add="http://192.168.1.102:3000/tajer/";
+  static public boolean isPasswordTrue(String name,Context context)
     {
 
         if (name.isEmpty()) {
