@@ -45,8 +45,7 @@ public class CustomerRequestActivity extends BaseActivity {
     private static final String URL = functions.add+"orders.php";
     private StringRequest request;
     ArrayList<Customer_request_item_data> list=new ArrayList<Customer_request_item_data>();
-    ArrayList<ProductLayoutData> itemList=new ArrayList<ProductLayoutData>();
-    String temp="-1";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,49 +56,20 @@ public class CustomerRequestActivity extends BaseActivity {
                 try {
                     JSONObject mainobj=new JSONObject(response);
                     JSONArray jsonArr=mainobj.getJSONArray("info");
-                    int item=1;
-                    ArrayList<PostGroupListData> pdlist=new ArrayList<PostGroupListData>();
                     for (int i = 0; i < jsonArr.length(); i++) {
-
                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                        if(jsonObj.get("OrderID").toString().compareTo(temp)!=0)
-                        {
-                            temp=jsonObj.get("OrderID").toString();
-                            Customer_request_item_data data=new Customer_request_item_data();
-                            data.setOrderID(temp);
+                            Customer_request_item_data data = new Customer_request_item_data();
+                            data.setOrderID(jsonObj.getString("OrderID"));
                             data.setName(jsonObj.getString("UserName"));
                             data.setEmail(jsonObj.getString("Email"));
                             data.setNumber(jsonObj.getString("Mobile"));
+                            data.setNo_of_items(jsonObj.getString("Items"));
                             list.add(data);
-                            if(i!=0)
-                            {
-                                list.get(list.size()-1).setNo_of_items(String.valueOf(item));
-                                item=0;
-                                ProductLayoutData pld=new ProductLayoutData();
-                                pld.setItems(pdlist);
-                                pld.setPay_method(jsonObj.getString("PayMethod"));
-                                pld.setDelivery_charges(120);
-                                itemList.add(pld);
-                                pdlist.clear();
-                            }
-                        }
-                        else{
-                            item++;
-                            PostGroupListData sitem=new PostGroupListData();
-                            sitem.setProductID(jsonObj.getString("ProductID"));
-                            sitem.setQuantity(jsonObj.getString("Quantity"));
-                            sitem.setProductName(jsonObj.getString("Title"));
-                            sitem.setDescription(jsonObj.getString("Description"));
-                            sitem.setPrice((jsonObj.getString("Price")));
-                            pdlist.add(sitem);
-                        }
-
                     }
+                    oCount.setText(list.size());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }// in case error
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
@@ -143,53 +113,7 @@ public class CustomerRequestActivity extends BaseActivity {
     public void setUpComponents()
     {
         mListView = (ListView)findViewById(R.id.customer_request_listView);
-        Customer_request_item_data item=new Customer_request_item_data();
-        item.setOrderID("7");
-        item.setName("Monis");
-        item.setEmail("moni.com");
-        item.setNumber("34604445457");
-        Customer_request_item_data item1=new Customer_request_item_data();
-        item1.setOrderID("3");
-        item1.setName("Moid");
-        item1.setEmail("abc.com");
-        item1.setNumber("7600837657");
-        ProductLayoutData list1[]=new ProductLayoutData[2];
-        list1[0]=new ProductLayoutData();
-        list1[1]=new ProductLayoutData();
-        ArrayList<PostGroupListData> pdlist=new ArrayList<PostGroupListData>();
-        PostGroupListData pd=new PostGroupListData();
-        pd.setProductID("0");
-        pd.setProductName("HandsFree");
-        pd.setDescription("Best HandsFree");
-        pd.setPrice("500");
-        pd.setQuantity("1");
-        pdlist.add(pd);
-        list1[0].setItems(pdlist);
-        list1[0].setDelivery_charges(20);
-        list1[0].setPay_method("1");
-        ArrayList<PostGroupListData> pdlist1=new ArrayList<PostGroupListData>();
-        PostGroupListData pd1=new PostGroupListData();
-        pd1.setProductID("1");
-        pd1.setProductName("Mobile");
-        pd1.setQuantity("1");
-        pd1.setDescription("BEST Mobile");
-        pd1.setPrice("1000");
-        pdlist1.add(pd1);
-        PostGroupListData pd2=new PostGroupListData();
-        pd2.setProductID("1008");
-        pd2.setProductName("Charger");
-        pd2.setDescription("Best Charger");
-        pd2.setPrice("100");
-        pd2.setQuantity("4");
-        pdlist1.add(pd2);
-        list1[1].setItems(pdlist1);
-        list1[1].setDelivery_charges(40);
-        list1[1].setPay_method("2");
-        item1.setNo_of_items(String.valueOf(list1[0].getItems().size()));
-        item.setNo_of_items(String.valueOf(list1[1].getItems().size()));
-        list.add(item);
-        list.add(item1);
-        mListView.setAdapter(new CustomerRequestAdapter(this,list,list1));
+        mListView.setAdapter(new CustomerRequestAdapter(this,list));
         postRequestButton = (ImageView)findViewById(R.id.post_your_request_button);
         setUpListeners();
     }

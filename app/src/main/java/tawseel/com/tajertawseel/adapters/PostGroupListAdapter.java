@@ -55,7 +55,7 @@ public class PostGroupListAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
-    ArrayList<PostGroupData>List;
+    ArrayList<PostGroupData> List;
     private RequestQueue requestQueue;
     ArrayList<PostGroupListData> list = new ArrayList<>();
 
@@ -170,7 +170,6 @@ public class PostGroupListAdapter extends BaseAdapter {
                                     item.setPrice(jsonObj.getString("Price"));
                                     item.setProductName(jsonObj.getString("ProductName"));
                                     item.setQuantity(jsonObj.getString("Quantity"));
-
                                     list.add(item);
                                 }
                                 productsList.setAdapter(new ProductItemAdapter(context,list));

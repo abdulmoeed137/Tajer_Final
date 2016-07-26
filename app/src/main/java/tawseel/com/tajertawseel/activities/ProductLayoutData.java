@@ -45,6 +45,6 @@ public class ProductLayoutData {
         this.delivery_charges = delivery_charges;
     }
 
-    private String pay_method;
+    private String pay_method="";
     private long total,delivery_charges;
 }

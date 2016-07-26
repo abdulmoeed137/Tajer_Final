@@ -80,6 +80,7 @@ public class PickSetActivity extends BaseActivity {
                         data.setGmembers(jsonObj.getString("members"));
                         list.add(data);
                     }
+                    grp_count.setText(list.size());
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_SHORT).show();
                 }
@@ -115,7 +116,7 @@ public class PickSetActivity extends BaseActivity {
 
 
     public void setUpToolbar()
-    {
+    { 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("");
         TextView toolbarTitle = (TextView)findViewById(R.id.title_text);
@@ -129,14 +130,16 @@ public class PickSetActivity extends BaseActivity {
         request1 = new StringRequest(Request.Method.POST, URLupdate, new Response.Listener<String>() {
             public void onResponse(String resp) {
                 try {
-                    JSONObject response =new JSONObject(resp);
-                   if(response.getString("result")=="1")
-                       result=true;
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.names().get(0).equals("success"))
+                        result=true;
+                    else {
+                        Toast.makeText(PickSetActivity.this, jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                    }
+
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_SHORT).show();
                 }
-
-
             }// in case error
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
@@ -168,7 +171,6 @@ public class PickSetActivity extends BaseActivity {
     public void setUpComponents (){
         mListView = (ListView)findViewById(R.id.pickSetListView);
         grp_count=(TextView)findViewById(R.id.grp_count);
-        grp_count.setText(list.size()+"");
         mListView.setAdapter(new PickSetAdapter(this,list));
         demandButton = (CustomBoldTextView)findViewById(R.id.add_demand_basket);
         demandButton.setOnClickListener(new View.OnClickListener() {
