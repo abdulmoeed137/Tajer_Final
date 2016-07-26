@@ -89,7 +89,7 @@ ViewHolder holder ;
 
 
                Intent i = new Intent(context, WaitingForAcceptanceActivity.class);
-                i.putExtra("grpId",v.getTag()+"");
+                i.putExtra("GroupID",v.getTag()+"");
                 context.startActivity(i);
 
             }

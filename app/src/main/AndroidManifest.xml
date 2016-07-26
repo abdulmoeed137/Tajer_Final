@@ -55,6 +55,11 @@
             android:label="@string/title_activity_sample"
             android:theme="@style/AppTheme" >
         </activity>
+        <receiver android:name=".activities.DeligateRequest">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
