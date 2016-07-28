@@ -15,7 +15,7 @@ public class ProductLayoutData {
     public void setItems(ArrayList<PostGroupListData> items) {
         this.items = items;
         for (int i=0;i<items.size();i++)
-            total+=Long.parseLong(items.get(i).getPrice());
+            total+=Double.parseDouble(items.get(i).getPrice());
     }
 
     private ArrayList<PostGroupListData> items;
@@ -33,11 +33,11 @@ public class ProductLayoutData {
         this.pay_method = pay_method;
     }
 
-    public long getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public long getDelivery_charges() {
+    public double getDelivery_charges() {
         return delivery_charges;
     }
 
@@ -46,5 +46,5 @@ public class ProductLayoutData {
     }
 
     private String pay_method="";
-    private long total,delivery_charges;
+    private double total,delivery_charges;
 }

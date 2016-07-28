@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -35,6 +36,7 @@ import java.util.Map;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.adapters.CustomerRequestAdapter;
 import tawseel.com.tajertawseel.adapters.PickSetAdapter;
 
 /**
@@ -49,7 +51,7 @@ public class PickSetActivity extends BaseActivity {
     ListView mListView;
     CustomBoldTextView demandButton;
     TextView grp_count;
-    private RequestQueue requestQueue;
+    private RequestQueue requestQueue,requestQueue1;
     private static final String URL = functions.add+"groups.php";
     private static final String URLupdate = functions.add+"add_order_to_groups.php";
     private StringRequest request,request1;
@@ -62,56 +64,49 @@ public class PickSetActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_set);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             orderID = extras.getString("orderID");
         }
         requestQueue= Volley.newRequestQueue(this);
-        request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            public void onResponse(String response) {
-                try {
-                    JSONObject mainobj=new JSONObject(response);
-                    JSONArray jsonArr=mainobj.getJSONArray("info");
-                    for (int i = 0; i < jsonArr.length(); i++) {
-                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                        PickSet_data data=new PickSet_data();
-                        data.setGid(jsonObj.getString("GroupID"));
-                        data.setGname(jsonObj.getString("name"));
-                        data.setGmembers(jsonObj.getString("members"));
-                        list.add(data);
-                    }
-                    grp_count.setText(list.size());
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_SHORT).show();
-                }
-
-
-            }// in case error
-        }, new Response.ErrorListener() {
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            //send data to server using POST
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-
-                hashMap.put("id",HomeActivity.id);
-                hashMap.put("hash",HASH.getHash());
-                return hashMap;
-            }
-        };
-
-        try{
-            requestQueue.add(request);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(PickSetActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
-        }
         setUpToolbar();
         setUpComponents();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/groups.php?id="+HomeActivity.id+"&hash="+HASH.getHash(),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONArray jsonArr=response.getJSONArray("info");
+                           grp_count.setText(jsonArr.length()+"");
+                            for(int i=0;i<jsonArr.length();i++) {
+                                final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                                PickSet_data data=new PickSet_data();
+                                data.setGid(jsonObj.getString("GroupID"));
+                                data.setGname(jsonObj.getString("name"));
+                                data.setGmembers(jsonObj.getString("members"));
+                                list.add(data);
+
+                            }
+
+                            mListView.setAdapter(new PickSetAdapter(PickSetActivity.this,list));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        };
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                    }
+                });
+
+        //dummy Adapter
+        // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        requestQueue.add(jsonObjectRequest);
+
     }
 
 
@@ -126,52 +121,15 @@ public class PickSetActivity extends BaseActivity {
 
     private void addGroup()
     {
-        requestQueue= Volley.newRequestQueue(this);
-        request1 = new StringRequest(Request.Method.POST, URLupdate, new Response.Listener<String>() {
-            public void onResponse(String resp) {
-                try {
-                    JSONObject jsonObject = new JSONObject(resp);
-                    if (jsonObject.names().get(0).equals("success"))
-                        result=true;
-                    else {
-                        Toast.makeText(PickSetActivity.this, jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
-                    }
+        Toast.makeText(PickSetActivity.this,orderID+"--"+groupID+"",Toast.LENGTH_SHORT).show();
 
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }// in case error
-        }, new Response.ErrorListener() {
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            //send data to server using POST
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-
-                hashMap.put("orderID",orderID);
-                hashMap.put("grpID",groupID);
-                hashMap.put("hash",HASH.getHash());
-                return hashMap;
-            }
-        };
-
-        try{
-            requestQueue.add(request1);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(PickSetActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
-        }
     }
 
 
     public void setUpComponents (){
         mListView = (ListView)findViewById(R.id.pickSetListView);
         grp_count=(TextView)findViewById(R.id.grp_count);
-        mListView.setAdapter(new PickSetAdapter(this,list));
+
         demandButton = (CustomBoldTextView)findViewById(R.id.add_demand_basket);
         demandButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,30 +139,63 @@ public class PickSetActivity extends BaseActivity {
                     Toast.makeText(PickSetActivity.this,"Select a group first.",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                addGroup();
-                if(result) {
-                    final Dialog dialog = new Dialog(PickSetActivity.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    dialog.setContentView(R.layout.dialogue_layout);
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(dialog.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
-                    lp.dimAmount = 0.3f;
-                    dialog.show();
-                    result=false;
-                    groupID=null;
-                    for (int i=0;i<mListView.getCount();i++) {
-                        RelativeLayout container = (RelativeLayout) mListView.getChildAt(i).findViewById(R.id.container);
-                        container.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                    }
-                }
-                else
-                {
-                    Toast.makeText(PickSetActivity.this,"Cannot add order to the group.",Toast.LENGTH_SHORT).show();
-                }
+                requestQueue1= Volley.newRequestQueue(PickSetActivity.this);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/add_order_to_groups.php?orderID="+orderID+"&grpID="+groupID+"&hash="+HASH.getHash(),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+
+                                    JSONArray jsonArr=response.getJSONArray("info");
+                                    for(int i=0;i<jsonArr.length();i++) {
+                                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                                        Toast.makeText(PickSetActivity.this,jsonObj.getString("status")+"Nop",Toast.LENGTH_SHORT).show();
+
+                                        if (jsonObj.getString("status").equals("success")){
+                                            Toast.makeText(PickSetActivity.this,jsonObj.getString("status")+"Yes",Toast.LENGTH_SHORT).show();
+
+                                        final Dialog dialog = new Dialog(PickSetActivity.this);
+                                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                            dialog.setContentView(R.layout.dialogue_layout);
+                                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                            lp.copyFrom(dialog.getWindow().getAttributes());
+                                            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                            lp.gravity = Gravity.CENTER;
+                                            lp.dimAmount = 0.3f;
+                                            dialog.show();
+                                            groupID=null;
+
+                                         /*       for (int ij=0;ij<mListView.getCount();ij++) {
+                                                RelativeLayout container = (RelativeLayout) mListView.getChildAt(ij).findViewById(R.id.container);
+                                                container.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                            }
+                                             */
+                                        }
+                                        else {
+                                            Toast.makeText(PickSetActivity.this,"Cannot add order to the group.",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                };
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("Volley", "Error");
+                            }
+                        });
+
+                //dummy Adapter
+                // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+                requestQueue1.add(jsonObjectRequest);
+
+
+
             }
         });
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -214,7 +205,8 @@ public class PickSetActivity extends BaseActivity {
                 {
          RelativeLayout container = (RelativeLayout) view.findViewById(R.id.container);
          container.setBackgroundColor(Color.parseColor("#CCCCCC"));
-         groupID = view.getId() + "";
+                    groupID =  list.get(position).getGid()+"";
+                    Toast.makeText(PickSetActivity.this,position+"and ID : "+list.get(position).getGid(),Toast.LENGTH_SHORT).show();
                     itert=view;
                 }
                 else if(itert==view)
@@ -228,7 +220,9 @@ public class PickSetActivity extends BaseActivity {
                 {
                     RelativeLayout container = (RelativeLayout) view.findViewById(R.id.container);
                     container.setBackgroundColor(Color.parseColor("#CCCCCC"));
-                    groupID = view.getId() + "";
+                    groupID =  list.get(position).getGid()+"";
+                    Toast.makeText(PickSetActivity.this,position+"and ID : "+list.get(position).getGid(),Toast.LENGTH_SHORT).show();
+
                     RelativeLayout container1 = (RelativeLayout)itert.findViewById(R.id.container);
                     container1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     itert=view;

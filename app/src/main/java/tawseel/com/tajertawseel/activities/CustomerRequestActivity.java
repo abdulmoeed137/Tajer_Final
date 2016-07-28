@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -30,6 +31,7 @@ import java.util.Map;
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.adapters.CustomerRequestAdapter;
+import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
 
 /**
  * Created by Junaid-Invision on 7/3/2016.
@@ -50,53 +52,54 @@ public class CustomerRequestActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_request);
-        oCount=(TextView)findViewById(R.id.req_countText);
-        request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            public void onResponse(String response) {
-                try {
-                    JSONObject mainobj=new JSONObject(response);
-                    JSONArray jsonArr=mainobj.getJSONArray("info");
-                    for (int i = 0; i < jsonArr.length(); i++) {
-                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                            Customer_request_item_data data = new Customer_request_item_data();
-                            data.setOrderID(jsonObj.getString("OrderID"));
-                            data.setName(jsonObj.getString("UserName"));
-                            data.setEmail(jsonObj.getString("Email"));
-                            data.setNumber(jsonObj.getString("Mobile"));
-                            data.setNo_of_items(jsonObj.getString("Items"));
-                            list.add(data);
-                    }
-                    oCount.setText(list.size());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }// in case error
-        }, new Response.ErrorListener() {
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            //send data to server using POST
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-
-                hashMap.put("id",HomeActivity.id);
-                hashMap.put("hash",HASH.getHash());
-                return hashMap;
-            }
-        };
-
-        try{
-            requestQueue= Volley.newRequestQueue(CustomerRequestActivity.this);
-            requestQueue.add(request);}
-        catch (Exception e)
-        {
-            Toast.makeText(CustomerRequestActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
-        }
-
         setUpToolbar();
         setUpComponents();
+        requestQueue= Volley.newRequestQueue(this);
+        oCount=(TextView)findViewById(R.id.req_countText);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/orders.php?id="+HomeActivity.id+"&hash="+HASH.getHash(),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONArray jsonArr=response.getJSONArray("info");
+oCount.setText(jsonArr.length()+"");
+                            for(int i=0;i<jsonArr.length();i++) {
+                                final JSONObject jsonObj = jsonArr.getJSONObject(i);
+
+                                Customer_request_item_data item = new Customer_request_item_data();
+                                item.setPriceRange(jsonObj.getString("PriceRange"));
+                                item.setCustomerEmail(jsonObj.getString("Email"));
+                                item.setCustomerName(jsonObj.getString("UserName"));
+                                item.setCustomerPhone(jsonObj.getString("Mobile"));
+                                item.setItemsPrice(jsonObj.getString("ItemsPrice"));
+                                item.setPayMethod(jsonObj.getString("PayMethod"));
+                                item.setOrderProductQuantity(jsonObj.getString("OrderMember"));
+                                item.setOrderID(jsonObj.getString("OrderID"));
+                                item.setLatitude(jsonObj.getString("Latitude"));
+                                item.setLongitude(jsonObj.getString("Longitude"));
+                                item.setID(jsonObj.getString("ID"));
+                                list.add(item);
+
+                            }
+
+                            mListView.setAdapter(new CustomerRequestAdapter(CustomerRequestActivity.this,list));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        };
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                    }
+                });
+
+        //dummy Adapter
+        // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        requestQueue.add(jsonObjectRequest);
+
     }
 
     private void setUpToolbar ()
@@ -113,7 +116,6 @@ public class CustomerRequestActivity extends BaseActivity {
     public void setUpComponents()
     {
         mListView = (ListView)findViewById(R.id.customer_request_listView);
-        mListView.setAdapter(new CustomerRequestAdapter(this,list));
         postRequestButton = (ImageView)findViewById(R.id.post_your_request_button);
         setUpListeners();
     }

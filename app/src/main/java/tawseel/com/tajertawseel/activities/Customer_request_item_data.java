@@ -6,53 +6,95 @@ package tawseel.com.tajertawseel.activities;
 
 public class Customer_request_item_data {
 
-    private String name;
+    private String PriceRange,PayMethod,ItemsPrice,CustomerName,CustomerEmail,CustomerPhone,OrderID,OrderProductQuantity,Latitude,Longitude,ID;
 
-    public String getName() {
-        return name;
+    public String getPriceRange() {
+        return PriceRange;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPriceRange(String priceRange) {
+        PriceRange = priceRange;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPayMethod() {
+        return PayMethod;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setPayMethod(String payMethod) {
+        PayMethod = payMethod;
     }
 
-    public String getEmail() {
-        return email;
+    public String getItemsPrice() {
+        return ItemsPrice;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setItemsPrice(String itemsPrice) {
+        ItemsPrice = itemsPrice;
     }
 
-    public String getNo_of_items() {
-        return no_of_items;
+    public String getCustomerName() {
+        return CustomerName;
     }
 
-    public void setNo_of_items(String no_of_items) {
-        this.no_of_items = no_of_items;
+    public void setCustomerName(String customerName) {
+        CustomerName = customerName;
     }
 
-    private String number;
-    private String email;
-    private String no_of_items;
+    public String getCustomerEmail() {
+        return CustomerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        CustomerEmail = customerEmail;
+    }
+
+    public String getCustomerPhone() {
+        return CustomerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        CustomerPhone = customerPhone;
+    }
 
     public String getOrderID() {
-        return orderID;
+        return OrderID;
     }
 
     public void setOrderID(String orderID) {
-        this.orderID = orderID;
+        OrderID = orderID;
     }
 
-    private String orderID;
+    public String getOrderProductQuantity() {
+        return OrderProductQuantity;
+    }
+
+    public void setOrderProductQuantity(String orderProductQuantity) {
+        OrderProductQuantity = orderProductQuantity;
+    }
+
+    public String getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        Latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        Longitude = longitude;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }
 
 

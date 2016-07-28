@@ -2,11 +2,13 @@ package tawseel.com.tajertawseel.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -48,12 +51,16 @@ public class CustomerRequestAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<Customer_request_item_data> List;
+    ArrayList<PostGroupListData> list = new ArrayList<>();
+    private RequestQueue requestQueue;
 
     public CustomerRequestAdapter (Context c, ArrayList<Customer_request_item_data> list)
     {
         List=list;
+
         context = c;
         inflater = LayoutInflater.from(c);
+        requestQueue = Volley.newRequestQueue(context);
     }
 
 
@@ -74,115 +81,119 @@ public class CustomerRequestAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v  = inflater.inflate(R.layout.customer_request_item,null,false);
-        TextView name=(TextView)v.findViewById(R.id.co_name);
-        TextView number=(TextView)v.findViewById(R.id.co_number);
-        TextView email=(TextView)v.findViewById(R.id.co_email);
-        TextView items=(TextView)v.findViewById(R.id.co_nitems);
-        final TextView moreView = (TextView) v.findViewById(R.id.moreButton);
+
+        final  ViewHolder holder;
         final Customer_request_item_data data=(Customer_request_item_data)getItem(position);
-        name.setText(data.getName());
-        number.setText(data.getNumber());
-        email.setText(data.getEmail());
-        items.setText(data.getNo_of_items());
-        ExpandablePanel panel = (ExpandablePanel)v.findViewById(R.id.expandableLayout);
-        CustomBoldTextView textView = (CustomBoldTextView) v.findViewById(R.id.start_delivery_button);
-        final View forlist=v;
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView  = inflater.inflate(R.layout.customer_request_item,null,false);
+            holder.CustomerName=(TextView)convertView.findViewById(R.id.co_name);
+            holder.CustomerPhone=(TextView)convertView.findViewById(R.id.co_number);
+            holder.CustomerEmail=(TextView)convertView.findViewById(R.id.co_email);
+            holder.OrderProductQuantity=(TextView)convertView.findViewById(R.id.co_nitems);
+
+
+            convertView.setTag(holder);
+        }
+        else
+            holder=(ViewHolder) convertView.getTag();
+
+        final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton);
+
+        holder.CustomerName.setText(data.getCustomerName());
+        holder.CustomerPhone.setText(data.getCustomerPhone());
+        holder.CustomerEmail.setText(data.getCustomerEmail());
+        holder.OrderProductQuantity.setText(data.getOrderProductQuantity());
+        ExpandablePanel panel = (ExpandablePanel)convertView.findViewById(R.id.expandableLayout);
+        final CustomBoldTextView textView = (CustomBoldTextView) convertView.findViewById(R.id.start_delivery_button);
+        textView.setTag(data.getID()+"");
+        final View finalConvertView=convertView;
         panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             @Override
             public void onExpand(View handle, final View content) {
-                moreView.setText(content.getResources().getString(R.string.less));
-                final ProductLayoutData data1=new ProductLayoutData();
-                final ArrayList<PostGroupListData> items=new ArrayList<PostGroupListData>();
-                RequestQueue requestQueue;
-                StringRequest request = new StringRequest(Request.Method.POST, functions.add+"orderitems.php", new Response.Listener<String>() {
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject mainobj=new JSONObject(response);
-                            JSONArray jsonArr=mainobj.getJSONArray("info");
-                            data1.setDelivery_charges(Long.parseLong(jsonArr.getJSONObject(0).getString("PriceRange")));
-                            data1.setPay_method(jsonArr.getJSONObject(0).getString("PayMethod"));
-                            for (int i = 0; i < jsonArr.length(); i++) {
-                                final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                                PostGroupListData pgld=new PostGroupListData();
-                                pgld.setProductID(jsonObj.getString("ProductID"));
-                                pgld.setProductName(jsonObj.getString("Title"));
-                                pgld.setQuantity(jsonObj.getString("Quantity"));
-                                pgld.setDescription(jsonObj.getString("Description"));
-                                pgld.setPrice("Price");
-                                items.add(pgld);
-                            }
-                            data1.setItems(items);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }// in case error
-                }, new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-                    //send data to server using POST
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
 
-                        hashMap.put("orderid", data.getOrderID());
-                        hashMap.put("id",HomeActivity.id);
-                        hashMap.put("hash", HASH.getHash());
-                        return hashMap;
+                holder.PriceRangeIcon = (View) content.findViewById(R.id.PriceMark);
+                holder.PriceRange2 = (TextView) content.findViewById(R.id.riyalPrice);
+                holder.ItemsPrice = (TextView) content.findViewById(R.id.ItemsPrice);
+                holder.PriceRangeText = (TextView) content.findViewById(R.id.PriceRange);
+                holder.TotalPrice= (TextView) content.findViewById(R.id.TotalPrice);
+                holder.PayMethod= (TextView)content.findViewById(R.id.PaymentType) ;
+
+                holder.ItemsPrice.setText(data.getItemsPrice());
+                holder.PriceRangeText.setText(data.getPriceRange());
+                holder.TotalPrice.setText(Integer.parseInt(data.getItemsPrice()) + (Integer.parseInt(data.getPriceRange())) + "");
+                if (data.getPayMethod().equals("1"))
+                {
+                    holder.PayMethod.setText(R.string.wire_transfer);
+                }
+                else if (data.getPayMethod().equals("2"))
+                {
+                    holder.PayMethod.setText(R.string.payment_on_delivery);
+                }
+                if (data.getPriceRange().equals("20")) {
+                    holder.PriceRangeIcon.setBackgroundResource(R.drawable.solid_green_circle);
+                    holder.PriceRange2.setText(R.string.ryal_20);
+
+                } else if (data.getPriceRange().equals("30")) {
+                    holder.PriceRangeIcon.setBackgroundResource(R.drawable.orange_circle);
+                    holder.PriceRange2.setText(R.string.ryal30);
+                } else if (data.getPriceRange().equals("40")) {
+                    holder.PriceRangeIcon.setBackgroundResource(R.drawable.maroon_circle);
+                    holder.PriceRange2.setText(R.string.ryal40);
+                } else if (data.getPriceRange().equals("50")) {
+                    holder.PriceRangeIcon.setBackgroundResource(R.drawable.red_circle);
+                    holder.PriceRange2.setText(R.string.ryal50);
+                }
+
+                final ListView productsList = (ListView) finalConvertView.findViewById(R.id.product_list);
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/OrderDetails.php?id="+data.getID(),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+
+                                    JSONArray jsonArr=response.getJSONArray("info");
+
+                                    for(int i=0;i<jsonArr.length();i++) {
+                                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                                        PostGroupListData item= new PostGroupListData();
+                                        item.setProductID(jsonObj.getString("ProductID"));
+                                        item.setDescription(jsonObj.getString("Description"));
+                                        item.setPrice(jsonObj.getString("Price"));
+                                        item.setProductName(jsonObj.getString("ProductName"));
+                                        item.setQuantity(jsonObj.getString("Quantity"));
+                                        list.add(item);
+                                    }
+                                    productsList.setAdapter(new ProductItemAdapter(context,list));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                };
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("Volley", "Error");
+                            }
+                        });
+
+                //dummy Adapter
+                // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+                requestQueue.add(jsonObjectRequest);
+
+                productsList.setOnTouchListener(new View.OnTouchListener() {
+                    // Setting on Touch Listener for handling the touch inside ScrollView
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        // Disallow the touch request for parent scroll on touch of child view
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        return false;
                     }
-                };
-                try{
-                    requestQueue= Volley.newRequestQueue(context);
-                    requestQueue.add(request);
+                });
                 }
-                catch (Exception e)
-                {
-                    Toast.makeText(context,"Request Issue",Toast.LENGTH_SHORT).show();
-                }
-                    final ListView productsList = (ListView)forlist.findViewById(R.id.product_list);
-                    productsList.setAdapter(new ProductItemAdapter(context,data1.getItems()));
-                    productsList.setOnTouchListener(new View.OnTouchListener() {
-                        // Setting on Touch Listener for handling the touch inside ScrollView
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            // Disallow the touch request for parent scroll on touch of child view
-                            v.getParent().requestDisallowInterceptTouchEvent(true);
-                            return false;
-                        }
-                    });
-                View PriceRangeIcon=(View)content.findViewById(R.id.PriceMark);
-                TextView PriceRange2=(TextView)content.findViewById(R.id.riyalPrice);
-                TextView ItemsPrice=(TextView)content.findViewById(R.id.ItemsPrice);
-                TextView PriceRangeText=(TextView)content.findViewById(R.id.PriceRange);
-                TextView TotalPrice=(TextView)content.findViewById(R.id.TotalPrice);
-                TextView PayMethod=(TextView)content.findViewById(R.id.PaymentType);
-                ItemsPrice.setText(String.valueOf(data1.getTotal()));
-                PriceRangeText.setText(String.valueOf(data1.getDelivery_charges()));
-                TotalPrice.setText(String.valueOf(data1.getTotal() + data1.getDelivery_charges()));
-                if (data1.getPay_method().equals("1"))
-                {
-                    PayMethod.setText(R.string.wire_transfer);
-                }
-                else if (data1.getPay_method().equals("2"))
-                {
-                    PayMethod.setText(R.string.payment_on_delivery);
-                }
-                if (data1.getDelivery_charges()==20) {
-                    PriceRangeIcon.setBackgroundResource(R.drawable.solid_green_circle);
-                    PriceRange2.setText(R.string.ryal_20);
-                } else if (data1.getDelivery_charges()==30) {
-                    PriceRangeIcon.setBackgroundResource(R.drawable.orange_circle);
-                    PriceRange2.setText(R.string.ryal30);
-                } else if (data1.getDelivery_charges()==40) {
-                    PriceRangeIcon.setBackgroundResource(R.drawable.maroon_circle);
-                    PriceRange2.setText(R.string.ryal40);
-                } else if (data1.getDelivery_charges()==50) {
-                    PriceRangeIcon.setBackgroundResource(R.drawable.red_circle);
-                    PriceRange2.setText(R.string.ryal50);
-                }
-            }
+
             @Override
             public void onCollapse(View handle, View content) {
                 moreView.setText(content.getResources().getString(R.string.more));
@@ -192,10 +203,11 @@ public class CustomerRequestAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PickSetActivity.class);
-                intent.putExtra("orderID",data.getOrderID());
+                intent.putExtra("orderID",v.getTag()+"");
+                Toast.makeText(context,v.getTag()+"",Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
             }
         });
-        return v;
+        return convertView;
     }
    }
