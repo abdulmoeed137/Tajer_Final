@@ -55,7 +55,7 @@ public class CustomerRequestActivity extends BaseActivity {
         setUpToolbar();
         setUpComponents();
         requestQueue= Volley.newRequestQueue(this);
-        oCount=(TextView)findViewById(R.id.req_countText);
+        oCount=(TextView)findViewById(R.id.request_count);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/orders.php?id="+HomeActivity.id+"&hash="+HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
