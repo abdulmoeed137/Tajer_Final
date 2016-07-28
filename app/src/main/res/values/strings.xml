@@ -121,4 +121,13 @@
     <string name="choose_deligate">اختيار المندوب</string>
     <string name = "distance_and_time">المسافة و الوقت</string>
     <string name="back_to_choose_delegates">الرجوع لاختيار مندوب</string>
+    <string name="New">جديد</string>
+    <string name="new_application">طلب جديد</string>
+    <string name="new_group">مجموعة جديدة</string>
+    <string name="begin_to_deliver">البدء في توصيل</string>
+
+
+
+    <string name="application_jammah">الطلبات المجمة</string>
+    <string name="applications">طلبات</string>
 </resources>

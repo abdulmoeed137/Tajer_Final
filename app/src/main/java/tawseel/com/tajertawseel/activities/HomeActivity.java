@@ -1,6 +1,7 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,10 +16,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import tawseel.com.tajertawseel.R;
 
@@ -88,6 +89,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         mDrawerLayout.findViewById(R.id.option5).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option6).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option7).setOnClickListener(this);
+        findViewById(R.id.new_button).setOnClickListener(this);
 
     }
 
@@ -112,6 +114,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         } else if (v.getId() == R.id.option7) {
             Toast.makeText(HomeActivity.this, "Send us feedback at Tajer Tawseel", Toast.LENGTH_SHORT).show();
         }
+        else if(v.getId() == R.id.new_button)
+        {
+            showDialogue();
+        }
+
 
     }
 
@@ -146,5 +153,30 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         Toast.makeText(this, "Location is Off!", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 
+    }
+
+
+    public void showDialogue()
+    {
+        final Dialog dialog = new Dialog(HomeActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.new_button_dialogue);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.BOTTOM;
+        lp.dimAmount = 0.3f;
+        dialog.show();
+
+
+        dialog.findViewById(R.id.option3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,HomePickSetActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
