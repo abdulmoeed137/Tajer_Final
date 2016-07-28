@@ -5,12 +5,30 @@
     android:id="@+id/homeDrawer">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <include layout="@layout/home_toolbar"
+            android:id="@+id/toolbar"/>
 
-    </LinearLayout>
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:background="@color/mainColor"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/add_demand_for_basket"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/add_demand_basket"/>
+
+    </RelativeLayout>
 
 
 
