@@ -9,7 +9,7 @@ import android.widget.Toast;
  */
 public class functions {
     public static String add="http://192.168.0.100/ms/";
-    public static String RequestDeligateID;
+    public static String RequestDeligateID, AvailableDeligates;
   static public boolean isPasswordTrue(String name,Context context)
     {
 

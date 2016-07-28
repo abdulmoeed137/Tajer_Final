@@ -1,11 +1,22 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,18 +34,36 @@ import tawseel.com.tajertawseel.utils.PathRequest;
 /**
  * Created by Junaid-Invision on 7/20/2016.
  */
-public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCallback {
+public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCallback,LocationListener {
 
+    LocationManager locationManager;
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    LatLng origin;
     private GoogleMap mMap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_delegate);
+        TextView TextAvailableDeligates= (TextView)findViewById(R.id.TextAvailableDelegates);
+        TextView TextDeligateCarBrand= (TextView)findViewById(R.id.TextDeligateCarBrand);
+        TextView TextDeligateCarModel= (TextView)findViewById(R.id.TextDeligateCarModel);
+        TextView TextDeligateCarNumber= (TextView)findViewById(R.id.TextDeligateCarNumber);
+        TextView TextDeligateContact= (TextView)findViewById(R.id.TextDeligateContact);
+        TextView TextDeligateName= (TextView)findViewById(R.id.TextDeligateName);
+        TextAvailableDeligates.setText(functions.AvailableDeligates+"");
+        TextDeligateCarBrand.setText(getIntent().getExtras().getString("CarBrand")+"");
+        TextDeligateCarModel.setText(getIntent().getExtras().getString("CarModel")+"");
+        TextDeligateContact.setText(getIntent().getExtras().getString("Contact"));
+        TextDeligateName.setText(getIntent().getExtras().getString("Name"));
+        TextDeligateCarNumber.setText(getIntent().getExtras().getString("CarNo"));
         setUpToolbar();
         setupMap();
-
+        Toast.makeText(ChooseDelegateActivity.this,getIntent().getExtras().getString("DeligateID"),Toast.LENGTH_SHORT).show();
 
         LinearLayout moreButton_layout = (LinearLayout)findViewById(R.id.moreLayout);
         moreButton_layout.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +73,29 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
                 startActivity(i);
             }
         });
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Toast.makeText(ChooseDelegateActivity.this, "Location Permission Required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                this);
+        try {
+            origin = new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(), locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude());
+
+        } catch (Exception e) {
+
+            Toast.makeText(ChooseDelegateActivity.this, "No Old Location Saved", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -86,21 +138,21 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
 
 
         mMap = googleMap;
-        LatLng positionUpdate = new LatLng(24.9033f,67.0346f);
+        LatLng positionUpdate =origin;
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate,16);
         mMap.animateCamera(update);
 
 
-        float dLat = getIntent().getExtras().getFloat("destLat");
-        float dLng = getIntent().getExtras().getFloat("destLng");
+        double dLat = origin.latitude;
+        double  dLng = origin.longitude;
 
 
-        float lat = getIntent().getExtras().getFloat("lat");
-        float lng = getIntent().getExtras().getFloat("lng");
+        double lat = Double.parseDouble(getIntent().getExtras().getString("Latitude"));
+        double lng = Double.parseDouble(getIntent().getExtras().getString("Longitude"));
 
 
-        addMarker(dLat,dLng,"destination", R.drawable.destination_marker);
-        addMarker(lat,lng,"Car", R.drawable.car_marker);
+        addMarker(dLat,dLng,"Seller", R.drawable.destination_marker);
+        addMarker(lat,lng,"Deligate", R.drawable.car_marker);
 
 
         PathRequest request = new PathRequest();
@@ -109,4 +161,26 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
     }
 
 
+    @Override
+    public void onLocationChanged(Location location) {
+        origin = new LatLng(location.getLatitude(), location.getLongitude());
+
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(ChooseDelegateActivity.this, "Location is Off!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+    }
 }

@@ -149,10 +149,8 @@ public class PickSetActivity extends BaseActivity {
                                     JSONArray jsonArr=response.getJSONArray("info");
                                     for(int i=0;i<jsonArr.length();i++) {
                                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                                        Toast.makeText(PickSetActivity.this,jsonObj.getString("status")+"Nop",Toast.LENGTH_SHORT).show();
 
                                         if (jsonObj.getString("status").equals("success")){
-                                            Toast.makeText(PickSetActivity.this,jsonObj.getString("status")+"Yes",Toast.LENGTH_SHORT).show();
 
                                         final Dialog dialog = new Dialog(PickSetActivity.this);
                                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -221,7 +219,6 @@ public class PickSetActivity extends BaseActivity {
                     RelativeLayout container = (RelativeLayout) view.findViewById(R.id.container);
                     container.setBackgroundColor(Color.parseColor("#CCCCCC"));
                     groupID =  list.get(position).getGid()+"";
-                    Toast.makeText(PickSetActivity.this,position+"and ID : "+list.get(position).getGid(),Toast.LENGTH_SHORT).show();
 
                     RelativeLayout container1 = (RelativeLayout)itert.findViewById(R.id.container);
                     container1.setBackgroundColor(Color.parseColor("#FFFFFF"));

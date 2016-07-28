@@ -48,6 +48,13 @@ public class DeligateRequest extends BroadcastReceiver {
 
                                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                    it.putExtra("DeligateID", jsonObj.getString("status")+"");
+                                   it.putExtra("Name",jsonObj.getString("Name")+"");
+                                   it.putExtra("CarNo",jsonObj.getString("CarNo")+"");
+                                   it.putExtra("CarModel",jsonObj.getString("CarModel")+"");
+                                   it.putExtra("Latitude",jsonObj.getString("Latitude"));
+                                   it.putExtra("Longitude",jsonObj.getString("Longitude"));
+                                   it.putExtra("CarBrand",jsonObj.getString("CarBrand"));
+                                   it.putExtra("Contact",jsonObj.getString("Contact"));
                                    context.startActivity(it);
                                    WaitingForAcceptanceActivity.c.finish();
 

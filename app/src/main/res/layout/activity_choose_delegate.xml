@@ -37,7 +37,8 @@
             android:text="14"
             android:textColor="@color/mainColor"
             android:layout_marginRight="10dp"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:id="@+id/TextAvailableDelegates" />
 
 
         <tawseel.com.tajertawseel.CustomBoldTextView
@@ -124,7 +125,8 @@
                 android:layout_height="wrap_content"
                 android:text="Khalid Ahmed Ali"
                 android:textColor="@color/mainColor"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:id="@+id/TextDeligateName" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -146,7 +148,8 @@
                 android:layout_height="wrap_content"
                 android:text="Camery"
                 android:textColor="@color/mainColor"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:id="@+id/TextDeligateCarBrand" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -169,7 +172,8 @@
                 android:layout_height="wrap_content"
                 android:text="2016"
                 android:textColor="@color/mainColor"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:id="@+id/TextDeligateCarModel" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -191,7 +195,8 @@
                 android:layout_height="wrap_content"
                 android:text="ABF - 2541"
                 android:textColor="@color/mainColor"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:id="@+id/TextDeligateCarNumber" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -213,7 +218,8 @@
                     android:layout_height="wrap_content"
                     android:text="0550044536"
                     android:textColor="@color/mainColor"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/TextDeligateContact" />
 
 
                 <tawseel.com.tajertawseel.CustomBoldTextView

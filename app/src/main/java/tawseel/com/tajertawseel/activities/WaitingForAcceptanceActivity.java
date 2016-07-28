@@ -204,6 +204,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
                         try {
 
                             JSONArray jsonArr=response.getJSONArray("info");
+                            functions.AvailableDeligates=jsonArr.length()+"";
                             for(int i=0;i<jsonArr.length();i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
                                 addMarker(Double.parseDouble(jsonObj.getString("Latitude")),Double.parseDouble(jsonObj.getString("Longitude")), jsonObj.getString("Name"), R.drawable.car_marker);
