@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+
+
+    <tawseel.com.tajertawseel.CustomBoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:minWidth="280dp"
+
+
+        android:textColor="@color/mainColor"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+
+
+        android:id="@+id/product_title" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccc"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        />
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="right"
+        >
+
+
+
+
+
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainColor"
+            android:text="Quantity"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:textSize="16dp" />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="16dp"
+            android:textDirection="rtl"
+            android:theme="@style/EditTextStyle"
+            android:id="@+id/pquantity_et" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:text="Add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_newitem_button"
+        android:background="@color/mainColor"
+        android:textColor="@color/white"
+        />
+
+
+</LinearLayout>
