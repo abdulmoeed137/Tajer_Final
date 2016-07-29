@@ -45,7 +45,7 @@
             android:gravity="center_vertical|right"
             android:background="@drawable/rectangle"
 
-            >
+            android:id="@+id/tajer_lap_view">
 
 
 
@@ -149,7 +149,7 @@
             android:textSize="16dp"
             android:textDirection="rtl"
        android:theme="@style/EditTextStyle"
-            />
+            android:id="@+id/c_name" />
 
         <tawseel.com.tajertawseel.CustomBoldTextView
             android:layout_width="wrap_content"
@@ -168,7 +168,7 @@
             android:textSize="16dp"
             android:textDirection="rtl"
             android:theme="@style/EditTextStyle"
-          />
+            android:id="@+id/c_number" />
 
 
         <tawseel.com.tajertawseel.CustomBoldTextView
@@ -188,7 +188,8 @@
             android:textSize="16dp"
             android:textDirection="rtl"
             android:theme="@style/EditTextStyle"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:id="@+id/c_email" />
 
 
 
@@ -426,7 +427,8 @@
                     android:src="@drawable/plus_icon"
                     android:padding="4dp"
                     android:layout_marginLeft="4dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/add_item_imageview" />
 
             </LinearLayout>
 
@@ -508,7 +510,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="right">
+            android:gravity="right"
+            android:id="@+id/pay_method_radiogrp">
 
 
             <RadioButton
@@ -519,7 +522,8 @@
                 android:text="@string/wire_transfer"
                 android:layout_marginRight="15dp"
                 android:theme="@style/RadioButtonStyle"
-                android:checked="false" />
+                android:checked="false"
+                android:id="@+id/by_bank" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -528,7 +532,8 @@
                 android:text="@string/payment_on_delivery"
                 android:layout_marginRight="15dp"
                 android:theme="@style/RadioButtonStyle"
-                android:checked="false" />
+                android:checked="false"
+                android:id="@+id/cash" />
         </RadioGroup>
 
 </LinearLayout>
@@ -607,7 +612,8 @@
                 android:textColor="@color/mainColor"
                 android:text="820"
                 android:textSize="35dp"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:id="@+id/c_total" />
 
         </LinearLayout>
 
@@ -662,7 +668,8 @@
                 android:textColor="@color/mainColor"
                 android:text="800"
                 android:textSize="20dp"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:id="@+id/c_itemTotal" />
 
         </LinearLayout>
 
@@ -705,7 +712,8 @@
                 android:textColor="@color/mainColor"
                 android:text="20"
                 android:textSize="20dp"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:id="@+id/c_delivery_charges" />
 
         </LinearLayout>
 

@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainColor"
-                android:text="@string/customer_name"
+                android:text="Item Name"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:textSize="16dp" />
@@ -67,13 +67,13 @@
                 android:textSize="16dp"
                 android:textDirection="rtl"
                 android:theme="@style/EditTextStyle"
-                />
+                android:id="@+id/new_item_name_et" />
 
             <tawseel.com.tajertawseel.CustomBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainColor"
-                android:text="@string/product_price"
+                android:text="Item Price"
                 android:layout_marginRight="15dp"
                 android:textSize="16dp" />
 
@@ -86,7 +86,7 @@
                 android:textSize="16dp"
                 android:textDirection="rtl"
                 android:theme="@style/EditTextStyle"
-                />
+                android:id="@+id/new_item_price_et" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -118,8 +118,14 @@
 
         </LinearLayout>
 
-
-
+    <Button
+        android:text="Add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_item_to_list"
+        android:background="@color/mainColor"
+        android:textColor="@color/white"
+        />
 
 
 </LinearLayout>

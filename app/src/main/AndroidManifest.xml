@@ -27,6 +27,9 @@
         <activity android:name=".activities.CustomerRequestActivity" />
         <activity android:name=".activities.PickSetActivity" />
         <activity android:name=".activities.AddNewOrderActivity" />
+        <activity android:name=".activities.Tajer_Lap_Activity" />
+        <activity android:name=".activities.Old_Orders_Activity" />
+        <activity android:name=".activities.New_Orders_Activity" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

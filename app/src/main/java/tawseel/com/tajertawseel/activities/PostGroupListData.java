@@ -4,7 +4,7 @@ package tawseel.com.tajertawseel.activities;
  * Created by AbdulMoeed on 7/25/2016.
  */
 public class PostGroupListData {
-    private String Quantity ,ProductID ,ProductName, Price ,Description;
+    private String Quantity ="",ProductID="" ,ProductName="", Price="" ,Description="";
 
     public String getQuantity() {
         return Quantity;

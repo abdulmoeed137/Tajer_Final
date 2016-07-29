@@ -5,8 +5,8 @@ package tawseel.com.tajertawseel.activities;
  */
 
 public class PickSet_data {
-    private String gid;
-    private String gmembers;
+    private String gid="";
+    private String gmembers="";
 
     public String getGname() {
         return gname;
@@ -32,5 +32,5 @@ public class PickSet_data {
         this.gid = gid;
     }
 
-    private String gname;
+    private String gname="";
 }
