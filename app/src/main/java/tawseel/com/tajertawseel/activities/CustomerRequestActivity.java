@@ -128,7 +128,6 @@ oCount.setText(jsonArr.length()+"");
 
 
                 Intent i  = new Intent (CustomerRequestActivity.this, AddNewOrderActivity.class);
-
                 startActivity(i);
 
             }

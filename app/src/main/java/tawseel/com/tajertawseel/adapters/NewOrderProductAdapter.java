@@ -25,7 +25,7 @@ public class NewOrderProductAdapter extends BaseAdapter {
 
 
 
-  public   NewOrderProductAdapter(Context c,ArrayList<PostGroupListData> list)
+  public NewOrderProductAdapter(Context c,ArrayList<PostGroupListData> list)
   {
       List=list;
       context = c;

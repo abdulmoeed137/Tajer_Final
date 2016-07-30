@@ -98,108 +98,39 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     LatLng origin;
-    EditText name,email,mobile;
+   public static EditText name,email,mobile;
     RadioGroup payment_method;
-    TextView total,item_total,delivery;
+    public static TextView total,item_total,delivery;
     TextView cancel,save,continue_b;
     private RequestQueue requestQueue;
-      int pmi=0;
-     RadioButton bank,cash;
-    ProductLayoutData pld=new ProductLayoutData();
-    ArrayList<PostGroupListData> items=new ArrayList<PostGroupListData>();
+      public static int pmi=0;
+    public static RadioButton bank,cash;
+
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_order);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            productsList = (ListView) findViewById(R.id.product_list);
-            bank=(RadioButton)findViewById(R.id.by_bank);
-            cash=(RadioButton)findViewById(R.id.cash);
+        productsList = (ListView) findViewById(R.id.product_list);
+        bank=(RadioButton)findViewById(R.id.by_bank);
+        cash=(RadioButton)findViewById(R.id.cash);
 
-            name=(EditText)findViewById(R.id.c_name);
-            email=(EditText)findViewById(R.id.c_email);
-            mobile=(EditText)findViewById(R.id.c_number);
+        name=(EditText)findViewById(R.id.c_name);
+        email=(EditText)findViewById(R.id.c_email);
+        mobile=(EditText)findViewById(R.id.c_number);
 
-            payment_method=(RadioGroup)findViewById(R.id.pay_method_radiogrp);
+        payment_method=(RadioGroup)findViewById(R.id.pay_method_radiogrp);
 
-            total=(TextView)findViewById(R.id.c_total);
-            item_total=(TextView)findViewById(R.id.c_itemTotal);
-            delivery=(TextView)findViewById(R.id.c_delivery_charges);
+        total=(TextView)findViewById(R.id.c_total);
+        item_total=(TextView)findViewById(R.id.c_itemTotal);
+        delivery=(TextView)findViewById(R.id.c_delivery_charges);
 
-            cancel=(TextView)findViewById(R.id.cancel_button);
-            save=(TextView)findViewById(R.id.protection_button);
-            continue_b=(TextView)findViewById(R.id.continue_button);
-            final String orderID = extras.getString("oid");
-            final String cname=extras.getString("name");
-            final String cemail=extras.getString("email");
-            final String cmobile=extras.getString("mobile");
-            RequestQueue requestQueue;
-            StringRequest request = new StringRequest(Request.Method.POST, functions.add+"orderitems.php", new Response.Listener<String>() {
-                public void onResponse(String response) {
-                    try {
-                        JSONObject mainobj=new JSONObject(response);
-                        JSONArray jsonArr=mainobj.getJSONArray("info");
-                        pld.setDelivery_charges(Long.parseLong(jsonArr.getJSONObject(0).getString("PriceRange")));
-                        pld.setPay_method(jsonArr.getJSONObject(0).getString("PayMethod"));
-                        for (int i = 0; i < jsonArr.length(); i++) {
-                            final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                            PostGroupListData pgld=new PostGroupListData();
-                            pgld.setProductID(jsonObj.getString("ProductID"));
-                            pgld.setProductName(jsonObj.getString("Title"));
-                            pgld.setQuantity(jsonObj.getString("Quantity"));
-                            pgld.setDescription(jsonObj.getString("Description"));
-                            pgld.setPrice("Price");
-                            items.add(pgld);
-                        }
-                        pld.setItems(items);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }// in case error
-            }, new Response.ErrorListener() {
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(AddNewOrderActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
-                //send data to server using POST
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    HashMap<String, String> hashMap = new HashMap<String, String>();
+        cancel=(TextView)findViewById(R.id.cancel_button);
+        save=(TextView)findViewById(R.id.protection_button);
+        continue_b=(TextView)findViewById(R.id.continue_button);
 
-                    hashMap.put("orderid", orderID);
-                    hashMap.put("id",HomeActivity.id);
-                    hashMap.put("hash", HASH.getHash());
-                    return hashMap;
-                }
-            };
-            try{
-                requestQueue= Volley.newRequestQueue(AddNewOrderActivity.this);
-                requestQueue.add(request);
-            }
-            catch (Exception e)
-            {
-                Toast.makeText(AddNewOrderActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
-            }
-            name.setText(cname);
-            email.setText(cemail);
-            mobile.setText(cmobile);
-            delivery.setText(String.valueOf(pld.getDelivery_charges()));
-            New_Orders_Activity.pList.clear();
-            New_Orders_Activity.pList = pld.getItems();
-            AddNewOrderActivity.productsList.setAdapter(new NewOrderProductAdapter(AddNewOrderActivity.context, New_Orders_Activity.pList));
-            if (pld.getPay_method().compareTo("1") == 0) {
-                bank.setChecked(true);
-                pmi = 1;
-            } else {
-                cash.setChecked(true);
-                pmi = 2;
-            }
-            item_total.setText(String.valueOf(pld.getTotal()));
-            total.setText(String.valueOf(pld.getTotal() + pld.getDelivery_charges()));
-        }
+        context=this;
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -251,8 +182,9 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
 
+
     public void setUpComponents() {
-      //  productsList.setAdapter(new NewOrderProductAdapter(this,New_Orders_Activity.pList));
+       // productsList.setAdapter(new NewOrderProductAdapter(this,New_Orders_Activity.pList));
         postnewLayout = (LinearLayout) findViewById(R.id.post_your_new_product_container);
         productsList.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
@@ -268,7 +200,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         for(int t=0;t<New_Orders_Activity.pList.size();t++)
             itotal+=Double.parseDouble(New_Orders_Activity.pList.get(t).getPrice());
         item_total.setText(String.valueOf(itotal));
-        total.setText(String.valueOf(itotal+Integer.parseInt(delivery.getText().toString())));
+        total.setText(String.valueOf(itotal+Double.parseDouble(delivery.getText().toString())));
 
         payment_method.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -276,7 +208,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 if(bank.isChecked())
                 {
                     item_total.setText("0");
-                    total.setText(String.valueOf(Integer.parseInt(item_total.getText().toString())+Integer.parseInt(delivery.getText().toString())));
+                    total.setText(String.valueOf(Double.parseDouble(item_total.getText().toString())+Double.parseDouble(delivery.getText().toString())));
                 pmi=1;
                 }
                 else
@@ -295,7 +227,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     {
                         Toast.makeText(AddNewOrderActivity.this,e.toString(),Toast.LENGTH_SHORT).show();
                     }
-                    total.setText(String.valueOf(itotal+Integer.parseInt(delivery.getText().toString())));
+                    total.setText(String.valueOf(itotal+Double.parseDouble(delivery.getText().toString())));
                     pmi=2;
                 }
 
@@ -314,7 +246,6 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
 
-
                 if(pmi==0||name.getText().toString().compareTo("")==0||email.getText().toString().compareTo("")==0||mobile.getText().toString().compareTo("")==0)
                 {
                     Toast.makeText(AddNewOrderActivity.this,"Complete all fields",Toast.LENGTH_SHORT).show();
@@ -325,7 +256,10 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     Toast.makeText(AddNewOrderActivity.this,"Add at least one item to the order",Toast.LENGTH_SHORT).show();
                     return;
                 }
-               StringRequest request = new StringRequest(Request.Method.POST,functions.add+"addorder.php", new Response.Listener<String>() {
+                String item_ids="";
+                for(int t=0;t<New_Orders_Activity.pList.size();t++)
+                    item_ids+=(New_Orders_Activity.pList.get(t).getProductID()+"-"+New_Orders_Activity.pList.get(t).getQuantity()+" ");
+               StringRequest request = new StringRequest(Request.Method.POST,functions.add+"addorder.php?itemlist="+item_ids, new Response.Listener<String>() {
                     public void onResponse(String response) {
                         try {
                           if(response!="-1")
@@ -357,10 +291,6 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         hashMap.put("name",name.getText().toString());
                         hashMap.put("email",email.getText().toString());
                         hashMap.put("number",mobile.getText().toString());
-                        String item_ids="";
-                        for(int t=0;t<New_Orders_Activity.pList.size();t++)
-                            item_ids+=(New_Orders_Activity.pList.get(t).getProductID()+"-"+New_Orders_Activity.pList.get(t).getQuantity()+" ");
-                        hashMap.put("itemlist",item_ids);
                         return hashMap;
                     }
                 };
@@ -389,11 +319,14 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     Toast.makeText(AddNewOrderActivity.this,"Add at least one item to the order",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String item_ids="";
+                for(int t=0;t<New_Orders_Activity.pList.size();t++)
+                    item_ids+=(New_Orders_Activity.pList.get(t).getProductID()+"-"+New_Orders_Activity.pList.get(t).getQuantity()+" ");
                 String curl="";
                 if(oldid!=-1)
                     curl+=functions.add+"changes_order_status.php";
                 else
-                curl+=functions.add+"addorder.php";
+                curl+=functions.add+"addorder.php?itemlist="+item_ids;
 
                 StringRequest request = new StringRequest(Request.Method.POST,curl, new Response.Listener<String>() {
                     public void onResponse(String response) {
@@ -431,10 +364,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         hashMap.put("name",name.getText().toString());
                         hashMap.put("email",email.getText().toString());
                         hashMap.put("number",mobile.getText().toString());
-                        String item_ids="";
-                        for(int t=0;t<New_Orders_Activity.pList.size();t++)
-                            item_ids+=(New_Orders_Activity.pList.get(t).getProductID()+"-"+New_Orders_Activity.pList.get(t).getQuantity()+" ");
-                        hashMap.put("itemlist",item_ids);}
+                       }
                         else
                         {
                             hashMap.put("id",HomeActivity.id);
@@ -534,13 +464,6 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         {
                             Toast.makeText(AddNewOrderActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
                         }
-/*PostGroupListData temp=new PostGroupListData();
-                        temp.setProductID(pid);
-                        temp.setProductName(newitem_name.getText().toString());
-                        temp.setDescription(newitem_name.getText().toString());
-                        temp.setQuantity("1");
-                        temp.setPrice(newitem_price.getText().toString());
-New_Orders_Activity.pList.add(temp);*/
                         dialog.dismiss();
                     }
                 });

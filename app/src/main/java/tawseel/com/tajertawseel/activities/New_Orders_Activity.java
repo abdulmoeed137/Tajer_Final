@@ -55,7 +55,7 @@ public class New_Orders_Activity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_orders_lab);
-Toast.makeText(this,String.valueOf(pList.size()),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,String.valueOf(pList.size()),Toast.LENGTH_SHORT).show();
         productList=(ScrollView)findViewById(R.id.nscrollView);
         add=(Button)findViewById(R.id.add_item_button);
         finishb=(Button)findViewById(R.id.finish_button);
