@@ -132,4 +132,11 @@
     <string name="applications">طلبات</string>
     <string name="march">مارس</string>
     <string name="khalid_ahmed_al">Khalid Ahmed Al...</string>
+    <string name="number_delegates_question">عدد المندوبين المفضلين</string>
+    <string name="coupling">توصيلات</string>
+    <string name="representative_data">بيانات المندوب</string>
+    <string name="contact_number">رقم التواصل</string>
+    <string name="last_connection_was_on">آخر توصيلة كانت بتاريخ</string>
+
+    <string name="connecting_profile_delegates">بروفايل مندوب توصيل</string>
 </resources>
