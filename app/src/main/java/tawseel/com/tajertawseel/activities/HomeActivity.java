@@ -104,7 +104,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             Intent i = new Intent(HomeActivity.this, DeliveryGroupActivity.class);
             startActivity(i);
         } else if (v.getId() == R.id.option3) {
-            Toast.makeText(HomeActivity.this, "Option3", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent (HomeActivity.this,DateOfConnectionsActivity.class);
+            startActivity(intent);
         } else if (v.getId() == R.id.option4) {
             Toast.makeText(HomeActivity.this, "Option4", Toast.LENGTH_SHORT).show();
         } else if (v.getId() == R.id.option5) {
