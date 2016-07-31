@@ -45,6 +45,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdate;
@@ -55,6 +56,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -328,19 +330,22 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 else
                 curl+=functions.add+"addorder.php?itemlist="+item_ids;
 
-                StringRequest request = new StringRequest(Request.Method.POST,curl, new Response.Listener<String>() {
-                    public void onResponse(String response) {
+                JsonObjectRequest request =new JsonObjectRequest(Request.Method.POST,curl, new Response.Listener<JSONObject>() {
+                    public void onResponse(JSONObject response) {
                         try {
-                            if(response!="-1")
-                            {
+
+                            JSONArray jsonArr=response.getJSONArray("info");
+
+                                final JSONObject jsonObj = jsonArr.getJSONObject(0);
+
                                 if(oldid!=-1)
                                     oldid=-1;
                                 New_Orders_Activity.pList.clear();
-                                Toast.makeText(AddNewOrderActivity.this,"Order Confirmed "+response,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddNewOrderActivity.this,"Order Confirmed "+jsonObj.getString("success"),Toast.LENGTH_SHORT).show();
                                 Intent i=new Intent(AddNewOrderActivity.this,PickSetActivity.class);
-                                i.putExtra("orderID",response);
-                                startActivity(i);
-                            }
+                             //   i.putExtra("orderID",response.getString(""));
+                               // startActivity(i);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -434,6 +439,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                     if(response!="-1")
                                     {
                                         pid=response;
+
                                         Toast.makeText(AddNewOrderActivity.this,"Product saved",Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {

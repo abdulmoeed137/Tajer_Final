@@ -65,10 +65,12 @@ public class PickSetActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_set);
 
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             orderID = extras.getString("orderID");
         }
+        Toast.makeText(PickSetActivity.this , orderID,Toast.LENGTH_SHORT).show();
         requestQueue= Volley.newRequestQueue(this);
         setUpToolbar();
         setUpComponents();

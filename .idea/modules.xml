@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Tajer_Final.iml" filepath="$PROJECT_DIR$/Tajer_Final.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tajer_Final2.iml" filepath="$PROJECT_DIR$/Tajer_Final2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tajer_FinalFinal.iml" filepath="$PROJECT_DIR$/Tajer_FinalFinal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
