@@ -45,7 +45,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdate;
@@ -56,7 +55,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -219,7 +217,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     double itotal=0.0;
                     try {
                         for (int t = 0; t < New_Orders_Activity.pList.size(); t++)
-                        { Toast.makeText(AddNewOrderActivity.this,New_Orders_Activity.pList.get(t).getPrice(),Toast.LENGTH_SHORT).show();
+                        {
                             itotal+=Double.parseDouble(New_Orders_Activity.pList.get(t).getPrice());
                         }
 
@@ -239,6 +237,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                New_Orders_Activity.pList.clear();
                 Intent i=new Intent(AddNewOrderActivity.this,CustomerRequestActivity.class);
                 startActivity(i);
             }
@@ -264,10 +263,13 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                StringRequest request = new StringRequest(Request.Method.POST,functions.add+"addorder.php?itemlist="+item_ids, new Response.Listener<String>() {
                     public void onResponse(String response) {
                         try {
-                          if(response!="-1")
-                          {
+                            JSONObject mainObj=new JSONObject(response);
+                            JSONArray arr=mainObj.getJSONArray("info");
+                            Toast.makeText(AddNewOrderActivity.this,arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
+                            if(arr.getJSONObject(0).getString("OrderID").compareTo("-1")!=0)
+                            {
                               New_Orders_Activity.pList.clear();
-                              Toast.makeText(AddNewOrderActivity.this,"Order saved "+response,Toast.LENGTH_SHORT).show();
+                              Toast.makeText(AddNewOrderActivity.this,"Order saved "+arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
                               Intent i=new Intent(AddNewOrderActivity.this,AddNewOrderActivity.class);
                               startActivity(i);
                           }
@@ -330,22 +332,22 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 else
                 curl+=functions.add+"addorder.php?itemlist="+item_ids;
 
-                JsonObjectRequest request =new JsonObjectRequest(Request.Method.POST,curl, new Response.Listener<JSONObject>() {
-                    public void onResponse(JSONObject response) {
+                StringRequest request = new StringRequest(Request.Method.POST,curl, new Response.Listener<String>() {
+                    public void onResponse(String response) {
                         try {
-
-                            JSONArray jsonArr=response.getJSONArray("info");
-
-                                final JSONObject jsonObj = jsonArr.getJSONObject(0);
-
+                            JSONObject mainObj=new JSONObject(response);
+                            JSONArray arr=mainObj.getJSONArray("info");
+                            Toast.makeText(AddNewOrderActivity.this,arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
+                            if(arr.getJSONObject(0).getString("OrderID").compareTo("-1")!=0)
+                            {
                                 if(oldid!=-1)
                                     oldid=-1;
                                 New_Orders_Activity.pList.clear();
-                                Toast.makeText(AddNewOrderActivity.this,"Order Confirmed "+jsonObj.getString("success"),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddNewOrderActivity.this,"Order Confirmed "+arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
                                 Intent i=new Intent(AddNewOrderActivity.this,PickSetActivity.class);
-                             //   i.putExtra("orderID",response.getString(""));
-                               // startActivity(i);
-
+                                i.putExtra("orderID",arr.getJSONObject(0).getString("OrderID"));
+                                startActivity(i);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -439,7 +441,6 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                     if(response!="-1")
                                     {
                                         pid=response;
-
                                         Toast.makeText(AddNewOrderActivity.this,"Product saved",Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {

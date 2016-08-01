@@ -38,6 +38,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
  *
  * Edited by M Monis on 7/21/2016
  */
+
 public class CustomerRequestActivity extends BaseActivity {
 
     ListView mListView;
@@ -63,7 +64,7 @@ public class CustomerRequestActivity extends BaseActivity {
                         try {
 
                             JSONArray jsonArr=response.getJSONArray("info");
-oCount.setText(jsonArr.length()+"");
+                            oCount.setText(jsonArr.length()+"");
                             for(int i=0;i<jsonArr.length();i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
 
@@ -72,6 +73,7 @@ oCount.setText(jsonArr.length()+"");
                                 item.setCustomerEmail(jsonObj.getString("Email"));
                                 item.setCustomerName(jsonObj.getString("UserName"));
                                 item.setCustomerPhone(jsonObj.getString("Mobile"));
+
                                 item.setItemsPrice(jsonObj.getString("ItemsPrice"));
                                 item.setPayMethod(jsonObj.getString("PayMethod"));
                                 item.setOrderProductQuantity(jsonObj.getString("OrderMember"));

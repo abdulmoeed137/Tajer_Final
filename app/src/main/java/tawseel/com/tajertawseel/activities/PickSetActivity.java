@@ -124,7 +124,6 @@ public class PickSetActivity extends BaseActivity {
     private void addGroup()
     {
         Toast.makeText(PickSetActivity.this,orderID+"--"+groupID+"",Toast.LENGTH_SHORT).show();
-
     }
 
 

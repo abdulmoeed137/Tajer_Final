@@ -24,7 +24,7 @@ public class ConnectingProfileDelegates extends BaseActivity {
     {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
      TextView title = (CustomBoldTextView)toolbar.findViewById(R.id.title_text);
-        title.setText(getString(R.string.connecting_profile_delegates));
+       // title.setText(getString(R.string.connecting_profile_delegates));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

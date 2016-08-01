@@ -136,8 +136,8 @@ public class Old_Orders_Activity extends  BaseActivity {
                 try {
                     JSONObject mainobj = new JSONObject(response);
                     JSONArray jsonArr = mainobj.getJSONArray("info");
-                    pld.setDelivery_charges(Long.parseLong(jsonArr.getJSONObject(0).getString("PriceRange")));
                     pld.setPay_method(jsonArr.getJSONObject(0).getString("PayMethod"));
+                    AddNewOrderActivity.delivery.setText(jsonArr.getJSONObject(0).getString("PriceRange"));
                     for (int i = 0; i < jsonArr.length(); i++) {
                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
                         PostGroupListData pgld = new PostGroupListData();
@@ -153,7 +153,6 @@ public class Old_Orders_Activity extends  BaseActivity {
                         New_Orders_Activity.pList.add(items.get(c));
                     ProductItemAdapter adapter=new ProductItemAdapter(AddNewOrderActivity.context,New_Orders_Activity.pList);
                     AddNewOrderActivity.productsList.setAdapter(adapter);
-                    pld.setItems(items);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -179,19 +178,10 @@ public class Old_Orders_Activity extends  BaseActivity {
         } catch (Exception e) {
             Toast.makeText(Old_Orders_Activity.this, "Request Issue", Toast.LENGTH_SHORT).show();
         }
-
             AddNewOrderActivity.oldid=Integer.parseInt(clist.get(index).getOrderID());
             AddNewOrderActivity.name.setText(clist.get(index).getCustomerName());
             AddNewOrderActivity.email.setText(clist.get(index).getCustomerEmail());
             AddNewOrderActivity.mobile.setText(clist.get(index).getCustomerPhone());
-            AddNewOrderActivity.delivery.setText(String.valueOf(pld.getDelivery_charges()).toString());
-
-
-
-
-
-            AddNewOrderActivity.item_total.setText(pld.getTotal()+"");
-            AddNewOrderActivity.total.setText((pld.getTotal() + pld.getDelivery_charges())+"");
             finish();
     }
 }
