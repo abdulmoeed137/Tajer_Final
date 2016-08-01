@@ -44,17 +44,23 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     LatLng origin;
     private GoogleMap mMap;
+    double dLat ;
+    double  dLng ;
+
+
+    double lat ;
+    double lng ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_delegate);
         TextView TextAvailableDeligates= (TextView)findViewById(R.id.TextAvailableDelegates);
-        TextView TextDeligateCarBrand= (TextView)findViewById(R.id.TextDeligateCarBrand);
-        TextView TextDeligateCarModel= (TextView)findViewById(R.id.TextDeligateCarModel);
-        TextView TextDeligateCarNumber= (TextView)findViewById(R.id.TextDeligateCarNumber);
-        TextView TextDeligateContact= (TextView)findViewById(R.id.TextDeligateContact);
-        TextView TextDeligateName= (TextView)findViewById(R.id.TextDeligateName);
+        final TextView TextDeligateCarBrand= (TextView)findViewById(R.id.TextDeligateCarBrand);
+        final TextView TextDeligateCarModel= (TextView)findViewById(R.id.TextDeligateCarModel);
+        final TextView TextDeligateCarNumber= (TextView)findViewById(R.id.TextDeligateCarNumber);
+        final TextView TextDeligateContact= (TextView)findViewById(R.id.TextDeligateContact);
+        final TextView TextDeligateName= (TextView)findViewById(R.id.TextDeligateName);
         TextAvailableDeligates.setText(functions.AvailableDeligates+"");
         TextDeligateCarBrand.setText(getIntent().getExtras().getString("CarBrand")+"");
         TextDeligateCarModel.setText(getIntent().getExtras().getString("CarModel")+"");
@@ -70,6 +76,9 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
             @Override
             public void onClick(View v) {
                 Intent i  = new Intent (ChooseDelegateActivity.this,BackToChooseNewDelegatesActivity.class);
+                i.putExtra("dLat",dLat);i.putExtra("dLng",dLng);i.putExtra("lat",lat);i.putExtra("lng",lng);
+                i.putExtra("CarBrand",TextDeligateCarBrand.getText().toString());i.putExtra("CarModel",TextDeligateCarModel.getText().toString());i.putExtra("CarNo",TextDeligateCarNumber.getText().toString());i.putExtra("DeligateContact",TextDeligateContact.getText().toString());
+               i.putExtra("DeligateName",TextDeligateName.getText().toString());
                 startActivity(i);
             }
         });
@@ -143,12 +152,12 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
         mMap.animateCamera(update);
 
 
-        double dLat = origin.latitude;
-        double  dLng = origin.longitude;
+    dLat = origin.latitude;
+       dLng = origin.longitude;
 
 
-        double lat = Double.parseDouble(getIntent().getExtras().getString("Latitude"));
-        double lng = Double.parseDouble(getIntent().getExtras().getString("Longitude"));
+        lat = Double.parseDouble(getIntent().getExtras().getString("Latitude"));
+        lng = Double.parseDouble(getIntent().getExtras().getString("Longitude"));
 
 
         addMarker(dLat,dLng,"Seller", R.drawable.destination_marker);

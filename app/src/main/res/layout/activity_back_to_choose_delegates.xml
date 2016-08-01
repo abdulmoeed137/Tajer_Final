@@ -70,7 +70,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/mainColor"
-                    android:text="30 km"/>
+                    android:text="30 km"
+                    android:id="@+id/Distance" />
             </LinearLayout>
 
 
@@ -155,7 +156,8 @@
                         android:layout_height="wrap_content"
                         android:text="Khalid Ahmed Ali"
                         android:textColor="@color/mainColor"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/DeligateName" />
 
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
@@ -177,7 +179,8 @@
                         android:layout_height="wrap_content"
                         android:text="Camery"
                         android:textColor="@color/mainColor"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/CarBrand" />
 
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
@@ -200,7 +203,8 @@
                         android:layout_height="wrap_content"
                         android:text="2016"
                         android:textColor="@color/mainColor"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/CarMode" />
 
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
@@ -222,7 +226,8 @@
                         android:layout_height="wrap_content"
                         android:text="ABF - 2541"
                         android:textColor="@color/mainColor"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/CarNo" />
 
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
@@ -271,7 +276,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0550044536"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/DeligateContact" />
 
             </LinearLayout>
 
