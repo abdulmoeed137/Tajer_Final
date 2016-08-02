@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:minHeight="100dp"
+                android:id="@+id/container">
+
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignBottom="@+id/name_container"
+                    android:layout_marginBottom="7dp"
+                    android:id="@+id/rating_item_image_view"
+                    android:layout_alignParentRight="true"
+                    android:background="#cccc"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:id="@+id/name_container"
+                    android:orientation="vertical"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:layout_toLeftOf="@+id/rating_item_image_view">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Khalid Ahmed ..."
+                        android:textSize="12dp"
+                        android:textColor="#44b1df"
+                        android:layout_marginBottom="10dp"
+                        />
+
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="bottom|right"
+
+                       android:textColor="@color/mainColor"
+                        android:text="#1"
+                        style="?android:attr/ratingBarStyleSmall"
+                        ></tawseel.com.tajertawseel.CustomBoldTextView>
+
+
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/circle_border"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:id="@+id/tawseel_container">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="5"
+                        android:textColor="@color/mainColor"/>
+
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/coupling"
+                        android:textSize="16dp"
+                        android:textColor="@color/mainColor"/>
+
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/phone_white"
+                    android:background="@color/mainColor"
+                    android:layout_toRightOf="@+id/tawseel_container"
+                    android:layout_marginLeft="15dp"
+                    android:padding="10dp"
+                    android:layout_alignTop="@+id/tawseel_container"/>
+
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/solid_circle"
+                    android:src="@drawable/dialog_tick_icon"
+                    android:padding="3dp"
+                    android:id="@+id/tick_view"
+                    android:visibility="invisible"
+                    android:layout_alignLeft="@+id/tawseel_container"
+                    android:layout_marginLeft="45dp"
+                    android:layout_alignBottom="@+id/tawseel_container"
+
+                    />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:id="@+id/dummy_view"
+                    android:background="@android:color/black"
+                    android:layout_toRightOf="@+id/tawseel_container"
+                    android:layout_marginLeft="20dp"
+                    />
+
+
+
+
+
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

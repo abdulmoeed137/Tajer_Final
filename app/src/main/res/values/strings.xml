@@ -139,4 +139,6 @@
     <string name="last_connection_was_on">آخر توصيلة كانت بتاريخ</string>
 
     <string name="connecting_profile_delegates">بروفايل مندوب توصيل</string>
+    <string name="the_map">الخريطة</string>
+    <string name="dilevered_now">يتم توصيلها الآن</string>
 </resources>
