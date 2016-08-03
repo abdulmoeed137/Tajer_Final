@@ -13,6 +13,9 @@
         import android.widget.TextView;
         import android.widget.Toast;
 
+        import com.google.android.gms.maps.model.LatLng;
+        import com.google.maps.android.SphericalUtil;
+
         import tawseel.com.tajertawseel.R;
         import tawseel.com.tajertawseel.adapters.HomePagerAdapter;
 
@@ -33,8 +36,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+//// for knowing the distance between the two points
+        LatLng to = new LatLng(24.92,67.0297);/// destination
+        LatLng from = new LatLng(24.9231,67.0204);//source point
+        Double distance = SphericalUtil.computeDistanceBetween(from, to); //map utils function to compute distance in meters
 
 
+        Toast.makeText(this,""+distance/1000+"KM",Toast.LENGTH_SHORT).show();
         setupContents();
     }
 
