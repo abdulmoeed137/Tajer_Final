@@ -11,7 +11,7 @@
         android:layout_gravity="right"
         android:minWidth="280dp"
         android:paddingRight="15dp"
-        android:id="@+id/option1"
+        android:id="@+id/BtnNewOrder"
         android:gravity="center_vertical"
 
 
@@ -57,7 +57,7 @@
             android:layout_gravity="right"
             android:paddingRight="15dp"
             android:minWidth="280dp"
-            android:id="@+id/option2"
+            android:id="@+id/BtnNewGroup"
             android:gravity="center_vertical"
 
 

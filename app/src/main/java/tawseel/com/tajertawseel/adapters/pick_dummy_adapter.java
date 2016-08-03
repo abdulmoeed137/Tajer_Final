@@ -23,7 +23,7 @@ public class pick_dummy_adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return 15;
     }
 
     @Override

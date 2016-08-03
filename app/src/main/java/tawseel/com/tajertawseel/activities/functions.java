@@ -25,7 +25,22 @@ public class functions {
         }
         else return true;
     }
-    boolean isIdTrue(String id,Context context)
+    static public boolean isNameTrue(String name,Context context)
+    {
+
+        if (name.isEmpty()) {
+
+            setStatus("Name Is Empty!",context);
+            return false;
+        }
+        if (name.length()<=4)
+        {
+            setStatus("Name too short!",context);
+            return false;
+        }
+        else return true;
+    }
+  static  boolean isIdTrue(String id,Context context)
     {
         if (id.isEmpty()) {
             setStatus("Id Is Empty!",context);

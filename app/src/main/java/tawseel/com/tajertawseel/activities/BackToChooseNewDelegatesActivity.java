@@ -1,8 +1,10 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -23,6 +25,7 @@ import tawseel.com.tajertawseel.utils.PathRequest;
  */
 public class BackToChooseNewDelegatesActivity extends BaseActivity  implements OnMapReadyCallback {
     private GoogleMap mMap;
+    TextView continuee;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,14 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
         TextDeligateCarNumber.setText(getIntent().getExtras().getString("CarNo"));
         TextDeligateContact.setText(getIntent().getExtras().getString("DeligateContact"));
         TextDeligateName.setText(getIntent().getExtras().getString("DeligateName"));
+        continuee = (TextView)findViewById(R.id.continue_button);
+        continuee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent(BackToChooseNewDelegatesActivity.this,HomeActivity.class));
+                finish();
+            }
+        });
         setUpToolbar();
         setupMap();
 
