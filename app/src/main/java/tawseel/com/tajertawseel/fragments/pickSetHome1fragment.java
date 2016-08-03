@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,12 +25,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
-import tawseel.com.tajertawseel.activities.DeliveryGroupData;
 import tawseel.com.tajertawseel.activities.HASH;
 import tawseel.com.tajertawseel.activities.HomeActivity;
 import tawseel.com.tajertawseel.activities.PickSet_data;
-import tawseel.com.tajertawseel.adapters.DileveryGroupAdapter;
-import tawseel.com.tajertawseel.adapters.PickSetAdapter;
 import tawseel.com.tajertawseel.adapters.pick_dummy_adapter;
 
 /**
@@ -45,6 +40,7 @@ public class pickSetHome1fragment extends Fragment {
     private RequestQueue requestQueue;
     private StringRequest request;
     ArrayList<PickSet_data> list=new ArrayList<PickSet_data>();
+    //private int SelectedItem = -1;
 
     @Nullable
     @Override
@@ -92,7 +88,7 @@ public class pickSetHome1fragment extends Fragment {
                 });
 
         //dummy Adapter
-        // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        // listView.setAdapter(new pick_dummy_adapter(getActivity(),list));
         requestQueue.add(jsonObjectRequest);
 
 
@@ -100,19 +96,47 @@ public class pickSetHome1fragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.container);
-                ImageView tickView = (ImageView) layout.findViewById(R.id.tick_view);
 
 
-                if(tickView.getVisibility() == View.INVISIBLE){
-                    tickView.setVisibility(View.VISIBLE);
-                    layout.setBackgroundColor(getResources().getColor(R.color.grey));
-                }
-                else
-                {
-                    tickView.setVisibility(View.INVISIBLE);
-                    layout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                }
+
+
+                ((pick_dummy_adapter)listView.getAdapter()).setSelectedItem(position);
+//                RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.container);
+//                ImageView tickView = (ImageView) layout.findViewById(R.id.tick_view);
+//
+//                try{
+//                if(SelectedItem != -1)
+//                {
+//
+//                    View previousView = listView.getChildAt(SelectedItem);
+//                    RelativeLayout previousLayout = (RelativeLayout) previousView.findViewById(R.id.container);
+//                    ImageView previousTickView = (ImageView) previousView.findViewById(R.id.tick_view);
+//
+//                    previousTickView.setVisibility( View.INVISIBLE);
+//                    previousLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//                }
+//
+//
+//               // SelectedItem =position;
+//                    }
+//
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+
+
+
+
+//                if(tickView.getVisibility() == View.INVISIBLE){
+//                    tickView.setVisibility(View.VISIBLE);
+//                    layout.setBackgroundColor(getResources().getColor(R.color.grey));
+//                }
+//                else
+//                {
+//                    tickView.setVisibility(View.INVISIBLE);
+//                    layout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//                }
 
 
             }
