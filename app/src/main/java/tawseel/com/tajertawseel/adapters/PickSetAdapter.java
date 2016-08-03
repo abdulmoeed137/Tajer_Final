@@ -47,17 +47,24 @@ public class PickSetAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View v = inflater.inflate(R.layout.pick_set_item,null,false);
-        TextView gid=(TextView)v.findViewById(R.id.gid);
-        TextView gname=(TextView)v.findViewById(R.id.gname);
-        TextView gorders=(TextView)v.findViewById(R.id.gorders);
+        ViewHolder holder;
+        if (convertView == null) {
+
+            convertView= inflater.inflate(R.layout.pick_set_item, null, false);
+            holder = new ViewHolder();
+            holder.gid=(TextView)convertView.findViewById(R.id.gid);
+            holder. gname=(TextView)convertView.findViewById(R.id.gname);
+            holder. gorders=(TextView)convertView.findViewById(R.id.gorders);
+            convertView.setTag(holder);
+        }
+        else
+            holder=(ViewHolder)convertView.getTag();
+
 
         PickSet_data data=(PickSet_data) getItem(position);
-        v.setId(Integer.parseInt(data.getGid()));
-        gid.setText(data.getGid());
-        gname.setText(data.getGname());
-        gorders.setText(data.getGmembers());
-
-        return v;
+        holder. gid.setText(data.getGid());
+        holder.  gname.setText(data.getGname());
+        holder. gorders.setText(data.getGmembers());
+        return convertView;
     }
 }

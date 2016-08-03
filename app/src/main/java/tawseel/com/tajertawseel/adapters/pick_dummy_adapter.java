@@ -5,8 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.DeliveryGroupData;
+import tawseel.com.tajertawseel.activities.PickSet_data;
 
 /**
  * Created by Junaid-Invision on 7/28/2016.
@@ -15,20 +20,21 @@ public class pick_dummy_adapter extends BaseAdapter {
 
     Context context;
     LayoutInflater li;
-
-    public pick_dummy_adapter(Context context) {
+    ArrayList<PickSet_data> List=new ArrayList<PickSet_data>();
+    public pick_dummy_adapter(Context context,ArrayList<PickSet_data> list) {
         this.context = context;
         this.li = LayoutInflater.from(context);
+        List=list;
     }
 
     @Override
     public int getCount() {
-        return 15;
+        return List.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return List.get(position);
     }
 
     @Override
@@ -38,6 +44,24 @@ public class pick_dummy_adapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return li.inflate(R.layout.pick_set_item,null,false);
+        ViewHolder holder;
+        if (convertView == null) {
+
+            convertView= li.inflate(R.layout.pick_set_item, null, false);
+            holder = new ViewHolder();
+      holder.gid=(TextView)convertView.findViewById(R.id.gid);
+           holder. gname=(TextView)convertView.findViewById(R.id.gname);
+           holder. gorders=(TextView)convertView.findViewById(R.id.gorders);
+            convertView.setTag(holder);
+        }
+            else
+            holder=(ViewHolder)convertView.getTag();
+
+
+        PickSet_data data=(PickSet_data) getItem(position);
+       holder. gid.setText(data.getGid());
+      holder.  gname.setText(data.getGname());
+      holder. gorders.setText(data.getGmembers());
+        return convertView;
     }
 }

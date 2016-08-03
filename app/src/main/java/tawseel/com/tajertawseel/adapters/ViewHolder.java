@@ -18,4 +18,8 @@ public class ViewHolder {
 
      TextView Quantity ,ProductID ,ProductName, ProductPrice ,Description;
 
+
+     //PickSetAdapter
+     TextView gid,gname,gorders;
+
 }

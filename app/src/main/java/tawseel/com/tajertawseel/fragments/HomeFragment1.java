@@ -23,7 +23,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.AddNewOrderActivity;
 import tawseel.com.tajertawseel.activities.HomePickSetActivity;
+import tawseel.com.tajertawseel.activities.PostNewGroupActivity;
 
 /**
  * Created by Junaid-Invision on 8/2/2016.
@@ -138,6 +140,18 @@ public class HomeFragment1 extends Fragment implements LocationListener {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),HomePickSetActivity.class);
                 startActivity(intent);
+            }
+        });
+        dialog.findViewById(R.id.BtnNewOrder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddNewOrderActivity.class));
+            }
+        });
+        dialog.findViewById(R.id.BtnNewGroup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), PostNewGroupActivity.class));
             }
         });
     }
