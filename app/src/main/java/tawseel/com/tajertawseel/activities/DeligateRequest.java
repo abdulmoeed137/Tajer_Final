@@ -39,7 +39,7 @@ public class DeligateRequest extends BroadcastReceiver {
                             JSONArray jsonArr=response.getJSONArray("info");
                             for(int i=0;i<jsonArr.length();i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                               if (!jsonObj.getString("status").isEmpty() || !jsonObj.getString("status").equals(""))
+                               if (!jsonObj.getString("status").isEmpty() && !jsonObj.getString("status").equals("")&& !jsonObj.getString("status").equals("0"))
                                {
                                    functions.RequestDeligateID=jsonObj.getString("status");
                                     WaitingForAcceptanceActivity.manager.cancel(WaitingForAcceptanceActivity.pendingIntent);

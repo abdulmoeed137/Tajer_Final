@@ -71,7 +71,7 @@ public class HomeFragment1 extends Fragment implements LocationListener {
                this);
 
 
-        mRootView.findViewById(R.id.new_button).setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.BtnAddGroupHome).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogue();

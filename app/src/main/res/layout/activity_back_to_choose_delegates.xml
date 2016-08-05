@@ -390,7 +390,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="15dp"
-                android:id="@+id/protection_button"
+                android:id="@+id/BtnSearchAgain"
                 android:textSize="16dp"
                 android:layout_toLeftOf="@+id/continue_button"
                 android:layout_height="40dp"

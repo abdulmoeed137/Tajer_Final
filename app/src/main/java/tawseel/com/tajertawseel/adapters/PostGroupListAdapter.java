@@ -43,6 +43,7 @@ import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.DeliveryGroupData;
 import tawseel.com.tajertawseel.activities.HASH;
 import tawseel.com.tajertawseel.activities.LoginActivity;
+import tawseel.com.tajertawseel.activities.PickSetActivity;
 import tawseel.com.tajertawseel.activities.PostGroupData;
 import tawseel.com.tajertawseel.activities.PostGroupListData;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
@@ -100,6 +101,7 @@ public class PostGroupListAdapter extends BaseAdapter {
             holder.OrderProductQuantity= (TextView)convertView.findViewById(R.id.OrderProductQuantity);
           holder.OrderMoveButton = (ImageView) convertView.findViewById(R.id.BtnMove);
            holder.OrderDeleteButton = (ImageView) convertView.findViewById(R.id.BtnDelete);
+
             convertView.setTag(holder);
         }
         else
@@ -217,7 +219,9 @@ public class PostGroupListAdapter extends BaseAdapter {
           @Override
           public void onClick(View v) {
               Toast.makeText(context,v.getTag()+"",Toast.LENGTH_SHORT).show();
-
+            Intent i = new Intent(context, PickSetActivity.class);
+              i.putExtra("orderID",v.getTag()+"");
+              context.startActivity(i);
 
           }
       });

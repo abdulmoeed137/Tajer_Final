@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -62,6 +63,7 @@ public class pick_dummy_adapter extends BaseAdapter {
                 if(position == selectedItem)
                 {
                     holder.tickVisible(true,convertView,context);
+
                 }
                 else
                 {

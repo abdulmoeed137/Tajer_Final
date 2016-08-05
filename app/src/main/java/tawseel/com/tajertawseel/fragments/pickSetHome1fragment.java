@@ -1,5 +1,6 @@
 package tawseel.com.tajertawseel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +31,7 @@ import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.HASH;
 import tawseel.com.tajertawseel.activities.HomeActivity;
 import tawseel.com.tajertawseel.activities.PickSet_data;
+import tawseel.com.tajertawseel.activities.WaitingForAcceptanceActivity;
 import tawseel.com.tajertawseel.adapters.pick_dummy_adapter;
 
 /**
@@ -41,7 +45,9 @@ public class pickSetHome1fragment extends Fragment {
     private StringRequest request;
     ArrayList<PickSet_data> list=new ArrayList<PickSet_data>();
     //private int SelectedItem = -1;
-
+   String GroupID=null;
+    boolean flag=false;
+            TextView submit;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class pickSetHome1fragment extends Fragment {
     public void setupComponents()
     {
         requestQueue = Volley.newRequestQueue(getActivity());
+        submit=(TextView)mRootView.findViewById(R.id.BtnAddGroupHome);
         listView = (ListView) mRootView.findViewById(R.id.listView);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/groups.php?id="+ HomeActivity.id+"&hash="+ HASH.getHash(),
                 new Response.Listener<JSONObject>() {
@@ -97,10 +104,11 @@ public class pickSetHome1fragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
+flag=true;
+           GroupID=list.get(position).getGid();
 
                 ((pick_dummy_adapter)listView.getAdapter()).setSelectedItem(position);
+
 //                RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.container);
 //                ImageView tickView = (ImageView) layout.findViewById(R.id.tick_view);
 //
@@ -136,9 +144,23 @@ public class pickSetHome1fragment extends Fragment {
 //                {
 //                    tickView.setVisibility(View.INVISIBLE);
 //                    layout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-//                }
+//                }e
 
 
+            }
+        });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (flag){
+                Intent i = new Intent(getActivity(), WaitingForAcceptanceActivity.class);
+                i.putExtra("GroupID",GroupID);
+                startActivity(i);
+                  flag=false;
+                    getActivity().finish();
+                }
+                else
+                    Toast.makeText(getActivity(),"Select Group! ",Toast.LENGTH_SHORT).show();
             }
         });
 
