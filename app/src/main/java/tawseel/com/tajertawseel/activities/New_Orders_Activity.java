@@ -1,6 +1,9 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.app.Dialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -69,6 +72,8 @@ public class New_Orders_Activity extends BaseActivity {
                     JSONObject mainObj=new JSONObject(response);
                     JSONArray jsonArr=mainObj.getJSONArray("info");
                     rbs=new RadioButton[jsonArr.length()];
+
+
                     for (int i = 0; i < jsonArr.length(); i++) {
                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
                         PostGroupListData data=new PostGroupListData();
@@ -77,6 +82,7 @@ public class New_Orders_Activity extends BaseActivity {
                         data.setDescription(jsonObj.getString("Description"));
                         data.setPrice(jsonObj.getString("Price"));
                         allproducts.add(data);
+
                         rbs[i]=new RadioButton(New_Orders_Activity.this);
                         rbs[i].setText(jsonObj.getString("Title")+"\n"+jsonObj.get("Description"));
                         radioGroup1.addView(rbs[i],lp);
