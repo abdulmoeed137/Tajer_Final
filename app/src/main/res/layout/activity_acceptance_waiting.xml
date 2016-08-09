@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -67,7 +68,7 @@
         android:layout_alignParentRight="true"
         android:tint="@android:color/background_dark"
         android:src="@android:drawable/ic_menu_mylocation"
-       android:backgroundTint="#d3efda"/>
+       app:backgroundTint="#d3efda"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/plus_button"
@@ -81,7 +82,7 @@
         android:layout_alignTop="@+id/map"
 
 
-        android:backgroundTint="#d3efda"/>
+        app:backgroundTint="#d3efda"/>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -92,7 +93,7 @@
         fab:fabSize="mini"
         android:src="@drawable/munis"
         android:layout_below="@+id/plus_button"
-        android:backgroundTint="#d3efda"/>
+        app:backgroundTint="#d3efda"/>
 
 
 

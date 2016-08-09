@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -51,7 +52,7 @@
         android:layout_marginRight="25dp"
 
 
-        android:backgroundTint="#d3efda"/>
+        app:backgroundTint="#d3efda"/>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -69,7 +70,7 @@
 
         android:layout_above="@+id/myLocation"
         android:layout_alignParentRight="true"
-        android:backgroundTint="#d3efda"
+        app:backgroundTint="#d3efda"
         />
 
 
@@ -88,6 +89,6 @@
         android:layout_alignParentRight="true"
         android:tint="@android:color/background_dark"
         android:src="@android:drawable/ic_menu_mylocation"
-        android:backgroundTint="#d3efda"/>
+        app:backgroundTint="#d3efda"/>
 
 </RelativeLayout>
