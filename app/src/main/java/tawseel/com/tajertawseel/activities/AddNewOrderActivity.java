@@ -347,6 +347,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                 Intent i=new Intent(AddNewOrderActivity.this,PickSetActivity.class);
                                 i.putExtra("orderID",arr.getJSONObject(0).getString("OrderID"));
                                 startActivity(i);
+                                finish();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -441,7 +442,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                     if(response!="-1")
                                     {
                                         pid=response;
-                                        Toast.makeText(AddNewOrderActivity.this,"Product saved",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddNewOrderActivity.this,"Product saved",Toast.LENGTH_SHORT).show();finish();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -458,8 +459,13 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                 HashMap<String, String> hashMap = new HashMap<String, String>();
                                 hashMap.put("id",HomeActivity.id);
                                 hashMap.put("hash",HASH.getHash());
-                                hashMap.put("name",newitem_name.getText().toString());
-                                hashMap.put("price",newitem_price.getText().toString());
+                                hashMap.put("delivery","20");
+                                hashMap.put("pay",String.valueOf(pmi));
+                                hashMap.put("price",item_total.getText().toString());
+                                hashMap.put("confirm","1");
+                                hashMap.put("name",name.getText().toString());
+                                hashMap.put("email",email.getText().toString());
+                                hashMap.put("number",mobile.getText().toString());
                                 return hashMap;
                             }
                         };

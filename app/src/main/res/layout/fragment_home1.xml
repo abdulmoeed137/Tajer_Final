@@ -47,12 +47,11 @@
 
         android:src="@drawable/black_add"
 
-        android:layout_above="@id/minus_button"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp"
 
-
-        app:backgroundTint="#d3efda"/>
+        app:backgroundTint="#d3efda"
+        android:layout_above="@+id/minus_button"
+        android:layout_alignRight="@+id/minus_button"
+        android:layout_alignEnd="@+id/minus_button" />
 
 
     <android.support.design.widget.FloatingActionButton

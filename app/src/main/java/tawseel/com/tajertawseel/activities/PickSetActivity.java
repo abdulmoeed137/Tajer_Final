@@ -1,6 +1,7 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -163,6 +164,15 @@ public class PickSetActivity extends BaseActivity {
                                             lp.height = WindowManager.LayoutParams.MATCH_PARENT;
                                             lp.gravity = Gravity.CENTER;
                                             lp.dimAmount = 0.3f;
+                                            dialog.findViewById(R.id.confirm12).setOnClickListener(new
+                                                                                                           View.OnClickListener() {
+                                                                                                               @Override
+                                                                                                               public void onClick(View v) {
+
+                                                                                                                   startActivity(new Intent(PickSetActivity.this,HomeActivity.class));
+                                                                                                                   finish();
+                                                                                                               }
+                                                                                                           });
                                             dialog.show();
                                             groupID=null;
 

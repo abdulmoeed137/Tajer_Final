@@ -1,4 +1,3 @@
-
         package tawseel.com.tajertawseel.activities;
 
         import android.content.Intent;
@@ -57,7 +56,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         TextView email_tv = (TextView) mDrawerLayout.findViewById(R.id.demail);
         uname_tv.setText(uname);
         email_tv.setText(email);
-
 
         homePager = (ViewPager) findViewById(R.id.homePager);
         homeTabLayout = (TabLayout) findViewById(R.id.home_tabLayout);
