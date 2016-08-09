@@ -62,8 +62,13 @@
         <activity android:name=".activities.HomePickSetActivity"/>
         <activity android:name=".activities.DelegatesQuestionActivity"/>
         <activity android:name=".activities.ConnectingProfileDelegates"/>
+        <activity android:name=".activities.DeliveredNowActivity"/>
         <receiver android:name=".activities.DeligateRequest">
             <intent-filter>
+
+
+
+
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>

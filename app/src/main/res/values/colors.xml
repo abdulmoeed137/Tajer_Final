@@ -11,4 +11,6 @@
 
     <color name="grey">#f1f1f2</color>
     <color name="white">#ffffff</color>
+    
+    <color name="sea_green">#00a99d</color>
 </resources>

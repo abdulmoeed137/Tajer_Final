@@ -1,14 +1,17 @@
 package tawseel.com.tajertawseel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.DeliveredNowActivity;
 import tawseel.com.tajertawseel.adapters.DeliveredListAdapter;
 
 /**
@@ -33,5 +36,13 @@ public class HomeFragment2 extends Fragment {
     {
         listView = (ListView)mRootView.findViewById(R.id.listView);
         listView.setAdapter(new DeliveredListAdapter(getActivity()));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent (getActivity(), DeliveredNowActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

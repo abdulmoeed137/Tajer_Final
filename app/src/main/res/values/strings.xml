@@ -142,4 +142,13 @@
     <string name="connecting_profile_delegates">بروفايل مندوب توصيل</string>
     <string name="the_map">الخريطة</string>
     <string name="dilevered_now">يتم توصيلها الآن</string>
+    <string name="request_dresses_for_girls">سلة طلبات الفساتين للبنات والاطفال</string>
+    <string name="number_of_clients">عدد العملاء</string>
+    <string name="no_delivery">رقم طلب التوصيل</string>
+    <string name="recieved_delegate">استلمها المندوب</string>
+    <string name="report_this_delegate">التبليغ عن هذا المندوب !</string>
+    <string name="financial_history">التاريخ المالي</string>
+    <string name="price_of_the_delivery">سعر التوصيل الكلي</string>
+    <string name="price_of_total_application">سعر الطلبات الكلي</string>
+    <string name="delivered">تم التوصيل</string>
 </resources>
