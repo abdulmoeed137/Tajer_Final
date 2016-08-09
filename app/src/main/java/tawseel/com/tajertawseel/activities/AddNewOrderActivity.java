@@ -9,8 +9,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
@@ -112,6 +114,8 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_order);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         productsList = (ListView) findViewById(R.id.product_list);
         bank=(RadioButton)findViewById(R.id.by_bank);
         cash=(RadioButton)findViewById(R.id.cash);
@@ -132,8 +136,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
 
         context=this;
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -558,7 +561,47 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     void builderWithBtn() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final Dialog dialog = new Dialog(AddNewOrderActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_with_2button_1text);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        lp.dimAmount = 0.3f;
+        final EditText input=(EditText)dialog.findViewById(R.id.new_item_name_et);
+
+       dialog.findViewById(R.id.OK).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    getLocationFromAddress(input.getText().toString());
+                    Toast.makeText(AddNewOrderActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
+                    requestDirection();
+                    dialog.cancel();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(AddNewOrderActivity.this,"Invalid URL or Connection Error",Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                }
+
+            }
+        });
+        dialog.findViewById(R.id.Cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+
+
+     /*   AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         builder.setTitle("Enter Location URL");
 
 // Set up the input
@@ -573,13 +616,18 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
 
             public void onClick(DialogInterface dialog, int which) {
                 try {
-
+                    progress = ProgressDialog.show(AddNewOrderActivity.this, "Loading",
+                            "Please Wait..", true);
                     getLocationFromAddress(input.getText().toString());
+                    Toast.makeText(AddNewOrderActivity.this,input.getText().toString(),Toast.LENGTH_SHORT).show();
                     requestDirection();
+                    progress.dismiss();
                 }
                 catch (Exception e)
                 {
-                    Toast.makeText(AddNewOrderActivity.this,"Wrong URL or Connection Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewOrderActivity.this,e.toString(),Toast.LENGTH_SHORT).show();
+                    Log.e("Masla",e.toString());
+                    progress.dismiss();
                 }
 
 
@@ -592,13 +640,12 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
             }
         });
 
-        builder.show();
+        builder.show(); */
     }
 
 
     public void getLocationFromAddress(String add) {
-        progress = ProgressDialog.show(this, "Loading",
-                "Please Wait..", true);
+
         URL url = null;
         try {
             url = new URL(add);
@@ -606,29 +653,45 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
             e.printStackTrace();
         }
         HttpURLConnection ucon = null;
+
+
         try {
 
             ucon = (HttpURLConnection) url.openConnection();
-            ucon.setInstanceFollowRedirects(false);
+            ucon.setInstanceFollowRedirects(true);
             URL secondURL = new URL(ucon.getHeaderField("Location"));
          String  dest=secondURL+"";
+            Log.d("neche",dest);
+            try {
+                String[] parts = dest.split("q=");
 
-            String[] parts = dest.split("q=");
+                String[] parts2 = parts[1].split("&hl");
+                String part2 = parts2[0]; // 034556
 
-            String[] parts2 = parts[1].split("&hl");
-            String part2 = parts2[0]; // 034556
+                String[] latlong = part2.split(",");
+                double sourceLat = Double.valueOf(latlong[0]);
+                double sourceLong = Double.valueOf(latlong[1]);
+                destination=new LatLng(sourceLat,sourceLong);
+            }
+            catch (Exception e)
+            {
+                String[] parts = dest.split("search/");
 
-            String []latlong=part2.split(",");
-          double  sourceLat= Double.valueOf(latlong[0]);
-          double  sourceLong=Double.valueOf(latlong[1]);
-            destination=new LatLng(sourceLat,sourceLong);
+                String[] parts2 = parts[1].split("/data");
+                String part2 = parts2[0]; // 034556
+
+                String[] latlong = part2.split(",");
+                double sourceLat = Double.valueOf(latlong[0]);
+                double sourceLong = Double.valueOf(latlong[1]);
+                destination=new LatLng(sourceLat,sourceLong);
+            }
+
 
 
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+          }
 
-progress.dismiss();
+
     }
 
 
