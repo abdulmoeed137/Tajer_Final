@@ -1,4 +1,4 @@
-package tawseel.com.tajertawseel.adapters;
+package tawseel.com.tajertawseel.fragments;
 
 /**
  * Created by AbdulMoeed on 8/11/2016.

@@ -261,13 +261,14 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     Toast.makeText(AddNewOrderActivity.this,"Add at least one item to the order",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                final String ItemDetails;
                 String item_ids="";
                 for(int t=0;t<New_Orders_Activity.pList.size();t++)
                     item_ids+=(New_Orders_Activity.pList.get(t).getProductID()+"-"+New_Orders_Activity.pList.get(t).getQuantity()+" ");
+            ItemDetails=item_ids;
                StringRequest request = new StringRequest(Request.Method.POST,functions.add+"addorder.php?itemlist="+item_ids, new Response.Listener<String>() {
                     public void onResponse(String response) {
                         try {
-                            Toast.makeText(AddNewOrderActivity.this,response+"",Toast.LENGTH_SHORT).show();
                             if(response.toString().compareTo("-1")!=0)
                             {
                               New_Orders_Activity.pList.clear();
@@ -295,12 +296,13 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         hashMap.put("delivery","20");
                         hashMap.put("pay",String.valueOf(pmi));
                         hashMap.put("price",item_total.getText().toString());
-                        hashMap.put("confirm","0");
+                        hashMap.put("confirm","1");
                         hashMap.put("name",name.getText().toString());
                         hashMap.put("email",email.getText().toString());
                         hashMap.put("number",mobile.getText().toString());
                         hashMap.put("lat",destination.latitude+"");
                         hashMap.put("lon",destination.longitude+"");
+                        hashMap.put("itemlist",ItemDetails);
                         return hashMap;
                     }
                 };
@@ -329,14 +331,16 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     Toast.makeText(AddNewOrderActivity.this,"Add at least one item to the order",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                final String ItemDetails;
                 String item_ids="";
                 for(int t=0;t<New_Orders_Activity.pList.size();t++)
                     item_ids+=(New_Orders_Activity.pList.get(t).getProductID()+"-"+New_Orders_Activity.pList.get(t).getQuantity()+" ");
                 String curl="";
+                ItemDetails=item_ids;
                 if(oldid!=-1)
                     curl+=functions.add+"changes_order_status.php";
                 else
-                curl+=functions.add+"addorder.php?itemlist="+item_ids;
+                curl+=functions.add+"addorder.php";
 
                 StringRequest request = new StringRequest(Request.Method.POST,curl, new Response.Listener<String>() {
                     public void onResponse(String response) {
@@ -376,6 +380,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         hashMap.put("number",mobile.getText().toString());
                             hashMap.put("lat",destination.latitude+"");
                             hashMap.put("lon",destination.longitude+"");
+                            hashMap.put("itemlist",ItemDetails);
                        }
                         else
                         {

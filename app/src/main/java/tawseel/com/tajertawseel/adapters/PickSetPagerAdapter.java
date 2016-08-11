@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import tawseel.com.tajertawseel.fragments.pickSetHome1fragment;
+import tawseel.com.tajertawseel.fragments.pickSetHome2fragment;
 
 /**
  * Created by Junaid-Invision on 7/28/2016.
@@ -16,7 +17,11 @@ public class PickSetPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new pickSetHome1fragment();
+        if(position ==0)
+        {
+            return new pickSetHome1fragment();
+        }
+        return new pickSetHome2fragment();
     }
 
     @Override

@@ -51,7 +51,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<Customer_request_item_data> List;
-    ArrayList<PostGroupListData> list = new ArrayList<>();
+
     private RequestQueue requestQueue;
 
     public CustomerRequestAdapter (Context c, ArrayList<Customer_request_item_data> list)
@@ -154,7 +154,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
                                 try {
 
                                     JSONArray jsonArr=response.getJSONArray("info");
-
+                                    ArrayList<PostGroupListData> list = new ArrayList<>();
                                     for(int i=0;i<jsonArr.length();i++) {
                                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
                                         PostGroupListData item= new PostGroupListData();

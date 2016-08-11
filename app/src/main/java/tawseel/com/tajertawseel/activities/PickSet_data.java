@@ -7,6 +7,7 @@ package tawseel.com.tajertawseel.activities;
 public class PickSet_data {
     private String gid="";
     private String gmembers="";
+    private  String ConfirmationCode,StatusCode,DeligateName,ItemPrice,PriceRange,DeligateNumber;
 
     public String getGname() {
         return gname;
@@ -33,4 +34,52 @@ public class PickSet_data {
     }
 
     private String gname="";
+
+    public String getConfirmationCode() {
+        return ConfirmationCode;
+    }
+
+    public void setConfirmationCode(String confirmationCode) {
+        ConfirmationCode = confirmationCode;
+    }
+
+    public String getStatusCode() {
+        return StatusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        StatusCode = statusCode;
+    }
+
+    public String getDeligateName() {
+        return DeligateName;
+    }
+
+    public void setDeligateName(String deligateName) {
+        DeligateName = deligateName;
+    }
+
+    public String getItemPrice() {
+        return ItemPrice;
+    }
+
+    public void setItemPrice(String itemPrice) {
+        ItemPrice = itemPrice;
+    }
+
+    public String getPriceRange() {
+        return PriceRange;
+    }
+
+    public void setPriceRange(String priceRange) {
+        PriceRange = priceRange;
+    }
+
+    public String getDeligateNumber() {
+        return DeligateNumber;
+    }
+
+    public void setDeligateNumber(String deligateNumber) {
+        DeligateNumber = deligateNumber;
+    }
 }

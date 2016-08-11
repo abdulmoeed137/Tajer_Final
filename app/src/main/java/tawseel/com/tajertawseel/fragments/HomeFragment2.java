@@ -26,12 +26,8 @@ import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.DeliveredNowActivity;
-import tawseel.com.tajertawseel.activities.DeliveryGroupData;
 import tawseel.com.tajertawseel.activities.HomeActivity;
-import tawseel.com.tajertawseel.activities.LoginActivity;
 import tawseel.com.tajertawseel.adapters.DeliveredListAdapter;
-import tawseel.com.tajertawseel.adapters.DileveryGroupAdapter;
-import tawseel.com.tajertawseel.adapters.HomeFragment2Data;
 
 /**
  * Created by Junaid-Invision on 8/2/2016.

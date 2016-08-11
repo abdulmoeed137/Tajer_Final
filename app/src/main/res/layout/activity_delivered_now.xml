@@ -65,7 +65,8 @@
                 android:layout_height="wrap_content"
                 android:text="# 25482"
 
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:id="@+id/GroupID" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -116,7 +117,7 @@
                 android:text="Khalid ahmed Al..."
                 android:textSize="12dp"
                 android:textColor="@color/mainColor"
-                />
+                android:id="@+id/DeligateName" />
 
 
             <RatingBar android:id="@+id/ratingbar"
@@ -141,14 +142,14 @@
                 <tawseel.com.tajertawseel.CustomBoldTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10:05 A.M"
+                    android:text="Date: N/A"
                     android:textSize="10dp"
                     android:layout_marginRight="10dp"/>
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2016/2/5"
+                    android:text="Time: N/A"
                     android:textSize="10dp"/>
 
 
@@ -173,7 +174,7 @@
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:id="@+id/status"
+            android:id="@+id/BtnStatus"
             />
 
 
@@ -185,8 +186,9 @@
             android:src="@drawable/phone_white"
             android:background="@color/mainColor"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/status"
-            android:layout_marginLeft="5dp"/>
+            android:layout_toRightOf="@+id/BtnStatus"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/BtnDeligateCall" />
 
 
 
@@ -196,10 +198,10 @@
             android:textColor="@color/mainColor"
             android:text="@string/report_this_delegate"
             android:textSize="10dp"
-            android:layout_below="@+id/status"
+            android:layout_below="@+id/BtnStatus"
             android:layout_marginTop="15dp"
-            android:layout_alignLeft="@id/status"
-            />
+            android:layout_alignLeft="@id/BtnStatus"
+            android:id="@+id/StatusText" />
 
 
 
@@ -281,7 +283,7 @@
                     android:text="60"
                     android:textSize="18dp"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/ItemsPrice" />
+                    android:id="@+id/PriceRange" />
                 </LinearLayout>
 
 
@@ -332,7 +334,7 @@
                     android:text="800"
                     android:textSize="18dp"
                     android:layout_marginLeft="5dp"
-                     />
+                    android:id="@+id/ItemPrice" />
             </LinearLayout>
 
 

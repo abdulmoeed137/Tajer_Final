@@ -1,26 +1,19 @@
 package tawseel.com.tajertawseel.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import android.Manifest;
 
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.fragments.HomeFragment2Data;
 
 /**
  * Created by Junaid-Invision on 8/2/2016.
