@@ -47,6 +47,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdate;
@@ -266,15 +267,15 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                StringRequest request = new StringRequest(Request.Method.POST,functions.add+"addorder.php?itemlist="+item_ids, new Response.Listener<String>() {
                     public void onResponse(String response) {
                         try {
-                            JSONObject mainObj=new JSONObject(response);
-                            JSONArray arr=mainObj.getJSONArray("info");
-                            Toast.makeText(AddNewOrderActivity.this,arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
-                            if(arr.getJSONObject(0).getString("OrderID").compareTo("-1")!=0)
+                            Toast.makeText(AddNewOrderActivity.this,response+"",Toast.LENGTH_SHORT).show();
+                            if(response.toString().compareTo("-1")!=0)
                             {
                               New_Orders_Activity.pList.clear();
-                              Toast.makeText(AddNewOrderActivity.this,"Order saved "+arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
+                              Toast.makeText(AddNewOrderActivity.this,"Order saved ",Toast.LENGTH_SHORT).show();
                               Intent i=new Intent(AddNewOrderActivity.this,AddNewOrderActivity.class);
                               startActivity(i);
+                                finish();
+
                           }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -298,6 +299,8 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         hashMap.put("name",name.getText().toString());
                         hashMap.put("email",email.getText().toString());
                         hashMap.put("number",mobile.getText().toString());
+                        hashMap.put("lat",destination.latitude+"");
+                        hashMap.put("lon",destination.longitude+"");
                         return hashMap;
                     }
                 };
@@ -338,17 +341,13 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 StringRequest request = new StringRequest(Request.Method.POST,curl, new Response.Listener<String>() {
                     public void onResponse(String response) {
                         try {
-                            JSONObject mainObj=new JSONObject(response);
-                            JSONArray arr=mainObj.getJSONArray("info");
-                            Toast.makeText(AddNewOrderActivity.this,arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
-                            if(arr.getJSONObject(0).getString("OrderID").compareTo("-1")!=0)
+                             if(response.toString().compareTo("-1")!=0)
                             {
                                 if(oldid!=-1)
                                     oldid=-1;
                                 New_Orders_Activity.pList.clear();
-                                Toast.makeText(AddNewOrderActivity.this,"Order Confirmed "+arr.getJSONObject(0).getString("OrderID"),Toast.LENGTH_SHORT).show();
                                 Intent i=new Intent(AddNewOrderActivity.this,PickSetActivity.class);
-                                i.putExtra("orderID",arr.getJSONObject(0).getString("OrderID"));
+                                i.putExtra("orderID",response.toString());
                                 startActivity(i);
                                 finish();
                             }
@@ -375,6 +374,8 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         hashMap.put("name",name.getText().toString());
                         hashMap.put("email",email.getText().toString());
                         hashMap.put("number",mobile.getText().toString());
+                            hashMap.put("lat",destination.latitude+"");
+                            hashMap.put("lon",destination.longitude+"");
                        }
                         else
                         {

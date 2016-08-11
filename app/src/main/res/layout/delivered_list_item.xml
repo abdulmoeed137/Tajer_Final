@@ -51,7 +51,7 @@
                         android:textSize="12dp"
                         android:textColor="#44b1df"
                         android:layout_marginBottom="10dp"
-                        />
+                        android:id="@+id/Name" />
 
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
@@ -63,7 +63,7 @@
                        android:textColor="@color/mainColor"
                         android:text="#1"
                         style="?android:attr/ratingBarStyleSmall"
-                        ></tawseel.com.tajertawseel.CustomBoldTextView>
+                        android:id="@+id/GroupID"></tawseel.com.tajertawseel.CustomBoldTextView>
 
 
 
@@ -87,7 +87,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="5"
-                        android:textColor="@color/mainColor"/>
+                        android:textColor="@color/mainColor"
+                        android:id="@+id/members" />
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:layout_width="wrap_content"
@@ -110,7 +111,9 @@
                     android:layout_toRightOf="@+id/tawseel_container"
                     android:layout_marginLeft="15dp"
                     android:padding="10dp"
-                    android:layout_alignTop="@+id/tawseel_container"/>
+                    android:layout_alignTop="@+id/tawseel_container"
+                    android:id="@+id/BtnCall"
+                    android:onClick="onClick" />
 
 
                 <ImageView

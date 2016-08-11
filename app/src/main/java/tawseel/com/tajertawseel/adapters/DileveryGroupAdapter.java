@@ -92,6 +92,7 @@ ViewHolder holder ;
                 i.putExtra("GroupID",v.getTag()+"");
                 context.startActivity(i);
 
+
             }
         });
 

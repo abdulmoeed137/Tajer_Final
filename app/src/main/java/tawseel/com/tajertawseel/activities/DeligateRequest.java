@@ -29,6 +29,7 @@ public class DeligateRequest extends BroadcastReceiver {
     private StringRequest request;
     @Override
     public void onReceive(final Context context, Intent intent) {
+        Toast.makeText(context,"Checking If Any Request", Toast.LENGTH_SHORT).show();
         requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"DeligateRequest.php?id="+WaitingForAcceptanceActivity.GrpID,
                 new Response.Listener<JSONObject>() {
@@ -41,6 +42,7 @@ public class DeligateRequest extends BroadcastReceiver {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
                                if (!jsonObj.getString("status").isEmpty() && !jsonObj.getString("status").equals("")&& !jsonObj.getString("status").equals("0"))
                                {
+
                                    functions.RequestDeligateID=jsonObj.getString("status");
                                     WaitingForAcceptanceActivity.manager.cancel(WaitingForAcceptanceActivity.pendingIntent);
                                    Toast.makeText(context,"Deligate Accepted",Toast.LENGTH_SHORT).show();

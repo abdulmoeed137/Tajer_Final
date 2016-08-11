@@ -26,6 +26,7 @@ public class Tajer_Lap_Activity extends BaseActivity {
             public void onClick(View view) {
                 Intent i  = new Intent (Tajer_Lap_Activity.this, New_Orders_Activity.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -34,6 +35,7 @@ public class Tajer_Lap_Activity extends BaseActivity {
             public void onClick(View view) {
                 Intent i  = new Intent (Tajer_Lap_Activity.this, Old_Orders_Activity.class);
                 startActivity(i);
+                finish();
             }
         });
     }

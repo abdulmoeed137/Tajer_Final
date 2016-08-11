@@ -67,7 +67,7 @@ public class DeliveryGroupActivity extends BaseActivity {
     {
         groupListView = (ListView)findViewById(R.id.group_list_view);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/info_grp.php?id=1",
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/info_grp.php?id="+LoginActivity.LoginID,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

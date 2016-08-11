@@ -70,9 +70,8 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         GrpID=getIntent().getExtras().getString("GroupID");
         Intent alarmIntent = new Intent(WaitingForAcceptanceActivity.this, DeligateRequest.class);
         pendingIntent = PendingIntent.getBroadcast(WaitingForAcceptanceActivity.this, 0, alarmIntent, 0);
+        alarmIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         start();
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -94,6 +93,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
 
             Toast.makeText(WaitingForAcceptanceActivity.this, "No Old Location Saved", Toast.LENGTH_SHORT).show();
         }
+
        setUpToolbar();
         setupMap();
     }
@@ -227,7 +227,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     }
     public void start() {
         manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 5000;
+        int interval =3000;
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
 
