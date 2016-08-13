@@ -74,6 +74,16 @@ ArrayList< PostGroupData> list = new ArrayList<>();
         ItemPrice2=getIntent().getExtras().getString("PriceRange");
         DeligateNumber=getIntent().getExtras().getString("DeligateNumber");
         NoOfCustomer= (TextView)findViewById(R.id.NoOfCustomers);
+        final String DeligateID= getIntent().getExtras().getString("DeligateID");
+        ImageView btnImageDeligate = (ImageView)findViewById(R.id.BtnImage) ;
+        btnImageDeligate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DeliveredNowActivity.this,ConnectingProfileDelegates.class);
+                i.putExtra("DeligateID",DeligateID);
+                startActivity(i);
+            }
+        });
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/GroupItem.php?id="+GroupID,

@@ -102,14 +102,14 @@
             android:background="#cccc"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:id="@+id/image"
+            android:id="@+id/BtnImage"
            />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_toLeftOf="@+id/image"
+            android:layout_toLeftOf="@+id/BtnImage"
             android:layout_marginRight="5dp">
 
             <tawseel.com.tajertawseel.CustomBoldTextView

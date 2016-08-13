@@ -55,7 +55,7 @@
                         android:layout_toLeftOf="@+id/image_view_contacts"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        />
+                        android:id="@+id/DeligateName" />
 
                 </RelativeLayout>
 
@@ -105,7 +105,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            />
+                            android:id="@+id/DeligateName2" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            />
+                            android:id="@+id/Car" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            />
+                            android:id="@+id/Model" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            />
+                            android:id="@+id/CarNumber" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -273,7 +273,7 @@
                         android:textColor="@android:color/black"
                         android:layout_below="@id/contacts_headings"
                         android:layout_marginRight="20dp"
-                        />
+                        android:id="@+id/Contact" />
 
 
                     <ImageView
@@ -282,7 +282,8 @@
                         android:layout_marginLeft="20dp"
                         android:padding="3dp"
                         android:src="@drawable/phone_tjr_icon"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        android:id="@+id/BtnCall" />
 
 
 

@@ -87,6 +87,7 @@ public class pickSetHome2fragment extends Fragment {
                                 data.setItemPrice(jsonObj.getString("ItemsPrice"));
                                 data.setPriceRange(jsonObj.getString("PriceRange"));
                                 data.setDeligateNumber(jsonObj.getString("DeligateNumber"));
+                                data.setDeligateID(jsonObj.getString("DeligateID"));
                                 list.add(data);
 
                             }
@@ -123,6 +124,7 @@ public class pickSetHome2fragment extends Fragment {
                 i.putExtra("ItemPrice",list.get(position).getItemPrice().toString());
                 i.putExtra("PriceRange",list.get(position).getPriceRange()).toString();
                 i.putExtra("DeligateNumber",list.get(position).getDeligateNumber()).toString();
+                i.putExtra("DeligateID",list.get(position).getDeligateID().toString());
                 startActivity(i);
                 getActivity().finish();
 
