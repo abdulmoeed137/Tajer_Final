@@ -151,4 +151,11 @@
     <string name="price_of_the_delivery">سعر التوصيل الكلي</string>
     <string name="price_of_total_application">سعر الطلبات الكلي</string>
     <string name="delivered">تم التوصيل</string>
+    <string name="date_of_dilevery_of_application">تاريخ تسليم الطلبات للمندوب</string>
+    <string name="dilevery_price">سعر التوصيل:</string>
+    <string name="asking_price">سعر الطلب:</string>
+    <string name="advertisement_merchant">رصيدي أنا التاجر</string>
+    <string name="balance_delegate">رصيد المندوب:</string>
+    <string name="balance_dealer_connected">رصيد تاجر توصيل</string>
+    <string name="financial_history_of_Request">التاريخ المالي للطلب</string>
 </resources>

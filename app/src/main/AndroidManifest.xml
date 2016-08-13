@@ -65,6 +65,7 @@
         <activity android:name=".activities.DelegatesQuestionActivity"/>
         <activity android:name=".activities.ConnectingProfileDelegates"/>
         <activity android:name=".activities.DeliveredNowActivity"/>
+        <activity android:name=".activities.FinancialRequestActivity"/>
         <receiver android:name=".activities.DeligateRequest">
             <intent-filter>
 

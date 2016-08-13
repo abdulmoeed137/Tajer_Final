@@ -56,6 +56,8 @@ public class LoginActivity extends BaseActivity {
               //  progress.dismiss();
                 Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+
+                //Intent i = new Intent (LoginActivity.this,FinancialRequestActivity.class);
                 startActivity(i);
                 finish();
 
