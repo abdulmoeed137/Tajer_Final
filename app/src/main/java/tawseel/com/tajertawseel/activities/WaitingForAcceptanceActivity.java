@@ -197,7 +197,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     {
          RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(WaitingForAcceptanceActivity.this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"EligibleDeligates.php?latitude="+this.origin.latitude+"&longitude="+this.origin.longitude,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"EligibleDeligates.php?latitude="+this.origin.latitude+"&longitude="+this.origin.longitude+"&GroupID="+GrpID,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

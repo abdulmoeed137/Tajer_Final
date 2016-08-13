@@ -169,7 +169,7 @@ public class PickSetActivity extends BaseActivity {
                                                                                                                @Override
                                                                                                                public void onClick(View v) {
 
-                                                                                                                   startActivity(new Intent(PickSetActivity.this,HomeActivity.class));
+
                                                                                                                    finish();
                                                                                                                }
                                                                                                            });

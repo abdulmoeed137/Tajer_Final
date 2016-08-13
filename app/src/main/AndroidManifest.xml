@@ -3,6 +3,7 @@
     package="tawseel.com.tajertawseel" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -66,6 +67,8 @@
         <activity android:name=".activities.ConnectingProfileDelegates"/>
         <activity android:name=".activities.DeliveredNowActivity"/>
         <activity android:name=".activities.FinancialRequestActivity"/>
+        <activity android:name=".activities.DeligateHomeActivity"/>
+        <activity android:name=".activities.DeligateNotificationData"/>
         <receiver android:name=".activities.DeligateRequest">
             <intent-filter>
 
@@ -75,6 +78,20 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+        <service
+            android:name=".firebase.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+
+        <service
+            android:name=".firebase.FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

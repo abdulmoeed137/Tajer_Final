@@ -50,6 +50,19 @@ public class LoginActivity extends BaseActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (pass_ET.getText().toString().equals("d"))
+                {
+
+                    Intent i = new Intent(LoginActivity.this, DeligateHomeActivity.class);
+                    i.putExtra("DeligateID",email_ET.getText().toString());
+                    i.putExtra("flag",true);
+                    Toast.makeText(getApplicationContext(), "Welcome "+email_ET.getText().toString(), Toast.LENGTH_SHORT).show();
+                    //Intent i = new Intent (LoginActivity.this,FinancialRequestActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                else
+                {
                 LoginID=1+"";
                 uname="tajer";
                 //if success
@@ -59,7 +72,7 @@ public class LoginActivity extends BaseActivity {
 
                 //Intent i = new Intent (LoginActivity.this,FinancialRequestActivity.class);
                 startActivity(i);
-                finish();
+                finish();}
 
            /*     email = email_ET.getText().toString();
                 final String pass = pass_ET.getText().toString();

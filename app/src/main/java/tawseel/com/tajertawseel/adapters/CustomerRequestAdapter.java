@@ -1,5 +1,6 @@
 package tawseel.com.tajertawseel.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -206,6 +207,8 @@ public class CustomerRequestAdapter extends BaseAdapter {
                 intent.putExtra("orderID",v.getTag()+"");
                 Toast.makeText(context,v.getTag()+"",Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
+                ((Activity)context).finish();
+
             }
         });
         return convertView;
