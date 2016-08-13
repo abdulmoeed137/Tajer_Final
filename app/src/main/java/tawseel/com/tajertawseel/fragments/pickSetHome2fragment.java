@@ -124,6 +124,7 @@ public class pickSetHome2fragment extends Fragment {
                 i.putExtra("PriceRange",list.get(position).getPriceRange()).toString();
                 i.putExtra("DeligateNumber",list.get(position).getDeligateNumber()).toString();
                 startActivity(i);
+                getActivity().finish();
 
             }
         });

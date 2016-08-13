@@ -8,11 +8,13 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.customviews.ExpandablePanel;
 
 /**
  * Created by AbdulMoeed on 7/24/2016.
@@ -64,5 +66,5 @@ ImageView BtnCall;
         });
 
     }
-
+TextView moreView; ExpandablePanel panel;ListView productsList;
 }

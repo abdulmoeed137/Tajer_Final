@@ -145,7 +145,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
+            // to handle the case where the user grants the permission. See the documentationstr
             // for ActivityCompat#requestPermissions for more details.
             Toast.makeText(AddNewOrderActivity.this, "Location Permission Required", Toast.LENGTH_SHORT).show();
             return;
