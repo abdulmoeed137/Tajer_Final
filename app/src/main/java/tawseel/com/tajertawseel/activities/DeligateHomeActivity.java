@@ -17,6 +17,7 @@ import tawseel.com.tajertawseel.firebase.FirebaseInstanceIDService;
  * Created by AbdulMoeed on 8/13/2016.
  */
 public class DeligateHomeActivity extends BaseActivity {
+    static String DeligateID;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class DeligateHomeActivity extends BaseActivity {
             String token = FirebaseInstanceId.getInstance().getToken();
             WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo wInfo = wifiManager.getConnectionInfo();
-            String DeligateID = getIntent().getExtras().getString("DeligateID");
+            DeligateID = getIntent().getExtras().getString("DeligateID");
 
             dd.registerToken(token, DeligateID, wInfo.getMacAddress() + "");
         }
