@@ -32,7 +32,7 @@ public class DeligateRequest extends Service {
     RequestQueue requestQueue;
     private StringRequest request;
     int i=0;
-
+boolean keepRunning=true;
     public class ThreadThis implements Runnable {
         int service_id;
 
@@ -44,9 +44,8 @@ public class DeligateRequest extends Service {
         @Override
         public void run() {
 //            Toast.makeText(DeligateRequest.this,"Checking If Any Request", Toast.LENGTH_SHORT).show();
-while (functions.keepRunning){
-Log.d("ServiceCheck",functions.keepRunning+"--"+i);
-    i=3;
+while (keepRunning){
+Log.d("ServiceCheck",keepRunning+"--"+i);
     try {
         synchronized (this){
       wait(5000);}
@@ -66,15 +65,13 @@ Log.d("ServiceCheck",functions.keepRunning+"--"+i);
                                     {
 
 
-                                            functions. keepRunning = false;
-            i=4
-            ;
-                                            Log.d("ServiceCheckAnder",functions.keepRunning+"--"+i);
+
+                                            Log.d("ServiceCheckAnder",keepRunning+"--"+i);
 
 
                                             // functions.RequestDeligateID=jsonObj.getString("status");
-
-                                            Toast.makeText(DeligateRequest.this, "Deligate Accepted" + functions.keepRunning, Toast.LENGTH_SHORT).show();
+                                            keepRunning=false;
+                                            Toast.makeText(DeligateRequest.this, "Deligate Accepted" + keepRunning, Toast.LENGTH_SHORT).show();
                                             Intent it = new Intent(DeligateRequest.this, ChooseDelegateActivity.class);
 
                                             it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -87,8 +84,9 @@ Log.d("ServiceCheck",functions.keepRunning+"--"+i);
                                             it.putExtra("CarBrand", jsonObj.getString("CarBrand"));
                                             it.putExtra("Contact", jsonObj.getString("Contact"));
                                             startActivity(it);
-                                        WaitingForAcceptanceActivity.c.finish();
+                                         WaitingForAcceptanceActivity.c.finish();
                                             stopSelf(service_id);
+                                              break;
 
 
 
@@ -124,7 +122,7 @@ Log.d("ServiceCheck",functions.keepRunning+"--"+i);
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        functions.keepRunning=true;i=1;
+        keepRunning=true;i=0;
         Thread t = new Thread(new ThreadThis(startId));
 t.start();
 
