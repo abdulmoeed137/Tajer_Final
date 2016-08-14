@@ -31,7 +31,7 @@ import tawseel.com.tajertawseel.R;
 public class DeligateRequest extends Service {
     RequestQueue requestQueue;
     private StringRequest request;
-    int i=0;
+
 boolean keepRunning=true;
     public class ThreadThis implements Runnable {
         int service_id;
@@ -45,7 +45,7 @@ boolean keepRunning=true;
         public void run() {
 //            Toast.makeText(DeligateRequest.this,"Checking If Any Request", Toast.LENGTH_SHORT).show();
 while (keepRunning){
-Log.d("ServiceCheck",keepRunning+"--"+i);
+Log.d("ServiceCheck",keepRunning+"");
     try {
         synchronized (this){
       wait(5000);}
@@ -66,7 +66,7 @@ Log.d("ServiceCheck",keepRunning+"--"+i);
 
 
 
-                                            Log.d("ServiceCheckAnder",keepRunning+"--"+i);
+                                            Log.d("ServiceCheckAnder",keepRunning+"");
 
 
                                             // functions.RequestDeligateID=jsonObj.getString("status");
@@ -122,7 +122,7 @@ Log.d("ServiceCheck",keepRunning+"--"+i);
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        keepRunning=true;i=0;
+        keepRunning=true;
         Thread t = new Thread(new ThreadThis(startId));
 t.start();
 
