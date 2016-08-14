@@ -69,7 +69,8 @@
         <activity android:name=".activities.FinancialRequestActivity"/>
         <activity android:name=".activities.DeligateHomeActivity"/>
         <activity android:name=".activities.DeligateNotificationData"/>
-        <receiver android:name=".activities.DeligateRequest">
+        <service android:name=".activities.DeligateRequest"
+            android:exported="false">
             <intent-filter>
 
 
@@ -77,7 +78,7 @@
 
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
-        </receiver>
+        </service>
         <service
             android:name=".firebase.FirebaseMessagingService">
             <intent-filter>

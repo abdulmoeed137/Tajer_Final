@@ -2,8 +2,6 @@ package tawseel.com.tajertawseel.activities;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -57,8 +55,6 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     LatLng origin;
     private GoogleMap mMap;
-    static PendingIntent pendingIntent;
-    static AlarmManager manager;
     static    int i=0;
     static String GrpID;
     static Activity c;
@@ -68,9 +64,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         setContentView(R.layout.activity_acceptance_waiting);
         c=this;
         GrpID=getIntent().getExtras().getString("GroupID");
-        Intent alarmIntent = new Intent(WaitingForAcceptanceActivity.this, DeligateRequest.class);
-        pendingIntent = PendingIntent.getBroadcast(WaitingForAcceptanceActivity.this, 0, alarmIntent, 0);
-        alarmIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+
         start();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -226,10 +220,8 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         requestQueue.add(jsonObjectRequest);
     }
     public void start() {
-        manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval =3000;
-
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        Intent i = new Intent(WaitingForAcceptanceActivity.this,DeligateRequest.class);
+        startService(i);
 
 
     }
@@ -237,7 +229,9 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     public void onBackPressed()
     {
         // code here to show dialog
-        super.onBackPressed();  // optional depending on your needs
-        manager.cancel(pendingIntent);
+
+        Intent i = new Intent(WaitingForAcceptanceActivity.this,DeligateRequest.class);
+        stopService(i);
+        finish();
     }
 }
