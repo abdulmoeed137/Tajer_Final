@@ -76,6 +76,7 @@ public class DeligateRequest extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         keepRunning = true;
+        requestQueue = Volley.newRequestQueue(DeligateRequest.this);
         response =  new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
