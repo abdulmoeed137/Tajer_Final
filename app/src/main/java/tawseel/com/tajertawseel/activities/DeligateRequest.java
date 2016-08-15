@@ -1,14 +1,10 @@
 package tawseel.com.tajertawseel.activities;
 
-import android.app.Activity;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,17 +13,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import tawseel.com.tajertawseel.R;
 
 /**
  * Created by AbdulMoeed on 7/26/2016.
@@ -77,19 +66,20 @@ public class DeligateRequest extends Service {
 
                                                 // functions.RequestDeligateID=jsonObj.getString("status");
 
-                                                Toast.makeText(DeligateRequest.this, "Deligate Accepted" + keepRunning, Toast.LENGTH_SHORT).show();
-                                                Intent it = new Intent(DeligateRequest.this, ChooseDelegateActivity.class);
-
-                                                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                it.putExtra("DeligateID", jsonObj.getString("status") + "");
-                                                it.putExtra("Name", jsonObj.getString("Name") + "");
-                                                it.putExtra("CarNo", jsonObj.getString("CarNo") + "");
-                                                it.putExtra("CarModel", jsonObj.getString("CarModel") + "");
-                                                it.putExtra("Latitude", jsonObj.getString("Latitude"));
-                                                it.putExtra("Longitude", jsonObj.getString("Longitude"));
-                                                it.putExtra("CarBrand", jsonObj.getString("CarBrand"));
-                                                it.putExtra("Contact", jsonObj.getString("Contact"));
-                                                getApplication().startActivity(it);
+                                                //commenting for testing
+//                                                Toast.makeText(DeligateRequest.this, "Deligate Accepted" + keepRunning, Toast.LENGTH_SHORT).show();
+//                                                Intent it = new Intent(DeligateRequest.this, ChooseDelegateActivity.class);
+//
+//                                                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                                it.putExtra("DeligateID", jsonObj.getString("status") + "");
+//                                                it.putExtra("Name", jsonObj.getString("Name") + "");
+//                                                it.putExtra("CarNo", jsonObj.getString("CarNo") + "");
+//                                                it.putExtra("CarModel", jsonObj.getString("CarModel") + "");
+//                                                it.putExtra("Latitude", jsonObj.getString("Latitude"));
+//                                                it.putExtra("Longitude", jsonObj.getString("Longitude"));
+//                                                it.putExtra("CarBrand", jsonObj.getString("CarBrand"));
+//                                                it.putExtra("Contact", jsonObj.getString("Contact"));
+//                                                getApplication().startActivity(it);
                                                 stopSelf(service_id);
                                                 WaitingForAcceptanceActivity.c.finish();
                                                 break;
