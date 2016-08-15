@@ -2,13 +2,32 @@ package tawseel.com.tajertawseel.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
@@ -24,6 +43,8 @@ public class DelegatesQuestionActivity extends BaseActivity {
     private ImageView deleteIcon;
     private boolean longClick  = false;
     private int ItemCount = 0;
+private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +57,57 @@ public class DelegatesQuestionActivity extends BaseActivity {
     public void setUpComponents ()
     {
         listview = (ListView)findViewById(R.id.mListView);
-        listview.setAdapter(new DelegatesQuestionAdapter(this));
+
+        StringRequest request = new StringRequest(Request.Method.POST,functions.add+"favdelegates.php", new Response.Listener<String>() {
+            public void onResponse(String response) {
+                try {
+                    JSONObject mainObj=new JSONObject(response);
+                    JSONArray jsonArr=mainObj.getJSONArray("info");
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                        FavouriteDelegateItemData tdata=new FavouriteDelegateItemData();
+                        tdata.setName(jsonObj.getString("Name"));
+                        tdata.setCar(jsonObj.getString("CarBrand"));
+                        tdata.setCarnum(jsonObj.getString("CarNo"));
+                        tdata.setModel(jsonObj.getString("CarModel"));
+                        tdata.setContact(jsonObj.getString("Contact"));
+                        tdata.setNdelivers(jsonObj.getString("delivers"));
+                        Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
+                        idelivers/=100.0f;
+                        idelivers*=5.0f;
+                        tdata.setStars(String.valueOf(idelivers));
+                        data.add(tdata);
+                    }
+                    listview.setAdapter(new DelegatesQuestionAdapter(DelegatesQuestionActivity.this,data));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                };
+
+            }
+
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("id",HomeActivity.id);
+                hashMap.put("hash",HASH.getHash());
+                return hashMap;
+            }
+        };
+        try{
+            requestQueue= Volley.newRequestQueue(DelegatesQuestionActivity.this);
+            requestQueue.add(request);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(DelegatesQuestionActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
+        }
+
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -44,6 +115,13 @@ public class DelegatesQuestionActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!longClick){
                 Intent intent = new Intent(DelegatesQuestionActivity.this,ConnectingProfileDelegates.class);
+                    intent.putExtra("name",data.get(position).getName());
+                    intent.putExtra("car",data.get(position).getCar());
+                    intent.putExtra("carnum",data.get(position).getCarnum());
+                    intent.putExtra("model",data.get(position).getModel());
+                    intent.putExtra("delivers",data.get(position).getNdelivers());
+                    intent.putExtra("contact",data.get(position).getContact());
+                    intent.putExtra("stars",data.get(position).getStars());
                 startActivity(intent);
                 }
                 else

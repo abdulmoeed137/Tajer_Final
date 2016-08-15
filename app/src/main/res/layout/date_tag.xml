@@ -23,14 +23,15 @@
             android:text="2016"
             android:textColor="@android:color/black"
             android:layout_marginRight="5dp"
-            />
+            android:id="@+id/dd_year" />
 
 
         <tawseel.com.tajertawseel.CustomBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
            android:text="@string/march"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black"
+            android:id="@+id/dd_month" />
 
 
         <View

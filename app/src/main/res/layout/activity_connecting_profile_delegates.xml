@@ -55,7 +55,7 @@
                         android:layout_toLeftOf="@+id/image_view_contacts"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:id="@+id/DeligateName" />
+                        android:id="@+id/mname" />
 
                 </RelativeLayout>
 
@@ -105,7 +105,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:id="@+id/DeligateName2" />
+                            android:id="@+id/profile_name" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:id="@+id/Car" />
+                            android:id="@+id/profile_car" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:id="@+id/Model" />
+                            android:id="@+id/profile_model" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:id="@+id/CarNumber" />
+                            android:id="@+id/profile_carnum" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -273,7 +273,7 @@
                         android:textColor="@android:color/black"
                         android:layout_below="@id/contacts_headings"
                         android:layout_marginRight="20dp"
-                        android:id="@+id/Contact" />
+                        android:id="@+id/profile_contact" />
 
 
                     <ImageView
@@ -282,8 +282,7 @@
                         android:layout_marginLeft="20dp"
                         android:padding="3dp"
                         android:src="@drawable/phone_tjr_icon"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/BtnCall" />
+                        android:layout_centerVertical="true"/>
 
 
 
@@ -309,7 +308,7 @@
                     android:paddingTop="20dp">
 
 
-                    <RatingBar android:id="@+id/ratingbar"
+                    <RatingBar android:id="@+id/profile_ratingbar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
@@ -324,7 +323,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"/>
+                        android:text="2"
+                        android:id="@+id/profile_reviews" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -396,13 +396,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10:55 A.M."
+                            android:text="00:00 A.M."
                             android:textSize="10dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:text="25/5/2015"
+                            android:text="1/7/2016"
                             android:textSize="10dp"/>
 
                     </LinearLayout>
@@ -434,7 +434,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="5"
-                        android:textColor="@color/mainColor"/>
+                        android:textColor="@color/mainColor"
+                        android:id="@+id/profile_delivers" />
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:layout_width="wrap_content"

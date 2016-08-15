@@ -189,7 +189,7 @@
                         android:layout_height="wrap_content"
                         android:text="10:05 AM"
                         android:textColor="@color/mainColor"
-                       />
+                        android:id="@+id/gtime" />
 
 
 
@@ -201,7 +201,7 @@
                             android:textColor="@color/mainColor"
                             android:text="2016/3/5"
                             android:layout_marginLeft="10dp"
-                            />
+                            android:id="@+id/gdate" />
 
 
 
