@@ -27,6 +27,7 @@ public class DeligateRequest extends Service {
     private StringRequest request;
     String tmp = "";
     boolean keepRunning = true;
+    boolean changeActivity = false;
 
     public class ThreadThis implements Runnable {
 
@@ -63,6 +64,7 @@ public class DeligateRequest extends Service {
 
                                                 keepRunning = false;
                                                 Log.d("ServiceCheckAnder", keepRunning + "");
+                                                changeActivity = true;
 
 
                                                 // functions.RequestDeligateID=jsonObj.getString("status");
@@ -80,7 +82,12 @@ public class DeligateRequest extends Service {
                                                 it.putExtra("Longitude", jsonObj.getString("Longitude"));
                                                 it.putExtra("CarBrand", jsonObj.getString("CarBrand"));
                                                 it.putExtra("Contact", jsonObj.getString("Contact"));
-                                                getApplication().startActivity(it);
+                                                if(changeActivity != false){
+                                                    getApplication().startActivity(it);
+                                                    changeActivity = false;
+
+                                                }
+
                                                 stopSelf(service_id);
                                                 WaitingForAcceptanceActivity.c.finish();
                                                 break;
