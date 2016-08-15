@@ -50,12 +50,11 @@ public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCa
 
     double lat ;
     double lng ;
-
+static boolean keepRunning2=false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_delegate);
-        functions.keepRunning=false;
         TextView TextAvailableDeligates= (TextView)findViewById(R.id.TextAvailableDelegates);
         final TextView TextDeligateCarBrand= (TextView)findViewById(R.id.TextDeligateCarBrand);
         final TextView TextDeligateCarModel= (TextView)findViewById(R.id.TextDeligateCarModel);

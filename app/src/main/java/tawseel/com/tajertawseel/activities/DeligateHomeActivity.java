@@ -1,6 +1,7 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class DeligateHomeActivity extends BaseActivity {
             DeligateID = getIntent().getExtras().getString("DeligateID");
 
             dd.registerToken(token, DeligateID, wInfo.getMacAddress() + "");
+            Intent i = new Intent(DeligateHomeActivity.this,UpdateLocation.class);
+            startService(i);
         }
     }
 

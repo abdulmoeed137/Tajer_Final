@@ -35,6 +35,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
 //// for knowing the distance between the two points
         LatLng to = new LatLng(24.92,67.0297);/// destination
         LatLng from = new LatLng(24.9231,67.0204);//source point
@@ -46,7 +47,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void setupContents() {
-
+        Intent i = new Intent(HomeActivity.this,UpdateLocationSeller.class);
+        startService(i);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawer);
         mDrawerLayout.openDrawer(Gravity.RIGHT);
         uname = LoginActivity.uname;

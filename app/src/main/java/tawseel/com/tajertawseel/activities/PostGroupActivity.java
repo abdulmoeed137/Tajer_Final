@@ -182,7 +182,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng positionUpdate = origin;
+        LatLng positionUpdate = new LatLng(origin.latitude,origin.longitude);
      CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate,9);
         mMap.animateCamera(update);
 
