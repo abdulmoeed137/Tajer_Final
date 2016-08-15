@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -67,19 +68,19 @@ public class DeligateRequest extends Service {
                                                 // functions.RequestDeligateID=jsonObj.getString("status");
 
                                                 //commenting for testing
-//                                                Toast.makeText(DeligateRequest.this, "Deligate Accepted" + keepRunning, Toast.LENGTH_SHORT).show();
-//                                                Intent it = new Intent(DeligateRequest.this, ChooseDelegateActivity.class);
-//
-//                                                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                                it.putExtra("DeligateID", jsonObj.getString("status") + "");
-//                                                it.putExtra("Name", jsonObj.getString("Name") + "");
-//                                                it.putExtra("CarNo", jsonObj.getString("CarNo") + "");
-//                                                it.putExtra("CarModel", jsonObj.getString("CarModel") + "");
-//                                                it.putExtra("Latitude", jsonObj.getString("Latitude"));
-//                                                it.putExtra("Longitude", jsonObj.getString("Longitude"));
-//                                                it.putExtra("CarBrand", jsonObj.getString("CarBrand"));
-//                                                it.putExtra("Contact", jsonObj.getString("Contact"));
-//                                                getApplication().startActivity(it);
+                                                Toast.makeText(DeligateRequest.this, "Deligate Accepted" + keepRunning, Toast.LENGTH_SHORT).show();
+                                                Intent it = new Intent(DeligateRequest.this, ChooseDelegateActivity.class);
+
+                                                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                it.putExtra("DeligateID", jsonObj.getString("status") + "");
+                                                it.putExtra("Name", jsonObj.getString("Name") + "");
+                                                it.putExtra("CarNo", jsonObj.getString("CarNo") + "");
+                                                it.putExtra("CarModel", jsonObj.getString("CarModel") + "");
+                                                it.putExtra("Latitude", jsonObj.getString("Latitude"));
+                                                it.putExtra("Longitude", jsonObj.getString("Longitude"));
+                                                it.putExtra("CarBrand", jsonObj.getString("CarBrand"));
+                                                it.putExtra("Contact", jsonObj.getString("Contact"));
+                                                getApplication().startActivity(it);
                                                 stopSelf(service_id);
                                                 WaitingForAcceptanceActivity.c.finish();
                                                 break;
