@@ -27,7 +27,6 @@ public class DeligateRequest extends Service {
     private StringRequest request;
     String tmp = "";
     boolean keepRunning = true;
-    boolean changeActivity = false;
 
     public class ThreadThis implements Runnable {
 
@@ -64,7 +63,6 @@ public class DeligateRequest extends Service {
 
                                                 keepRunning = false;
                                                 Log.d("ServiceCheckAnder", keepRunning + "");
-                                                changeActivity = true;
 
 
                                                 // functions.RequestDeligateID=jsonObj.getString("status");
@@ -82,12 +80,7 @@ public class DeligateRequest extends Service {
                                                 it.putExtra("Longitude", jsonObj.getString("Longitude"));
                                                 it.putExtra("CarBrand", jsonObj.getString("CarBrand"));
                                                 it.putExtra("Contact", jsonObj.getString("Contact"));
-                                                if(changeActivity != false){
-                                                    getApplication().startActivity(it);
-                                                    changeActivity = false;
-
-                                                }
-
+                                                getApplication().startActivity(it);
                                                 stopSelf(service_id);
                                                 WaitingForAcceptanceActivity.c.finish();
                                                 break;
@@ -95,9 +88,15 @@ public class DeligateRequest extends Service {
 
                                             }
                                         }
+                                        if(!keepRunning)
+                                        {
+                                           requestQueue.cancelAll("request");
+                                        }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+
+
                                     ;
                                 }
                             },
@@ -110,7 +109,7 @@ public class DeligateRequest extends Service {
 
                     //dummy Adapter
                     // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
-
+                   jsonObjectRequest.setTag("request");
                     requestQueue.add(jsonObjectRequest);
 
                 } catch (InterruptedException e) {
