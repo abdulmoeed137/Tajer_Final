@@ -120,7 +120,7 @@ public class DeligateRequest extends Service {
                     if(keepRunning != false)
 
                     {
-                        requestQueue.add(request);
+                        requestQueue.add(jsonRequest);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -143,7 +143,7 @@ public class DeligateRequest extends Service {
                         Log.d("Volley", "onErrorResponse: " + error);
                     }
                 });
-        requestQueue.add(request);
+        requestQueue.add(jsonRequest);
         Log.d("Moeed", "finish");
         return START_STICKY;
     }
