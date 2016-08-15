@@ -1,12 +1,18 @@
 package tawseel.com.tajertawseel.adapters;
 
 import android.content.Context;
+import android.media.Rating;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.FavouriteDelegateItemData;
 
 /**
  * Created by Junaid-Invision on 7/30/2016.
@@ -15,22 +21,23 @@ public class DelegatesQuestionAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
-   public  DelegatesQuestionAdapter (Context c)
+    private ArrayList<FavouriteDelegateItemData> List=new ArrayList<>();
+   public  DelegatesQuestionAdapter (Context c,ArrayList<FavouriteDelegateItemData> list)
    {
+       List=list;
        context = c;
        inflater = LayoutInflater.from(c);
-
    }
 
 
     @Override
     public int getCount() {
-        return 10;
+        return List.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return List.get(position);
     }
 
     @Override
@@ -43,7 +50,13 @@ public class DelegatesQuestionAdapter extends BaseAdapter {
 
         if(convertView == null)
             convertView = inflater.inflate(R.layout.delegates_question_list_item, null,false);
-
+        TextView delivers=(TextView)convertView.findViewById(R.id.ndelivers);
+        RatingBar bar=(RatingBar)convertView.findViewById(R.id.ratingbar);
+        TextView name=(TextView)convertView.findViewById(R.id.delegate_name);
+        FavouriteDelegateItemData data=(FavouriteDelegateItemData) getItem(position);
+        delivers.setText(data.getNdelivers());
+        name.setText(data.getName());
+        bar.setRating(Float.parseFloat(data.getStars()));
         return convertView;
     }
 }

@@ -8,10 +8,28 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.adapters.DateOfConnectionsAdapter;
+import tawseel.com.tajertawseel.adapters.DelegatesQuestionAdapter;
 
 /**
  * Created by Junaid-Invision on 7/28/2016.
@@ -21,6 +39,8 @@ public class DateOfConnectionsActivity extends BaseActivity {
     private ImageView deleteIcon;
     private CustomBoldTextView title;
     private int selectedCount = 0;
+    private ArrayList<DateOfConnectionsData> data=new ArrayList<>();
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +55,51 @@ public class DateOfConnectionsActivity extends BaseActivity {
     public void setupComponents()
     {
         mLisView = (ListView)findViewById(R.id.connectionsListView);
-        mLisView.setAdapter(new DateOfConnectionsAdapter(DateOfConnectionsActivity.this));
+
+        StringRequest request = new StringRequest(Request.Method.POST,functions.add+"delivers.php", new Response.Listener<String>() {
+            public void onResponse(String response) {
+                try {
+                    JSONObject mainObj=new JSONObject(response);
+                    JSONArray jsonArr=mainObj.getJSONArray("info");
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                        DateOfConnectionsData tdata=new DateOfConnectionsData();
+                        tdata.setGid(jsonObj.getString("GroupID"));
+                        tdata.setDate(jsonObj.getString("DeliveryDate"));
+                        tdata.setGname(jsonObj.getString("name"));
+                        tdata.setTime(jsonObj.getString("Deliverytime"));
+                        tdata.setTitle("");
+                        data.add(tdata);
+                    }
+                    mLisView.setAdapter(new DateOfConnectionsAdapter(DateOfConnectionsActivity.this,data));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                };
+
+            }
+
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("id",HomeActivity.id);
+                hashMap.put("hash",HASH.getHash());
+                return hashMap;
+            }
+        };
+        try{
+            requestQueue= Volley.newRequestQueue(DateOfConnectionsActivity.this);
+            requestQueue.add(request);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(DateOfConnectionsActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
+        }
 
         mLisView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -51,7 +51,7 @@
                         android:textSize="12dp"
                         android:textColor="#44b1df"
                         android:layout_marginBottom="10dp"
-                        />
+                        android:id="@+id/delegate_name" />
 
 
                     <RatingBar android:id="@+id/ratingbar"
@@ -62,7 +62,7 @@
                         android:stepSize="1.0"
                         android:progressTint="#f7941e"
                         style="?android:attr/ratingBarStyleSmall"
-                        ></RatingBar>
+                        android:rating="5"></RatingBar>
 
 
 
@@ -86,7 +86,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="5"
-                        android:textColor="@color/mainColor"/>
+                        android:textColor="@color/mainColor"
+                        android:id="@+id/ndelivers" />
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:layout_width="wrap_content"

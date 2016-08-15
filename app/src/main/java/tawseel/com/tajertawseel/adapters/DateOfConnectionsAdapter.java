@@ -5,8 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.DateOfConnectionsData;
 
 /**
  * Created by Junaid-Invision on 7/29/2016.
@@ -16,20 +20,22 @@ public class DateOfConnectionsAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private Context context;
+    private ArrayList<DateOfConnectionsData> List=new ArrayList<>();
 
-    public DateOfConnectionsAdapter (Context c)
+    public DateOfConnectionsAdapter (Context c,ArrayList<DateOfConnectionsData> list)
     {
-       context =c;
+        List=list;
+        context =c;
         inflater = LayoutInflater.from(c);
     }
     @Override
     public int getCount() {
-        return 10;
+        return List.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return List.get(position);
     }
 
     @Override
@@ -41,10 +47,26 @@ public class DateOfConnectionsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if(convertView== null ){
-        if(position == 7 || position == 5 || position== 1)
+
+
+            DateOfConnectionsData data=(DateOfConnectionsData) getItem(position);
+        if(data.getTitle().compareTo("")!=0)
         convertView = inflater.inflate(R.layout.date_tag,null,false);
         else
-        convertView = inflater.inflate(R.layout.date_of_connections_list_item,null,false);
+        {
+            convertView = inflater.inflate(R.layout.date_of_connections_list_item,null,false);
+            TextView gname=(TextView)convertView.findViewById(R.id.group_name);
+            TextView gid=(TextView)convertView.findViewById(R.id.GroupID);
+            TextView time=(TextView)convertView.findViewById(R.id.gtime);
+            TextView date=(TextView)convertView.findViewById(R.id.gdate);
+            gname.setText(data.getGname());
+            gid.setText(data.getGid());
+            time.setText(data.getTime());
+            date.setText(data.getDate());
+        }
+
+
+
         }
 
         return convertView;
