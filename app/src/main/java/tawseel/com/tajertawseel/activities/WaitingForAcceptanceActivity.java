@@ -2,6 +2,8 @@ package tawseel.com.tajertawseel.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -46,7 +48,8 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
  * Created by Junaid-Invision on 7/16/2016.
  */
 public class WaitingForAcceptanceActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
-
+    static PendingIntent pendingIntent;
+    static AlarmManager manager;
     LocationManager locationManager;
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -62,6 +65,11 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceptance_waiting);
+        Intent alarmIntent = new Intent(this, DeligateRequest.class);
+
+      alarmIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+
         c=this;
         GrpID=getIntent().getExtras().getString("GroupID");
 
@@ -221,8 +229,12 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         requestQueue.add(jsonObjectRequest);
     }
     public void start() {
-        Intent i = new Intent(WaitingForAcceptanceActivity.this,DeligateRequest.class);
-        startService(i);
+   //     Toast.makeText(WaitingForAcceptanceActivity.this,"yes1",Toast.LENGTH_SHORT).show();
+        manager= (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        int interval = 3000;
+
+
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
 
 
     }
@@ -231,8 +243,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     {
         // code here to show dialog
 
-        Intent i = new Intent(WaitingForAcceptanceActivity.this,DeligateRequest.class);
-        stopService(i);
+      manager.cancel(pendingIntent);
         finish();
     }
 }
