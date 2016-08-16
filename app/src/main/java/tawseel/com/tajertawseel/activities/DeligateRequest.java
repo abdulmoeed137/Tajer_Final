@@ -30,7 +30,7 @@ public class DeligateRequest extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        //Toast.makeText(context,"yes2",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Checking Requests",Toast.LENGTH_SHORT).show();
         requestQueue=Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add + "DeligateRequest.php?id=" + WaitingForAcceptanceActivity.GrpID,
                 new Response.Listener<JSONObject>() {

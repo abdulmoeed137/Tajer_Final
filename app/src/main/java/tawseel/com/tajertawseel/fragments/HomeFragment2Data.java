@@ -4,7 +4,7 @@ package tawseel.com.tajertawseel.fragments;
  * Created by AbdulMoeed on 8/11/2016.
  */
 public class HomeFragment2Data {
-    private String Name,GroupID,StatusCode,ConfirmationCode,DeliveryCode,ItemPrice,PriceRange,Members,DeligateContact;
+    private String Name,GroupID,StatusCode,ConfirmationCode,DeliveryCode,ItemPrice,PriceRange,Members,DeligateContact,DeligateName,DeligateID;
 
     public String getName() {
         return Name;
@@ -78,5 +78,21 @@ public class HomeFragment2Data {
 
     public void setDeligateContact(String deligateContact) {
         DeligateContact = deligateContact;
+    }
+
+    public String getDeligateName() {
+        return DeligateName;
+    }
+
+    public void setDeligateName(String deligateName) {
+        DeligateName = deligateName;
+    }
+
+    public String getDeligateID() {
+        return DeligateID;
+    }
+
+    public void setDeligateID(String deligateID) {
+        DeligateID = deligateID;
     }
 }

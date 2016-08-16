@@ -231,7 +231,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     public void start() {
    //     Toast.makeText(WaitingForAcceptanceActivity.this,"yes1",Toast.LENGTH_SHORT).show();
         manager= (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 3000;
+        int interval = 2000;
 
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
