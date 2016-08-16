@@ -6,6 +6,16 @@ package tawseel.com.tajertawseel.activities;
 
 public class FavouriteDelegateItemData {
     private String name;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
     private String ndelivers;
     private String car;
     private String carnum;

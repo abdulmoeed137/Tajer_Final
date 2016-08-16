@@ -69,7 +69,13 @@ public class DateOfConnectionsActivity extends BaseActivity {
                         tdata.setGname(jsonObj.getString("name"));
                         tdata.setTime(jsonObj.getString("Deliverytime"));
                         tdata.setTitle("");
-                        data.add(tdata);
+                        tdata.setDname(jsonObj.getString("Name"));
+                        tdata.setDelivers(jsonObj.getString("orders"));
+                        //Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
+                        //idelivers/=100.0f;
+                        //idelivers*=5.0f;
+                        //tdata.setStars(String.valueOf(idelivers));
+                        //data.add(tdata);
                     }
                     mLisView.setAdapter(new DateOfConnectionsAdapter(DateOfConnectionsActivity.this,data));
                 } catch (JSONException e) {

@@ -9,7 +9,34 @@ public class DateOfConnectionsData {
     String gid;
     String gname;
     String date;
+    String dname;
+    String delivers;
 
+    public String getStars() {
+        return stars;
+    }
+
+    public void setStars(String stars) {
+        this.stars = stars;
+    }
+
+    public String getDelivers() {
+        return delivers;
+    }
+
+    public void setDelivers(String delivers) {
+        this.delivers = delivers;
+    }
+
+    public String getDname() {
+        return dname;
+    }
+
+    public void setDname(String dname) {
+        this.dname = dname;
+    }
+
+    String stars;
     public String getTime() {
         return time;
     }
