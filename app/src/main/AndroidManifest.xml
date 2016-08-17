@@ -19,11 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".activities.SplashScreen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.BaseActivity" />
@@ -67,7 +67,16 @@
         <activity android:name=".activities.ConnectingProfileDelegates"/>
         <activity android:name=".activities.DeliveredNowActivity"/>
         <activity android:name=".activities.FinancialRequestActivity"/>
-        <activity android:name=".activities.DeligateHomeActivity"/>
+        <activity android:name=".activities.DeligateHomeActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
         <activity android:name=".activities.DeligateNotificationData"/>
         <service android:name=".activities.DeligateRequest"
             android:exported="false">
