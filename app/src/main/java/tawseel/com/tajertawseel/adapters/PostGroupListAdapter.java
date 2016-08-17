@@ -59,9 +59,11 @@ public class PostGroupListAdapter extends BaseAdapter {
     ArrayList<PostGroupData> List;
     private RequestQueue requestQueue;
     ArrayList<PostGroupListData> list = new ArrayList<>();
+    String Flag;
 
-    public PostGroupListAdapter (Context c   ,ArrayList<PostGroupData> list)
+    public PostGroupListAdapter (Context c   ,ArrayList<PostGroupData> list,String Flag)
     {
+        this.Flag=Flag;
         context = c;
         requestQueue = Volley.newRequestQueue(context);
         inflater = LayoutInflater.from(c);
@@ -214,7 +216,11 @@ public class PostGroupListAdapter extends BaseAdapter {
 
 
     //  CustomBoldTextView textView = (CustomBoldTextView) v.findViewById(R.id.start_delivery_button);
-
+if (Flag.equals("false"))
+{
+    holder.OrderDeleteButton.setVisibility(View.GONE);
+    holder.OrderMoveButton.setVisibility(View.GONE);
+}
       holder.OrderMoveButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {

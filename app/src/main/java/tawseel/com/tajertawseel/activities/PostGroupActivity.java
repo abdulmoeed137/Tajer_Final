@@ -62,19 +62,31 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
 
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_post_group);
+        TextView ButtonSave= (TextView)findViewById(R.id.ButtonSave);
+        ButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-       // origin= new LatLng(21.470285, 39.238547);
-   //     LinearLayout ll = (LinearLayout)findViewById(R.id.LayoutAdd) ;
-     //   if (getIntent().getExtras().getBoolean("flag") == false)
-       // {
-         //   ll.setVisibility(View.GONE);
-        //}
+            }
+        });
+        TextView ButtonContinue= (TextView)findViewById(R.id.ButtonContinue);
+        TextView ButtonCancel= (TextView)findViewById(R.id.ButtonCancel);
+        // origin= new LatLng(21.470285, 39.238547);
+       LinearLayout ll = (LinearLayout)findViewById(R.id.LayoutAdd) ;
+        if (getIntent().getExtras().getString("flag").equals("false"))
+        {
+
+            ll.setVisibility(View.GONE);
+            ButtonCancel.setVisibility(View.GONE);
+            ButtonCancel.setVisibility(View.GONE);
+            ButtonSave.setVisibility(View.GONE);
+            ButtonContinue.setVisibility(View.GONE);
+        }
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -144,7 +156,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
                             {
                                 addMarker(Double.parseDouble(list.get(i).getLatitude()),Double.parseDouble(list.get(i).getLongitude()),"Customer", R.drawable.person_marker);
                             }
-                            productList.setAdapter(new PostGroupListAdapter(PostGroupActivity.this,list));
+                            productList.setAdapter(new PostGroupListAdapter(PostGroupActivity.this,list,getIntent().getExtras().getString("flag")));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -97,7 +97,7 @@ public class delegateHomeFragment2 extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                Intent i = new Intent (getActivity(), PostGroupActivity.class);
                 i.putExtra("id",list.get(position).getGroupID().toString());
-                i.putExtra("flag",false);
+                i.putExtra("flag","false");
 
                 startActivity(i);
             }

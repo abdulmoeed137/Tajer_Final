@@ -1,15 +1,11 @@
 package tawseel.com.tajertawseel.activities;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +55,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
         TextDeligateCarNumber.setText(getIntent().getExtras().getString("CarNo"));
         TextDeligateContact.setText(getIntent().getExtras().getString("DeligateContact"));
         TextDeligateName.setText(getIntent().getExtras().getString("DeligateName"));
-        continuee = (TextView)findViewById(R.id.continue_button);
+        continuee = (TextView)findViewById(R.id.ButtonContinue);
         continuee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
