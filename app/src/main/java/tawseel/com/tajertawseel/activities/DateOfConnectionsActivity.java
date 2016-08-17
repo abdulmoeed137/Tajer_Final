@@ -75,7 +75,7 @@ public class DateOfConnectionsActivity extends BaseActivity {
                         //idelivers/=100.0f;
                         //idelivers*=5.0f;
                         //tdata.setStars(String.valueOf(idelivers));
-                        //data.add(tdata);
+                        data.add(tdata);
                     }
                     mLisView.setAdapter(new DateOfConnectionsAdapter(DateOfConnectionsActivity.this,data));
                 } catch (JSONException e) {
