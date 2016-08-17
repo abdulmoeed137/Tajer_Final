@@ -66,6 +66,7 @@ private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
                     for (int i = 0; i < jsonArr.length(); i++) {
                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
                         FavouriteDelegateItemData tdata=new FavouriteDelegateItemData();
+                        tdata.setId(jsonObj.getString("DeligateID"));
                         tdata.setName(jsonObj.getString("Name"));
                         tdata.setCar(jsonObj.getString("CarBrand"));
                         tdata.setCarnum(jsonObj.getString("CarNo"));
@@ -115,13 +116,7 @@ private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!longClick){
                 Intent intent = new Intent(DelegatesQuestionActivity.this,ConnectingProfileDelegates.class);
-                    intent.putExtra("name",data.get(position).getName());
-                    intent.putExtra("car",data.get(position).getCar());
-                    intent.putExtra("carnum",data.get(position).getCarnum());
-                    intent.putExtra("model",data.get(position).getModel());
-                    intent.putExtra("delivers",data.get(position).getNdelivers());
-                    intent.putExtra("contact",data.get(position).getContact());
-                    intent.putExtra("stars",data.get(position).getStars());
+                    intent.putExtra("DeligateID",data.get(position).getId());
                 startActivity(intent);
                 }
                 else

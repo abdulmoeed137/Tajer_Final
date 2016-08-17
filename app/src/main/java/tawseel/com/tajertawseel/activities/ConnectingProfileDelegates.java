@@ -6,14 +6,30 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.adapters.DelegatesQuestionAdapter;
 
 /**
  * Created by Junaid-Invision on 7/30/2016.
@@ -21,44 +37,88 @@ import tawseel.com.tajertawseel.R;
 public class ConnectingProfileDelegates extends BaseActivity {
 
 
+    private RequestQueue requestQueue;
+    String id="";
+    TextView main_name;
+    TextView name;
+    TextView car;
+    TextView num;
+    TextView model;
+    TextView contact;
+    TextView delivers;
+    TextView reviews;
+    RatingBar rating;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connecting_profile_delegates);
         Bundle extras = getIntent().getExtras();
-        FavouriteDelegateItemData temp=new FavouriteDelegateItemData();
+         main_name = (TextView) findViewById(R.id.mname);
+         name = (TextView) findViewById(R.id.profile_name);
+         car = (TextView) findViewById(R.id.profile_car);
+         num = (TextView) findViewById(R.id.profile_carnum);
+         model = (TextView) findViewById(R.id.profile_model);
+         contact = (TextView) findViewById(R.id.profile_contact);
+         delivers = (TextView) findViewById(R.id.profile_delivers);
+        reviews = (TextView) findViewById(R.id.profile_reviews);
+        rating=(RatingBar)findViewById(R.id.profile_ratingbar);
 
         if (extras != null) {
-            temp.setName(extras.getString("name"));
-            temp.setCar(extras.getString("car"));
-            temp.setCarnum(extras.getString("carnum"));
-            temp.setModel(extras.getString("model"));
-            temp.setNdelivers(extras.getString("delivers"));
-            temp.setContact(extras.getString("contact"));
-            temp.setStars(extras.getString("stars"));
+            id=extras.getString("DeligateID");
         }
 
-        TextView main_name = (TextView) findViewById(R.id.mname);
-        TextView name = (TextView) findViewById(R.id.profile_name);
-        TextView car = (TextView) findViewById(R.id.profile_car);
-        TextView num = (TextView) findViewById(R.id.profile_carnum);
-        TextView model = (TextView) findViewById(R.id.profile_model);
-        TextView contact = (TextView) findViewById(R.id.profile_contact);
-        TextView delivers = (TextView) findViewById(R.id.profile_delivers);
-        TextView reviews = (TextView) findViewById(R.id.profile_reviews);
-        RatingBar rating=(RatingBar)findViewById(R.id.profile_ratingbar);
+        StringRequest request = new StringRequest(Request.Method.POST,functions.add+"delegates.php", new Response.Listener<String>() {
+            public void onResponse(String response) {
+                try {
+                    JSONObject mainObj=new JSONObject(response);
+                    JSONArray jsonArr=mainObj.getJSONArray("info");
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                        FavouriteDelegateItemData tdata=new FavouriteDelegateItemData();
+                        main_name.setText(jsonObj.getString("Name"));
+                        name.setText(jsonObj.getString("Name"));
+                        car.setText(jsonObj.getString("CarBrand"));
+                        num.setText(jsonObj.getString("CarNo"));
+                        model.setText(jsonObj.getString("CarModel"));
+                        contact.setText(jsonObj.getString("Contact"));
+                        delivers.setText(jsonObj.getString("delivers"));
+                        reviews.setText(jsonObj.getString("delivers"));
+                        Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
+                        idelivers/=100.0f;
+                        idelivers*=5.0f;
+                        rating.setRating(idelivers);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                };
 
-        main_name.setText(temp.getName());
-        name.setText(temp.getName());
-        car.setText(temp.getCar());
-        num.setText(temp.getCarnum());
-        model.setText(temp.getModel());
-        contact.setText(temp.getContact());
-        delivers.setText(temp.getNdelivers());
-        reviews.setText(temp.getNdelivers());
-        rating.setRating(Float.parseFloat(temp.getStars()));
+            }
 
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("id",HomeActivity.id);
+                hashMap.put("hash",HASH.getHash());
+                hashMap.put("did",id);
+                return hashMap;
+            }
+        };
+        try{
+            requestQueue= Volley.newRequestQueue(ConnectingProfileDelegates.this);
+            requestQueue.add(request);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(ConnectingProfileDelegates.this,"Request Issue",Toast.LENGTH_SHORT).show();
+        }
         setUpToolbar();
     }
 

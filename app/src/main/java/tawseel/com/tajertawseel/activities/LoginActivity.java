@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 else
                 {
-                LoginID=2+"";
+                LoginID=1+"";
                 uname="tajer";
                 //if success
               //  progress.dismiss();

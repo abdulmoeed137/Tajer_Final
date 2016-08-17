@@ -78,8 +78,8 @@
 
         </activity>
         <activity android:name=".activities.DeligateNotificationData"/>
-        <service android:name=".activities.DeligateRequest"
-            android:exported="false">
+        <receiver android:name=".activities.DeligateRequest"
+            >
             <intent-filter>
 
 
@@ -87,7 +87,7 @@
 
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
-        </service>
+        </receiver>
         <service
             android:name=".firebase.FirebaseMessagingService">
             <intent-filter>

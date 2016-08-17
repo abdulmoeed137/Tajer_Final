@@ -70,6 +70,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
@@ -578,14 +580,21 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         lp.gravity = Gravity.CENTER;
         lp.dimAmount = 0.3f;
         final EditText input=(EditText)dialog.findViewById(R.id.new_item_name_et);
-
+        final ExecutorService mThreadPool = Executors.newSingleThreadScheduledExecutor();
        dialog.findViewById(R.id.OK).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    getLocationFromAddress(input.getText().toString());
+                    mThreadPool.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            getLocationFromAddress(input.getText().toString());
+                            requestDirection();
+                        }
+                    });
+
                     Toast.makeText(AddNewOrderActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
-                    requestDirection();
+
                     dialog.cancel();
                 }
                 catch (Exception e)

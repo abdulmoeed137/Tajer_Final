@@ -73,6 +73,8 @@ public class HomeFragment2 extends Fragment {
                                 item.setConfirmationCode(jsonObj.getString("ConfirmationCode"));
                                 item.setDeliveryCode(jsonObj.getString("DeliveryCode"));
                                 item.setDeligateContact(jsonObj.getString("DeligateNumber"));
+                                item.setDeligateID(jsonObj.getString("DeligateID"));
+                                item.setDeligateName(jsonObj.getString("DeligateName"));
 
                                 list.add(item);
                             }
@@ -102,6 +104,13 @@ public class HomeFragment2 extends Fragment {
                 Intent i = new Intent (getActivity(), DeliveredNowActivity.class);
                 i.putExtra("GroupID",list.get(position).getGroupID().toString());
                 i.putExtra("ConfirmationCode",list.get(position).getConfirmationCode().toString());
+                i.putExtra("StatusCode",list.get(position).getStatusCode()).toString();
+                i.putExtra("GroupName",list.get(position).getName().toString());
+                i.putExtra("DeligateName",list.get(position).getDeligateName().toString());
+                i.putExtra("ItemPrice",list.get(position).getItemPrice().toString());
+                i.putExtra("PriceRange",list.get(position).getPriceRange()).toString();
+                i.putExtra("DeligateNumber",list.get(position).getDeligateContact()).toString();
+                i.putExtra("DeligateID",list.get(position).getDeligateID().toString());
                 startActivity(i);
             }
         });
