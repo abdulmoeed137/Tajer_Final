@@ -26,7 +26,7 @@ import tawseel.com.tajertawseel.R;
 public class LoginActivity extends BaseActivity {
 
     ProgressDialog progress;
-    static String LoginID;
+    public static String LoginID,DeligateID;
     EditText email_ET, pass_ET;
     private RequestQueue requestQueue;
     private static final String URL = functions.add + "login.php";
@@ -55,6 +55,7 @@ public class LoginActivity extends BaseActivity {
 
                     Intent i = new Intent(LoginActivity.this, DeligateHomeActivity.class);
                     i.putExtra("DeligateID",email_ET.getText().toString());
+                    DeligateID=email_ET.getText().toString();
                     i.putExtra("flag",true);
                     Toast.makeText(getApplicationContext(), "Welcome "+email_ET.getText().toString(), Toast.LENGTH_SHORT).show();
                     //Intent i = new Intent (LoginActivity.this,FinancialRequestActivity.class);

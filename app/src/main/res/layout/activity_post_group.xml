@@ -43,29 +43,36 @@
                 android:background="@android:color/white">
 
 
-
-                <tawseel.com.tajertawseel.CustomBoldTextView
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/mainColor"
-                    android:text="@string/post_your_request"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="18dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/LayoutAdd">
 
-                    android:id="@+id/postText"/>
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mainColor"
+                        android:text="@string/post_your_request"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="18dp"
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:id="@+id/post_your_request_button"
-                    android:layout_height="30dp"
-                    android:background="@drawable/circle_border"
-                    android:src="@drawable/plus_icon"
-                    android:layout_toRightOf="@+id/postText"
-                    android:layout_marginLeft="10dp"
-                    android:layout_centerVertical="true"
-                    android:padding="5dp"
-                    />
+                        android:id="@+id/postText"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:id="@+id/post_your_request_button"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_border"
+                        android:src="@drawable/plus_icon"
+                        android:layout_toRightOf="@+id/postText"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"
+                        android:padding="5dp"
+                        />
+                </LinearLayout>
 
 
                 <tawseel.com.tajertawseel.CustomBoldTextView

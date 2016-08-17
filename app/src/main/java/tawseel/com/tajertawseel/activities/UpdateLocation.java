@@ -212,7 +212,7 @@ public class UpdateLocation extends Service implements LocationListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("id","4");
+                hashMap.put("id",LoginActivity.DeligateID+"");
                 hashMap.put("hash", "CCB612R");
                 hashMap.put("lat",location.getLatitude()+"");
                 hashMap.put("lon",location.getLongitude()+"");

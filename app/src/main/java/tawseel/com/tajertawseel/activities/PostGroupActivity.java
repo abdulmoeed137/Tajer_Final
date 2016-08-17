@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
     private RequestQueue requestQueue;
     ArrayList<PostGroupData> list = new ArrayList<>();;
     private TextView total_orders;
-    private GoogleMap mMap;
+    private GoogleMap mMap=null;
     LatLng origin ;
     LocationManager locationManager;
     // The minimum distance to change Updates in meters
@@ -67,6 +68,13 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_post_group);
+
+       // origin= new LatLng(21.470285, 39.238547);
+   //     LinearLayout ll = (LinearLayout)findViewById(R.id.LayoutAdd) ;
+     //   if (getIntent().getExtras().getBoolean("flag") == false)
+       // {
+         //   ll.setVisibility(View.GONE);
+        //}
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -85,8 +93,7 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
                 this);
         try
         {
-           origin= new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude());
-
+           origin= new LatLng(LocationManage.Lat,LocationManage.Long);
         }
         catch (Exception e)
         {
@@ -209,7 +216,19 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationChanged(Location location) {
-        origin= new LatLng(location.getLatitude(),location.getLongitude());
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
+        LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
 
     }
 

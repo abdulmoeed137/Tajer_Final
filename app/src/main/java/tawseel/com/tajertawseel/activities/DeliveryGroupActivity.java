@@ -131,6 +131,7 @@ try {
                Intent i = new Intent(DeliveryGroupActivity.this,PostGroupActivity.class);
 
                 i.putExtra("id",list.get(position).getGrpID()+"");
+                   i.putExtra("flag",true);
                  startActivity(i);
 
                    }
