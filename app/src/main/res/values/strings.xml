@@ -158,4 +158,8 @@
     <string name="balance_delegate">رصيد المندوب:</string>
     <string name="balance_dealer_connected">رصيد تاجر توصيل</string>
     <string name="financial_history_of_Request">التاريخ المالي للطلب</string>
+    <string name="available">متاح</string>
+    <string name="confirm_status_busy">هل أنت متأكد من تغيير حالتك إلى مشغول؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
 </resources>

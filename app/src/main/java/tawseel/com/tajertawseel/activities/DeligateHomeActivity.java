@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import tawseel.com.tajertawseel.R;
-import tawseel.com.tajertawseel.adapters.HomePagerAdapter;
+import tawseel.com.tajertawseel.adapters.DelegatesHomeAdapter;
 
 /**
  * Created by AbdulMoeed on 8/13/2016.
@@ -54,7 +54,7 @@ public class DeligateHomeActivity extends BaseActivity {
         homePager = (ViewPager) findViewById(R.id.homePager);
         homeTabLayout = (TabLayout) findViewById(R.id.home_tabLayout);
 
-        homePager.setAdapter(new HomePagerAdapter(getSupportFragmentManager()));
+        homePager.setAdapter(new DelegatesHomeAdapter(getSupportFragmentManager()));
         homeTabLayout.setupWithViewPager(homePager);
 
         LayoutInflater inflater = LayoutInflater.from(this);
