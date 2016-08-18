@@ -18,6 +18,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.DeligateNotificationData;
+import tawseel.com.tajertawseel.activities.NotificationOrderDetails;
 import tawseel.com.tajertawseel.adapters.OrdeDialogueAdapter;
 
 /**
@@ -32,8 +33,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void showNotification(String message,String GroupID) {
 
-        Intent i = new Intent(this,DeligateNotificationData.class);
-        i.putExtra("GroupID",GroupID);
+        Intent i = new Intent(this,NotificationOrderDetails.class);
+        i.putExtra("id",GroupID);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);

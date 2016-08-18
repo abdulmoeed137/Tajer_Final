@@ -111,6 +111,8 @@ public class UpdateLocation extends Service implements LocationListener {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
+        LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(flag){
             flag=false;

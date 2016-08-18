@@ -55,7 +55,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
         TextDeligateCarNumber.setText(getIntent().getExtras().getString("CarNo"));
         TextDeligateContact.setText(getIntent().getExtras().getString("DeligateContact"));
         TextDeligateName.setText(getIntent().getExtras().getString("DeligateName"));
-        continuee = (TextView)findViewById(R.id.ButtonContinue);
+        continuee = (TextView)findViewById(R.id.ButtonAccept);
         continuee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

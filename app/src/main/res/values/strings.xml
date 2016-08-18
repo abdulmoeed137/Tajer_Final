@@ -101,7 +101,7 @@
         <item>بعيد جدًا ( 50 ريال)ا</item>
     </string-array>
 
-
+<string name="accept">قبول</string>
     <string name="waiting_for_acceptance">انتظار قبول مندوب rep</string>
     <string name="cancelling_order">إلغاء الطلب</string>
     <string name="title_activity_sample">sample</string>

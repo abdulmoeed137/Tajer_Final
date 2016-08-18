@@ -89,8 +89,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
                 this);
         try {
-            origin = new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(), locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude());
-
+            origin = new LatLng(LocationManage.Lat,LocationManage.Long);
         } catch (Exception e) {
 
             Toast.makeText(WaitingForAcceptanceActivity.this, "No Old Location Saved", Toast.LENGTH_SHORT).show();
@@ -147,27 +146,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
 
         mMap.addMarker(markerOptions);
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
 
-
-                if (marker.getTitle().equals("Car")) {
-                    double latitude = marker.getPosition().latitude;
-                    double longitude = marker.getPosition().longitude;
-
-                    Log.d("Latitide , Longitide", "" + latitude + " " + longitude);
-
-                    Intent i = new Intent(WaitingForAcceptanceActivity.this, ChooseDelegateActivity.class);
-                    i.putExtra("destLat", 24.9033f);
-                    i.putExtra("destLng", 67.0346f);
-                    i.putExtra("lat", (double) latitude);
-                    i.putExtra("lng", (double) longitude);
-                    startActivity(i);
-                }
-                return false;
-            }
-        });
 //        LatLng latLng = new LatLng(lat,lng);
 //        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, Application.DEFAULT_ZOOM);
 //        mMap.animateCamera(update);
@@ -176,8 +155,18 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
 
     @Override
     public void onLocationChanged(Location location) {
-        origin = new LatLng(location.getLatitude(), location.getLongitude());
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
+        LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
 
     }
 

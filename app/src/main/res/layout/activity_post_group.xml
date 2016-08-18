@@ -120,7 +120,7 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:divider="@android:color/transparent"
@@ -205,14 +205,14 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="5dp"
-                android:id="@+id/ButtonContinue"
+                android:id="@+id/ButtonAccept"
                 android:layout_alignParentRight="true"
                 android:textSize="16dp"
                 android:textColor="@android:color/white"
                 android:layout_height="40dp"
                 android:background="@color/mainColor"
                 android:gravity="center"
-                android:text="@string/delivery_start"
+                android:text="@string/accept"
                 />
 
 
@@ -223,7 +223,7 @@
                 android:layout_marginRight="15dp"
                 android:id="@+id/ButtonSave"
                 android:textSize="16dp"
-                android:layout_toLeftOf="@+id/ButtonContinue"
+                android:layout_toLeftOf="@+id/ButtonAccept"
                 android:layout_height="40dp"
                 android:background="@drawable/rectangle"
                 android:gravity="center"

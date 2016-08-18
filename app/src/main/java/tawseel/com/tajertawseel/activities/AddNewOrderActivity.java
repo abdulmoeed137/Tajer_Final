@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
@@ -68,7 +67,7 @@ import tawseel.com.tajertawseel.adapters.ListPopupAdapter;
 /**
  * Created by Junaid-Invision on 7/10/2016.
  */
-public class AddNewOrderActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback, DirectionCallback, android.location.LocationListener {
+public class AddNewOrderActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback, DirectionCallback {
 //okw
 
     private ProgressDialog progress;
@@ -81,7 +80,6 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     public static ListView productsList;
     public  static Context context;
     LinearLayout postnewLayout;
-    LocationManager locationManager;
     boolean isGPSEnabled = false;
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -121,28 +119,13 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
 
         cancel=(TextView)findViewById(R.id.cancel_button);
         save=(TextView)findViewById(R.id.protection_button);
-        continue_b=(TextView)findViewById(R.id.ButtonContinue);
+        continue_b=(TextView)findViewById(R.id.ButtonAccept);
 
         context=this;
 
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentationstr
-            // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(AddNewOrderActivity.this, "Location Permission Required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                this);
         try
         {
-            origin=new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude());
+            origin=new LatLng(LocationManage.Lat,LocationManage.Long);
         }
         catch (Exception e)
         {
@@ -528,33 +511,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     public void onDirectionFailure(Throwable t) {
 
     }
-
-
-    @Override
-    public void onLocationChanged(Location location) {
-        origin= new LatLng(location.getLatitude(), location.getLongitude());
-
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(AddNewOrderActivity.this, "Location is Off!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-
-    }
-
-    void builderWithBtn() {
+ void builderWithBtn() {
         final Dialog dialog = new Dialog(AddNewOrderActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);

@@ -1,5 +1,9 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,13 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.adapters.DelegatesHomeAdapter;
+import tawseel.com.tajertawseel.firebase.FirebaseInstanceIDService;
 
 /**
  * Created by AbdulMoeed on 8/13/2016.
  */
-public class DeligateHomeActivity extends BaseActivity {
+public class DeligateHomeActivity extends BaseActivity  {
     static String DeligateID;
     private ViewPager homePager;
     private TabLayout homeTabLayout;
@@ -28,25 +36,25 @@ public class DeligateHomeActivity extends BaseActivity {
 
 
     private void setUpContents() {
-//        boolean CheckLogin=false;
-//        try {
-//          CheckLogin = getIntent().getExtras().getBoolean("flag");
-//        }
-//        catch (Exception e)
-//        {}
-//        if (CheckLogin) {
-//            CheckLogin=false;
-//            FirebaseMessaging.getInstance().subscribeToTopic("test");
-//            FirebaseInstanceIDService dd = new FirebaseInstanceIDService();
-//            String token = FirebaseInstanceId.getInstance().getToken();
-//            WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-//            WifiInfo wInfo = wifiManager.getConnectionInfo();
-//            DeligateID = getIntent().getExtras().getString("DeligateID");
-//
-//            dd.registerToken(token, DeligateID, wInfo.getMacAddress() + "");
-//            Intent i = new Intent(DeligateHomeActivity.this,UpdateLocation.class);
-//            startService(i);
-//        }
+       boolean CheckLogin=false;
+        try {
+          CheckLogin = getIntent().getExtras().getBoolean("flag");
+        }
+        catch (Exception e)
+        {}
+        if (CheckLogin) {
+            CheckLogin=false;
+            FirebaseMessaging.getInstance().subscribeToTopic("test");
+            FirebaseInstanceIDService dd = new FirebaseInstanceIDService();
+            String token = FirebaseInstanceId.getInstance().getToken();
+            WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wInfo = wifiManager.getConnectionInfo();
+            DeligateID = getIntent().getExtras().getString("DeligateID");
+
+            dd.registerToken(token, DeligateID, wInfo.getMacAddress() + "");
+            Intent i = new Intent(DeligateHomeActivity.this,UpdateLocation.class);
+            startService(i);
+        }
 
 
 
