@@ -46,7 +46,7 @@
         android:background="@android:color/white">
 
         <!-- drawer content -->
-        <include layout="@layout/drawer_content"/>
+        <include layout="@layout/drawer_content_layout2"/>
 
 
     </LinearLayout>

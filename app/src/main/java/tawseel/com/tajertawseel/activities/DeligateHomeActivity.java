@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -22,21 +24,26 @@ import tawseel.com.tajertawseel.firebase.FirebaseInstanceIDService;
 /**
  * Created by AbdulMoeed on 8/13/2016.
  */
-public class DeligateHomeActivity extends BaseActivity  {
+public class DeligateHomeActivity extends BaseActivity implements View.OnClickListener {
     static String DeligateID;
     private ViewPager homePager;
     private TabLayout homeTabLayout;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.button_screen);
         setUpContents();
+        setupListeners();
     }
 
 
     private void setUpContents() {
        boolean CheckLogin=false;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawer);
+        mDrawerLayout.openDrawer(Gravity.RIGHT);
+
         try {
           CheckLogin = getIntent().getExtras().getBoolean("flag");
         }
@@ -86,4 +93,26 @@ public class DeligateHomeActivity extends BaseActivity  {
        // setupListeners();
     }
 
+    public void setupListeners() {
+       // mDrawerLayout.findViewById(R.id.option1).setOnClickListener(this);
+        //mDrawerLayout.findViewById(R.id.option2).setOnClickListener(this);
+        mDrawerLayout.findViewById(R.id.option3).setOnClickListener(this);
+        mDrawerLayout.findViewById(R.id.option4).setOnClickListener(this);
+        mDrawerLayout.findViewById(R.id.option5).setOnClickListener(this);
+        mDrawerLayout.findViewById(R.id.option6).setOnClickListener(this);
+        mDrawerLayout.findViewById(R.id.option7).setOnClickListener(this);
+        // findViewById(R.id.new_button).setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+        if (v.getId() == R.id.option3) {
+            Intent intent = new Intent(DeligateHomeActivity.this, DeligateDateOfConnectionActivity.class);
+            startActivity(intent);
+        }
+
+    }
 }

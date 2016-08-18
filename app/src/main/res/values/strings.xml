@@ -162,4 +162,5 @@
     <string name="confirm_status_busy">هل أنت متأكد من تغيير حالتك إلى مشغول؟</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
+    <string name="trader_favourite">التجّار المفضلﻴﻦ</string>
 </resources>
