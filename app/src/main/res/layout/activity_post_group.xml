@@ -124,6 +124,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
         android:id="@+id/product_list"></ListView>
 
 
