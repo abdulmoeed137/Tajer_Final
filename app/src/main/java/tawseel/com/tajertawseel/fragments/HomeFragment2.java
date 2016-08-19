@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import tawseel.com.tajertawseel.activities.functions;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -52,7 +53,7 @@ public class HomeFragment2 extends Fragment {
     {
         requestQueue = Volley.newRequestQueue(getActivity());
         listView = (ListView)mRootView.findViewById(R.id.listView);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/InfoGroup2.php?id="+HomeActivity.id
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"InfoGroup2.php?id="+HomeActivity.id
                 ,
                 new Response.Listener<JSONObject>() {
                     @Override

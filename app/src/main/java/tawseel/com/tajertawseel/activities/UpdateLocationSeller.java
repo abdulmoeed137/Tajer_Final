@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -142,7 +143,8 @@ public class UpdateLocationSeller extends Service implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Toast.makeText(this, "Location is Off!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
     public void UpdateDeligateLocation(final Location location)
     {
@@ -150,7 +152,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
 
-        request = new StringRequest(Request.Method.POST, "http://192.168.0.100/ms/UpdateSellerLocation.php", new Response.Listener<String>() {
+        request = new StringRequest(Request.Method.POST, functions.add+"UpdateSellerLocation.php", new Response.Listener<String>() {
             //if response
             public void onResponse(String response) {
               try {
@@ -186,7 +188,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("id","1");
+                hashMap.put("id",HomeActivity.id);
                 hashMap.put("hash", "CCB612R");
                 hashMap.put("lat",location.getLatitude()+"");
                 hashMap.put("lon",location.getLongitude()+"");

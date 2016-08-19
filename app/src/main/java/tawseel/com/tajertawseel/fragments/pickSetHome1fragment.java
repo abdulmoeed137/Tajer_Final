@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import tawseel.com.tajertawseel.activities.functions;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -64,7 +65,7 @@ public class pickSetHome1fragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getActivity());
         submit=(TextView)mRootView.findViewById(R.id.BtnAddGroupHome);
         listView = (ListView) mRootView.findViewById(R.id.listView);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/groups.php?id="+ HomeActivity.id+"&hash="+ HASH.getHash(),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"groups.php?id="+ HomeActivity.id+"&hash="+ HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

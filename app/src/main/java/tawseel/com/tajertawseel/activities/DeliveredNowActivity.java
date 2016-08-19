@@ -86,7 +86,7 @@ ArrayList< PostGroupData> list = new ArrayList<>();
         });
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/GroupItem.php?id="+GroupID,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"GroupItem.php?id="+GroupID,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -182,7 +182,7 @@ StatusBox.setOnClickListener(new View.OnClickListener() {
                 StringRequest request;
                 progress = ProgressDialog.show(DeliveredNowActivity.this, "Performing",
                         "Please Wait..", true);
-                request = new StringRequest(Request.Method.POST, "http://192.168.0.100/ms/DeleteDeligateFromGroup.php", new Response.Listener<String>() {
+                request = new StringRequest(Request.Method.POST, functions.add+"DeleteDeligateFromGroup.php", new Response.Listener<String>() {
                     //if response
                     public void onResponse(String response) {
                         try {

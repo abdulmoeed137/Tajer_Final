@@ -14,6 +14,7 @@ import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,7 +74,14 @@ public class LoginActivity extends BaseActivity implements LocationListener{
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
                 this);
-
+        try {
+            LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
+            LocationManage.Long = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
+        }
+        catch (Exception e)
+        {
+            Log.d("Location",e.toString());
+        }
         ImageView logo = (ImageView) findViewById(R.id.logo);
         Glide.with(this).load(R.drawable.splash_logo3).into(logo);
         Button loginButton = (Button) findViewById(R.id.loginButton);

@@ -74,8 +74,6 @@ private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
                         tdata.setContact(jsonObj.getString("Contact"));
                         tdata.setNdelivers(jsonObj.getString("delivers"));
                         Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
-                        idelivers/=100.0f;
-                        idelivers*=5.0f;
                         tdata.setStars(String.valueOf(idelivers));
                         data.add(tdata);
                     }

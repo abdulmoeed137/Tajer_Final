@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -94,6 +95,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
     private RequestQueue requestQueue;
       public static int pmi=0;
     public static RadioButton bank,cash;
+    private String[] Ryals;
 
 
 
@@ -106,7 +108,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         productsList = (ListView) findViewById(R.id.product_list);
         bank=(RadioButton)findViewById(R.id.by_bank);
         cash=(RadioButton)findViewById(R.id.cash);
-
+        Ryals = AddNewOrderActivity.this.getResources().getStringArray(R.array.ryal_array);
         name=(EditText)findViewById(R.id.c_name);
         email=(EditText)findViewById(R.id.c_email);
         mobile=(EditText)findViewById(R.id.c_number);
@@ -168,6 +170,37 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 // Disallow the touch request for parent scroll on touch of child view
                 v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
+            }
+        });
+
+        Spinner layout = (Spinner) findViewById(R.id.popup_view);
+        layout.setAdapter(new ListPopupAdapter(this));
+
+        layout.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView ryalTextView  = (TextView)view.findViewById(R.id.ryal_textView);
+                int p;
+                for(p=0;p<Ryals.length;p++)
+                {
+                    if(ryalTextView.getText().toString().compareTo(Ryals[p])==0)
+                        break;
+                }
+                if(p==0)
+                    delivery.setText("20");
+                else if(p==1)
+                    delivery.setText("30");
+                else if(p==2)
+                    delivery.setText("40");
+                else if(p==3)
+                {
+                    delivery.setText("50");
+                }
+                total.setText(String.valueOf(Double.parseDouble(item_total.getText().toString())+Double.parseDouble(delivery.getText().toString())));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
 
@@ -255,7 +288,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     }// in case error
                 }, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Internet Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
                     //send data to server using POST
@@ -264,7 +297,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         HashMap<String, String> hashMap = new HashMap<String, String>();
                         hashMap.put("id",HomeActivity.id);
                         hashMap.put("hash",HASH.getHash());
-                        hashMap.put("delivery","20");
+                        hashMap.put("delivery",delivery.getText().toString());
                         hashMap.put("pay",String.valueOf(pmi));
                         hashMap.put("price",item_total.getText().toString());
                         hashMap.put("confirm","1");
@@ -283,7 +316,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 }
                 catch (Exception e)
                 {
-                    Toast.makeText(AddNewOrderActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewOrderActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -332,7 +365,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                     }// in case error
                 }, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Internet Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
                     //send data to server using POST
@@ -342,7 +375,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                         if(oldid==-1){
                         hashMap.put("id",HomeActivity.id);
                         hashMap.put("hash",HASH.getHash());
-                        hashMap.put("delivery","20");
+                        hashMap.put("delivery",delivery.getText().toString());
                         hashMap.put("pay",String.valueOf(pmi));
                         hashMap.put("price",item_total.getText().toString());
                         hashMap.put("confirm","1");
@@ -368,14 +401,12 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 }
                 catch (Exception e)
                 {
-                    Toast.makeText(AddNewOrderActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewOrderActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
-        Spinner layout = (Spinner) findViewById(R.id.popup_view);
-        layout.setAdapter(new ListPopupAdapter(this));
 
        View tajer_lap=(View)findViewById(R.id.tajer_lap_view);
         tajer_lap.setOnClickListener(new View.OnClickListener() {

@@ -142,7 +142,7 @@ public class PickSetActivity extends BaseActivity {
                     return;
                 }
                 requestQueue1= Volley.newRequestQueue(PickSetActivity.this);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/add_order_to_groups.php?orderID="+orderID+"&grpID="+groupID+"&hash="+HASH.getHash(),
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"add_order_to_groups.php?orderID="+orderID+"&grpID="+groupID+"&hash="+HASH.getHash(),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
