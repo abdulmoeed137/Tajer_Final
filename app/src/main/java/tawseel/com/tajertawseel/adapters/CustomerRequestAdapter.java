@@ -148,7 +148,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
 
                 final ListView productsList = (ListView) finalConvertView.findViewById(R.id.product_list);
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/OrderDetails.php?id="+data.getID(),
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"OrderDetails.php?id="+data.getID(),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {

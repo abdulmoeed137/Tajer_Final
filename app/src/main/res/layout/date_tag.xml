@@ -4,7 +4,6 @@
     android:layout_height="match_parent">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -20,18 +19,12 @@
         <tawseel.com.tajertawseel.CustomBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2016"
+            android:text="March 2016"
             android:textColor="@android:color/black"
-            android:layout_marginRight="5dp"
-            android:id="@+id/dd_year" />
-
-
-        <tawseel.com.tajertawseel.CustomBoldTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           android:text="@string/march"
-            android:textColor="@android:color/black"
-            android:id="@+id/dd_month" />
+            android:id="@+id/dt_title"
+            android:layout_weight="0.22"
+            android:layout_marginLeft="15dp"
+            />
 
 
         <View

@@ -163,7 +163,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
             productList = (ListView)findViewById(R.id.product_list);
             Toast.makeText(NotificationOrderDetails.this,getIntent().getExtras().getString("id"),Toast.LENGTH_SHORT).show();
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/GroupItem.php?id="+getIntent().getExtras().getString("id"),
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"GroupItem.php?id="+getIntent().getExtras().getString("id"),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -50,8 +51,11 @@ public class DateOfConnectionsAdapter extends BaseAdapter {
 
 
             DateOfConnectionsData data=(DateOfConnectionsData) getItem(position);
-        if(data.getTitle().compareTo("")!=0)
+        if(data.getTitle().compareTo("")!=0){
         convertView = inflater.inflate(R.layout.date_tag,null,false);
+        TextView date=(TextView)convertView.findViewById(R.id.dt_title);
+            date.setText(data.getTitle());
+        }
         else
         {
             convertView = inflater.inflate(R.layout.date_of_connections_list_item,null,false);
@@ -59,10 +63,16 @@ public class DateOfConnectionsAdapter extends BaseAdapter {
             TextView gid=(TextView)convertView.findViewById(R.id.GroupID);
             TextView time=(TextView)convertView.findViewById(R.id.gtime);
             TextView date=(TextView)convertView.findViewById(R.id.gdate);
+            TextView dname=(TextView)convertView.findViewById(R.id.g_dname);
+            TextView qc=(TextView) convertView.findViewById(R.id.g_quantity_customer);
+            RatingBar bar=(RatingBar)convertView.findViewById(R.id.g_drating);
             gname.setText(data.getGname());
             gid.setText(data.getGid());
             time.setText(data.getTime());
             date.setText(data.getDate());
+            dname.setText(data.getDname());
+            qc.setText(data.getDelivers());
+            bar.setRating(Float.parseFloat(data.getStars()));
         }
 
 

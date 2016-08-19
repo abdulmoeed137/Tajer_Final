@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.PostGroupData;
 import tawseel.com.tajertawseel.activities.PostGroupListData;
+import tawseel.com.tajertawseel.activities.functions;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
 
 /**
@@ -120,7 +121,7 @@ public class DeliveredNowAdapter extends BaseAdapter {
 
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/OrderDetails.php?id="+data.getOrderID(),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"OrderDetails.php?id="+data.getOrderID(),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

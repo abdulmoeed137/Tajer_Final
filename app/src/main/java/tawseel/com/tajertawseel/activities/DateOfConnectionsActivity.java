@@ -1,5 +1,6 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,7 @@ public class DateOfConnectionsActivity extends BaseActivity {
     private int selectedCount = 0;
     private ArrayList<DateOfConnectionsData> data=new ArrayList<>();
     private RequestQueue requestQueue;
+    String date="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,9 @@ public class DateOfConnectionsActivity extends BaseActivity {
                     JSONArray jsonArr=mainObj.getJSONArray("info");
                     for (int i = 0; i < jsonArr.length(); i++) {
                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                        if(i==0)
+                        {
+                            date=jsonObj.getString("DeliveryDate");
                         DateOfConnectionsData tdata=new DateOfConnectionsData();
                         tdata.setGid(jsonObj.getString("GroupID"));
                         tdata.setDate(jsonObj.getString("DeliveryDate"));
@@ -71,11 +76,49 @@ public class DateOfConnectionsActivity extends BaseActivity {
                         tdata.setTitle("");
                         tdata.setDname(jsonObj.getString("Name"));
                         tdata.setDelivers(jsonObj.getString("orders"));
-                        //Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
-                        //idelivers/=100.0f;
-                        //idelivers*=5.0f;
-                        //tdata.setStars(String.valueOf(idelivers));
+                        tdata.setStars(jsonObj.getString("delivers"));
                         data.add(tdata);
+
+                            DateOfConnectionsData tdata1=new DateOfConnectionsData();
+                            String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
+                            tdata1.setTitle(datearr[1]+" "+datearr[2]);
+                            data.add(tdata1);
+                        }
+                        else
+                        {
+                            if(date.compareTo(jsonObj.getString("DeliveryDate"))!=0)
+                            {
+                                date=jsonObj.getString("DeliveryDate");
+                                DateOfConnectionsData tdata=new DateOfConnectionsData();
+                                tdata.setGid(jsonObj.getString("GroupID"));
+                                tdata.setDate(jsonObj.getString("DeliveryDate"));
+                                tdata.setGname(jsonObj.getString("name"));
+                                tdata.setTime(jsonObj.getString("Deliverytime"));
+                                tdata.setTitle("");
+                                tdata.setDname(jsonObj.getString("Name"));
+                                tdata.setDelivers(jsonObj.getString("orders"));
+                                tdata.setStars(jsonObj.getString("delivers"));
+                                data.add(tdata);
+
+                                DateOfConnectionsData tdata1=new DateOfConnectionsData();
+                                String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
+                                tdata1.setTitle(datearr[1]+" "+datearr[2]);
+                                data.add(tdata1);
+                            }
+                            else
+                            {
+                                DateOfConnectionsData tdata=new DateOfConnectionsData();
+                                tdata.setGid(jsonObj.getString("GroupID"));
+                                tdata.setDate(jsonObj.getString("DeliveryDate"));
+                                tdata.setGname(jsonObj.getString("name"));
+                                tdata.setTime(jsonObj.getString("Deliverytime"));
+                                tdata.setTitle("");
+                                tdata.setDname(jsonObj.getString("Name"));
+                                tdata.setDelivers(jsonObj.getString("orders"));
+                                tdata.setStars(jsonObj.getString("delivers"));
+                                data.add(tdata);
+                            }
+                        }
                     }
                     mLisView.setAdapter(new DateOfConnectionsAdapter(DateOfConnectionsActivity.this,data));
                 } catch (JSONException e) {
@@ -109,8 +152,18 @@ public class DateOfConnectionsActivity extends BaseActivity {
 
         mLisView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // T.2.1
+                Intent intent=new Intent(DateOfConnectionsActivity.this,PostGroupActivity.class);
+                intent.putExtra("id",data.get(i).getGid().toString());
+                intent.putExtra("flag","false");
+                startActivity(intent);
+            }
+        });
 
+        mLisView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 LinearLayout layout = (LinearLayout)view.findViewById(R.id.container);
 
                 if(layout!=null)
@@ -143,7 +196,9 @@ public class DateOfConnectionsActivity extends BaseActivity {
 
                     }
 
-                }
+
+            }
+                return false;
             }
         });
     }

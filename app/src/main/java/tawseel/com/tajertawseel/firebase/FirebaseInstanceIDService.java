@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import tawseel.com.tajertawseel.activities.LoginActivity;
+import tawseel.com.tajertawseel.activities.functions;
 
 /**
  * Created by AbdulMoeed on 8/13/2016.
@@ -31,7 +32,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://192.168.0.100/ms/PushNotificationReg.php")
+                .url(functions.add+"PushNotificationReg.php")
                 .post(body)
                 .build();
 

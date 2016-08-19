@@ -152,7 +152,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
 
-        request = new StringRequest(Request.Method.POST, "http://192.168.0.100/ms/UpdateSellerLocation.php", new Response.Listener<String>() {
+        request = new StringRequest(Request.Method.POST, functions.add+"UpdateSellerLocation.php", new Response.Listener<String>() {
             //if response
             public void onResponse(String response) {
               try {
@@ -188,7 +188,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("id","1");
+                hashMap.put("id",HomeActivity.id);
                 hashMap.put("hash", "CCB612R");
                 hashMap.put("lat",location.getLatitude()+"");
                 hashMap.put("lon",location.getLongitude()+"");

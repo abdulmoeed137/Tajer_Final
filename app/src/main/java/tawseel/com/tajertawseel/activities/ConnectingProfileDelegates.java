@@ -67,6 +67,7 @@ public class ConnectingProfileDelegates extends BaseActivity {
 
         if (extras != null) {
             id=extras.getString("DeligateID");
+            Toast.makeText(ConnectingProfileDelegates.this,id,Toast.LENGTH_SHORT).show();
         }
 
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"delegates.php", new Response.Listener<String>() {
@@ -76,7 +77,6 @@ public class ConnectingProfileDelegates extends BaseActivity {
                     JSONArray jsonArr=mainObj.getJSONArray("info");
                     for (int i = 0; i < jsonArr.length(); i++) {
                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                        FavouriteDelegateItemData tdata=new FavouriteDelegateItemData();
                         main_name.setText(jsonObj.getString("Name"));
                         name.setText(jsonObj.getString("Name"));
                         car.setText(jsonObj.getString("CarBrand"));
@@ -86,8 +86,6 @@ public class ConnectingProfileDelegates extends BaseActivity {
                         delivers.setText(jsonObj.getString("delivers"));
                         reviews.setText(jsonObj.getString("delivers"));
                         Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
-                        idelivers/=100.0f;
-                        idelivers*=5.0f;
                         rating.setRating(idelivers);
                     }
                 } catch (JSONException e) {

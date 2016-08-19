@@ -50,7 +50,7 @@ public class DeligateNotificationData extends BaseActivity {
         findViewById(R.id.Accept).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+GroupID+"&hash=CCB612R&DeligateID="+DeligateHomeActivity.DeligateID,
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"DeligateAcceptRequest.php?id="+GroupID+"&hash=CCB612R&DeligateID="+DeligateHomeActivity.DeligateID,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -93,7 +93,7 @@ finish();
         });
 
         GroupInfoText.setText("********Group Details ************");
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/GroupItem.php?id="+GroupID,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"GroupItem.php?id="+GroupID,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

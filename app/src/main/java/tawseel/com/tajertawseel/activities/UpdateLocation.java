@@ -155,7 +155,7 @@ public class UpdateLocation extends Service implements LocationListener {
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
 
-        request = new StringRequest(Request.Method.POST, "http://192.168.0.100/ms/UpdateDeligateLocation.php", new Response.Listener<String>() {
+        request = new StringRequest(Request.Method.POST, functions.add+"UpdateDeligateLocation.php", new Response.Listener<String>() {
             //if response
             public void onResponse(String response) {
                 try {
