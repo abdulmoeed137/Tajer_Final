@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
@@ -145,7 +146,8 @@ public class UpdateLocation extends Service implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Toast.makeText(this, "Location is Off!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
     public void UpdateDeligateLocation(final Location location)
     {

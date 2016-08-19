@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -54,11 +55,9 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             FirebaseMessaging.getInstance().subscribeToTopic("test");
             FirebaseInstanceIDService dd = new FirebaseInstanceIDService();
             String token = FirebaseInstanceId.getInstance().getToken();
-            WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-            WifiInfo wInfo = wifiManager.getConnectionInfo();
             DeligateID = getIntent().getExtras().getString("DeligateID");
 
-            dd.registerToken(token, DeligateID, wInfo.getMacAddress() + "");
+            dd.registerToken(token, DeligateID, Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID) + "");
             Intent i = new Intent(DeligateHomeActivity.this,UpdateLocation.class);
             startService(i);
         }

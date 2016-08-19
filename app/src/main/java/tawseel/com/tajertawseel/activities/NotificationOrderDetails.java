@@ -65,15 +65,60 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
             super.onCreate(savedInstanceState);
 
             setContentView(R.layout.activity_notification_order_details);
+            requestQueue = Volley.newRequestQueue(this);
             TextView ButtonSave= (TextView)findViewById(R.id.ButtonSave);
-            ButtonSave.setOnClickListener(new View.OnClickListener() {
+            TextView ButtonContinue= (TextView)findViewById(R.id.ButtonAccept);
+            ButtonContinue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+DeligateHomeActivity.DeligateID,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
 
+                                        JSONArray jsonArr=response.getJSONArray("info");
+
+                                        for(int i=0;i<jsonArr.length();i++) {
+                                            final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                                            if (jsonObj.names().get(0).equals("success"))
+                                            {
+                                                if (jsonObj.getString("success").toString().equals("Taken"))
+                                                {
+                                                    Toast.makeText(NotificationOrderDetails.this,"SomeOne Already Taken",Toast.LENGTH_SHORT).show();
+                                                }
+                                                else
+                                                    Toast.makeText(NotificationOrderDetails.this,"You Got. Check your Groups ",Toast.LENGTH_SHORT).show();
+                                            }else
+                                                Toast.makeText(NotificationOrderDetails.this,"Failed",Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        finish();
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    };
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("Volley", "Error");
+                                }
+                            });
+
+                    //dummy Adapter
+                    // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+                    requestQueue.add(jsonObjectRequest);
                 }
             });
-            TextView ButtonContinue= (TextView)findViewById(R.id.ButtonAccept);
             TextView ButtonCancel= (TextView)findViewById(R.id.ButtonCancel);
+            ButtonCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
             // origin= new LatLng(21.470285, 39.238547);
             LinearLayout ll = (LinearLayout)findViewById(R.id.LayoutAdd) ;
            ll.setVisibility(View.GONE);
@@ -104,7 +149,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
                 Toast.makeText(this,"No Old Location Saved",Toast.LENGTH_SHORT).show();
             }
 
-            requestQueue = Volley.newRequestQueue(this);
+
             total_orders = (TextView)findViewById(R.id.request_count);
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
