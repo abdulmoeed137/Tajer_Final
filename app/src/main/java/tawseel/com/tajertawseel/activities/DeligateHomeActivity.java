@@ -1,9 +1,6 @@
 package tawseel.com.tajertawseel.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -14,7 +11,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -105,6 +101,8 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
         mDrawerLayout.findViewById(R.id.option5).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option6).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option7).setOnClickListener(this);
+
+        mDrawerLayout.findViewById(R.id.confirmation).setOnClickListener(this);
         // findViewById(R.id.new_button).setOnClickListener(this);
 
     }
@@ -116,6 +114,10 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
         if (v.getId() == R.id.option3) {
             Intent intent = new Intent(DeligateHomeActivity.this, DeligateDateOfConnectionActivity.class);
             startActivity(intent);
+        } else if (v.getId() == R.id.confirmation){
+
+            Intent i  = new Intent(DeligateHomeActivity.this,ComfirmationActivity.class);
+            startActivity(i);
         }
 
     }

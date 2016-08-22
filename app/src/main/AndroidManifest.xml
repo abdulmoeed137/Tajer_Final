@@ -18,11 +18,11 @@
         android:theme="@style/AppTheme" >
         <activity android:name=".activities.SplashScreen" >
 
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
+                <!--<intent-filter>-->
+                    <!--<action android:name="android.intent.action.MAIN" />-->
 
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
+                    <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <!--</intent-filter>-->
             </activity>
 
         <activity android:name=".activities.HomeActivity" />
@@ -67,7 +67,15 @@
         <activity android:name=".activities.ConnectingProfileDelegates"/>
         <activity android:name=".activities.DeliveredNowActivity"/>
         <activity android:name=".activities.FinancialRequestActivity"/>
-        <activity android:name=".activities.DeligateHomeActivity"></activity>
+        <activity android:name=".activities.DeligateHomeActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".activities.DeligateDateOfConnectionActivity"/>
 
 
@@ -76,6 +84,7 @@
 
         <activity android:name=".activities.NotificationOrderDetails"></activity>
         <activity android:name=".activities.dialog"></activity>
+        <activity android:name=".activities.ComfirmationActivity"></activity>
         <activity android:name=".activities.DeligateNotificationData"/>
         <receiver android:name=".activities.DeligateRequest">
             <intent-filter>
