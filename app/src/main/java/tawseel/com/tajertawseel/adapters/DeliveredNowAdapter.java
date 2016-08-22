@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ public class DeliveredNowAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
+    String StatusCode;
 
     ArrayList< PostGroupData> List = new ArrayList<>();
 
@@ -50,12 +54,13 @@ public class DeliveredNowAdapter extends BaseAdapter {
 
 
 
-    public DeliveredNowAdapter(Context c,ArrayList< PostGroupData> list)
+    public DeliveredNowAdapter(Context c,ArrayList< PostGroupData> list,String StatusCode)
     {
         context = c;
         inflater = LayoutInflater.from(c);
         requestQueue = Volley.newRequestQueue(context);
         List=list;
+        this.StatusCode=StatusCode;
     }
 
     @Override
@@ -89,10 +94,70 @@ public class DeliveredNowAdapter extends BaseAdapter {
            holder. moreView = (TextView) convertView.findViewById(R.id.moreButton);
             holder. panel = (ExpandablePanel)convertView.findViewById(R.id.expandableLayout);
             holder. productsList = (ListView) convertView.findViewById(R.id.product_list);
+            holder.OrderStatusButton = (TextView)convertView.findViewById(R.id.start_delivery_button);
             convertView.setTag(holder);
         }
        else
-            holder=(ViewHolder) convertView.getTag();
+         holder=(ViewHolder) convertView.getTag();
+
+        if (StatusCode.equals("1"))
+        {
+            int sdk = android.os.Build.VERSION.SDK_INT;
+            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                holder.OrderStatusButton.setBackgroundResource(R.drawable.purple_rectangle);
+
+            } else {
+                holder.OrderStatusButton.setBackground(context.getResources().getDrawable(R.drawable.purple_rectangle));
+            }
+            holder.OrderStatusButton.setText(R.string.pending);
+            holder.OrderStatusButton.setTextColor(context.getResources().getColor(R.color.purplee));
+        }else
+        {
+
+            if (data.getIsConfirmed().equals("1")){
+
+            int sdk = android.os.Build.VERSION.SDK_INT;
+            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                holder.OrderStatusButton.setBackgroundResource(R.drawable.blue_rectangle);
+            }
+            else
+            {
+                holder.OrderStatusButton.setBackground(context.getResources().getDrawable(R.drawable.blue_rectangle));
+            }
+                holder.OrderStatusButton.setTextColor(context.getResources().getColor(R.color.mainColorLight));
+                holder.OrderStatusButton.setText(R.string.waiting);
+            } else   if (data.getIsConfirmed().equals("2")) {
+                int sdk = android.os.Build.VERSION.SDK_INT;
+                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    holder.OrderStatusButton.setBackgroundResource(R.drawable.orange_rectangle);
+                }
+                else
+                {
+                    holder.OrderStatusButton.setBackground(context.getResources().getDrawable(R.drawable.orange_rectangle));
+                }
+                holder.OrderStatusButton.setTextColor(context.getResources().getColor(R.color.orange));
+                holder.OrderStatusButton.setText(R.string.on_the_way);
+          }
+            else
+                if (data.getIsConfirmed().equals("3"))
+                {
+                    int sdk = android.os.Build.VERSION.SDK_INT;
+                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        holder.OrderStatusButton.setBackgroundResource(R.drawable.green_rectangle);
+                    }
+                    else
+                    {
+                        holder.OrderStatusButton.setBackground(context.getResources().getDrawable(R.drawable.green_rectangle));
+                    }
+                    holder.OrderStatusButton.setTextColor(context.getResources().getColor(R.color.green));
+                    holder.OrderStatusButton.setText(R.string.delivered);
+                }
+
+
+        }
+
+
+
             holder.CustomerName.setText(data.getCustomerName());
             holder.CustomerEmail.setText(data.getCustomerEmail());
             holder.CustomerPhone.setText(data.getCustomerPhone());

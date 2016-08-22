@@ -74,7 +74,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         Double distance = SphericalUtil.computeDistanceBetween(from, to); //map utils function to compute distance in meters
 
 
-        Toast.makeText(this, "" + distance / 1000 + "KM", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "" + distance / 1000 + "KM", Toast.LENGTH_SHORT).show();
         setupContents();
     }
 
@@ -86,7 +86,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         uname = LoginActivity.uname;
         email = LoginActivity.email;
         id = LoginActivity.LoginID;
-        TextView uname_tv = (TextView) mDrawerLayout.findViewById(R.id.dname);
+        TextView uname_tv = (TextView) mDrawerLayout.findViewById(R.id.DeligateName);
         TextView email_tv = (TextView) mDrawerLayout.findViewById(R.id.demail);
         uname_tv.setText(uname);
         email_tv.setText(email);

@@ -8,7 +8,7 @@ import android.widget.Toast;
  * Created by AbdulMoeed on 7/13/2016.
  */
 public class functions {
-    public static String add="http://192.168.0.102:3000/tajer/";
+    public static String add="http://192.168.0.100/ms/";
     public static String  AvailableDeligates;
     static boolean keepRunning=true;
   static public boolean isPasswordTrue(String name,Context context)

@@ -143,8 +143,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Location is Off!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+
     }
     public void UpdateDeligateLocation(final Location location)
     {
@@ -162,14 +161,14 @@ public class UpdateLocationSeller extends Service implements LocationListener {
                         if (jsonObject.names().get(0).equals("success")) {
 
                             //if success
-                            Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
 
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -181,7 +180,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Srvc",error.toString());
-                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
             }
         }) {
             //send data to server using POST

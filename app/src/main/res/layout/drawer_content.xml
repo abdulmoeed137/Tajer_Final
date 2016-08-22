@@ -33,7 +33,7 @@
             android:layout_alignTop="@+id/headerImage"
             android:layout_marginTop="10dp"
             android:layout_marginRight="2dp"
-            android:id="@+id/dname"
+            android:id="@+id/DeligateName"
 
             />
         <TextView
@@ -45,7 +45,7 @@
             android:layout_marginTop="2dp"
 
             android:layout_marginRight="2dp"
-            android:layout_below="@+id/dname"
+            android:layout_below="@+id/DeligateName"
 
 
             android:id="@+id/demail" />

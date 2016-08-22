@@ -284,7 +284,7 @@ if (Flag.equals("false"))
                         }, new Response.ErrorListener() {
                             public void onErrorResponse(VolleyError error) {
                                 progress.dismiss();
-                                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Internet Connection Error", Toast.LENGTH_SHORT).show();
                             }
                         }) {
                             //send data to server using POST

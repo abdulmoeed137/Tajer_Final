@@ -86,7 +86,7 @@ private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
             }
         }) {
             //send data to server using POST

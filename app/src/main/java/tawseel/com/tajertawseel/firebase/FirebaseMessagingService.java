@@ -34,7 +34,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void showNotification(String message,String GroupID) {
 
-        Intent i = new Intent(this,dialog.class);
+        Intent i = new Intent(this,NotificationOrderDetails.class);
         i.putExtra("id",GroupID);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -45,7 +45,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setAutoCancel(true)
                 .setContentTitle("Tawseel")
                 .setContentText(message)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                .setSmallIcon(R.drawable.tjer)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 

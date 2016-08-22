@@ -39,7 +39,7 @@
             android:textColor="@color/mainColor"
             android:background="@drawable/rectangle"
 
-            />
+            android:id="@+id/ButtonCancel" />
     </LinearLayout>
 
 

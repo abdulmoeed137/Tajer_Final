@@ -130,6 +130,7 @@ public class CustomerRequestActivity extends BaseActivity {
 
 
                 Intent i  = new Intent (CustomerRequestActivity.this, AddNewOrderActivity.class);
+                finish();
                 startActivity(i);
 
             }

@@ -165,7 +165,7 @@ public class UpdateLocation extends Service implements LocationListener {
                         if (jsonObject.names().get(0).equals("success")) {
 
                             //if success
-                            Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                        /*    if (flag2){
                             if (jsonObject.names().get(1).equals("Alert"))
                             {
@@ -192,16 +192,16 @@ public class UpdateLocation extends Service implements LocationListener {
                             }*/
 
                         } else {
-                            Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
 
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
 
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -209,7 +209,7 @@ public class UpdateLocation extends Service implements LocationListener {
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Srvc",error.toString());
-                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
             }
         }) {
             //send data to server using POST

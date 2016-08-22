@@ -32,7 +32,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="UserName"
+            android:hint="ID/Email"
 
             android:theme="@style/EditTextStyle"
             android:layout_marginLeft="40dp"

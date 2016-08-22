@@ -21,11 +21,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import tawseel.com.tajertawseel.R;
 
@@ -54,10 +64,7 @@ public class LoginActivity extends BaseActivity implements LocationListener{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE}, 100);
-    }
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -69,8 +76,12 @@ public class LoginActivity extends BaseActivity implements LocationListener{
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(this, "Location Permission Required", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(this, "Permissions Required", Toast.LENGTH_SHORT).show();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE}, 100);
+            }
+
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
                 this);
@@ -93,32 +104,9 @@ public class LoginActivity extends BaseActivity implements LocationListener{
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pass_ET.getText().toString().equals("d"))
-                {
 
-                    Intent i = new Intent(LoginActivity.this, DeligateHomeActivity.class);
-                    i.putExtra("DeligateID",email_ET.getText().toString());
-                    DeligateID=email_ET.getText().toString();
-                    i.putExtra("flag",true);
-                    Toast.makeText(getApplicationContext(), "Welcome "+email_ET.getText().toString(), Toast.LENGTH_SHORT).show();
-                    //Intent i = new Intent (LoginActivity.this,FinancialRequestActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-                else
-                {
-                LoginID=1+"";
-                uname="tajer";
-                //if success
-              //  progress.dismiss();
-                Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
 
-                //Intent i = new Intent (LoginActivity.this,FinancialRequestActivity.class);
-                startActivity(i);
-                finish();}
-
-           /*     email = email_ET.getText().toString();
+              email = email_ET.getText().toString();
                 final String pass = pass_ET.getText().toString();
                 if (functions.isEmailTrue(email, getApplicationContext()) || functions.isPasswordTrue(pass,getApplicationContext())) {
                     progress = ProgressDialog.show(LoginActivity.this, "Loading",
@@ -126,29 +114,41 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                    request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                         //if response
                         public void onResponse(String response) {
+                            JSONObject jsonObject = null;
                             try {
-                                JSONObject jsonObject = new JSONObject(response);
+                                jsonObject = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
-                                try {
-                                    if (jsonObject.names().get(0).equals("success")) {
-                                     LoginID=jsonObject.getString("success");
-                                        uname=jsonObject.getString("uname");
-                                        //if success
-                                        progress.dismiss();
-                                        Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                                        startActivity(i);
-                                        finish();
-                                    } else {
-                                        progress.dismiss();
-                                        Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-                                } catch (JSONException e) {
+                            try {
+                                if (jsonObject.names().get(0).equals("tajer")) {
+                                    LoginID=jsonObject.getString("tajer");
+                                    uname=jsonObject.getString("uname");
+                                    Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
+                                    //if success
                                     progress.dismiss();
-                                    e.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                } else if (jsonObject.names().get(0).equals("deligate")){
+                                    uname=jsonObject.getString("uname");
+                                    DeligateID= jsonObject.getString("deligate");
+                                    //if success
+                                    progress.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(LoginActivity.this, DeligateHomeActivity.class);
+                                    i.putExtra("DeligateID",DeligateID);
+                                    i.putExtra("flag",true);
+                                    startActivity(i);
+                                    finish();
                                 }
-
+                                else {
+                                    progress.dismiss();
+                                    Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                             } catch (JSONException e) {
                                 progress.dismiss();
                                 e.printStackTrace();
@@ -159,7 +159,7 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                     }, new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
                             progress.dismiss();
-                            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {
                         //send data to server using POST
@@ -174,7 +174,7 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                         }
                     };
                     requestQueue.add(request);}
-                    */
+
 
 
             }

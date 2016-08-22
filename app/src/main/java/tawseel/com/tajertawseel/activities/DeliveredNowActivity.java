@@ -108,10 +108,11 @@ ArrayList< PostGroupData> list = new ArrayList<>();
                                 item.setLatitude(jsonObj.getString("Latitude"));
                                 item.setLongitude(jsonObj.getString("Longitude"));
                                 item.setID(jsonObj.getString("ID"));
+                                item.setIsConfirmed(jsonObj.getString("IsConfirmed"));
 
                                 list.add(item);
                             }
-                            mListView.setAdapter(new DeliveredNowAdapter(DeliveredNowActivity.this,list));
+                            mListView.setAdapter(new DeliveredNowAdapter(DeliveredNowActivity.this,list,StatusCode));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         };
@@ -152,6 +153,78 @@ ArrayList< PostGroupData> list = new ArrayList<>();
                 StatusBox.setBackground(getResources().getDrawable(R.drawable.red_rectangle));
             }
             StatusBox.setTextColor(Color.RED);
+            StatusBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    requestQueue = Volley.newRequestQueue(DeliveredNowActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DeliveredNowActivity.this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                    builder.setTitle("Are You Sure?");
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final ProgressDialog progress;
+                            StringRequest request;
+                            progress = ProgressDialog.show(DeliveredNowActivity.this, "Performing",
+                                    "Please Wait..", true);
+                            request = new StringRequest(Request.Method.POST, functions.add+"DeleteDeligateFromGroup.php", new Response.Listener<String>() {
+                                //if response
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+
+                                        try {
+                                            if (jsonObject.names().get(0).equals("success")) {
+
+                                                Toast.makeText(DeliveredNowActivity.this, "Deligate Cancelled. Please Again Search Deligate for this Group", Toast.LENGTH_SHORT).show();
+                                                progress.dismiss();
+                                                finish();
+                                            } else {
+                                                progress.dismiss();
+                                                Toast.makeText(DeliveredNowActivity.this, jsonObject.getString("Error while Deleting"), Toast.LENGTH_SHORT).show();
+                                                return;
+                                            }
+                                        } catch (JSONException e) {
+                                            progress.dismiss();
+                                            e.printStackTrace();
+                                        }
+
+                                    } catch (JSONException e) {
+                                        progress.dismiss();
+                                        e.printStackTrace();
+                                    }
+
+
+                                }// in case error
+                            }, new Response.ErrorListener() {
+                                public void onErrorResponse(VolleyError error) {
+                                    progress.dismiss();
+                                    Toast.makeText(DeliveredNowActivity.this, "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                                }
+                            }) {
+                                //send data to server using POST
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                                    hashMap.put("id",GroupID);
+                                    hashMap.put("hash", HASH.getHash());
+                                    return hashMap;
+                                }
+                            };
+                            requestQueue.add(request);
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
+
+                }
+            });
         }
 
         assert CallDeligate != null;
@@ -168,78 +241,7 @@ ArrayList< PostGroupData> list = new ArrayList<>();
             }
         });
 
-StatusBox.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        requestQueue = Volley.newRequestQueue(DeliveredNowActivity.this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(DeliveredNowActivity.this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-        builder.setTitle("Are You Sure?");
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final ProgressDialog progress;
-                StringRequest request;
-                progress = ProgressDialog.show(DeliveredNowActivity.this, "Performing",
-                        "Please Wait..", true);
-                request = new StringRequest(Request.Method.POST, functions.add+"DeleteDeligateFromGroup.php", new Response.Listener<String>() {
-                    //if response
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            try {
-                                if (jsonObject.names().get(0).equals("success")) {
-
-                                    Toast.makeText(DeliveredNowActivity.this, "Deligate Cancelled. Please Again Search Deligate for this Group", Toast.LENGTH_SHORT).show();
-                                    progress.dismiss();
-                                    finish();
-                                } else {
-                                    progress.dismiss();
-                                    Toast.makeText(DeliveredNowActivity.this, jsonObject.getString("Error while Deleting"), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            } catch (JSONException e) {
-                                progress.dismiss();
-                                e.printStackTrace();
-                            }
-
-                        } catch (JSONException e) {
-                            progress.dismiss();
-                            e.printStackTrace();
-                        }
-
-
-                    }// in case error
-                }, new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        progress.dismiss();
-                        Toast.makeText(DeliveredNowActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-                    //send data to server using POST
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
-                        hashMap.put("id",GroupID);
-                        hashMap.put("hash", HASH.getHash());
-                        return hashMap;
-                    }
-                };
-                requestQueue.add(request);
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
-
-    }
-});
     }
 
 

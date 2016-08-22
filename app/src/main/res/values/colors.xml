@@ -14,4 +14,6 @@
     
     <color name="sea_green">#00a99d</color>
     <color name="red">#FFFF0004</color>
+    <color name="orange">#D2691E</color>
+    <color name="purplee">#800080</color>
 </resources>

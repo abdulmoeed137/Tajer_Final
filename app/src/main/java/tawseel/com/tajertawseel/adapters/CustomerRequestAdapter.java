@@ -9,18 +9,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -28,18 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
-import tawseel.com.tajertawseel.activities.CustomerRequestActivity;
 import tawseel.com.tajertawseel.activities.Customer_request_item_data;
-import tawseel.com.tajertawseel.activities.HASH;
-import tawseel.com.tajertawseel.activities.HomeActivity;
 import tawseel.com.tajertawseel.activities.PickSetActivity;
 import tawseel.com.tajertawseel.activities.PostGroupListData;
-import tawseel.com.tajertawseel.activities.ProductLayoutData;
 import tawseel.com.tajertawseel.activities.functions;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
 

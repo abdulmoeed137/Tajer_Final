@@ -115,7 +115,7 @@ public class ConnectingProfileDelegates extends BaseActivity {
         }
         catch (Exception e)
         {
-            Toast.makeText(ConnectingProfileDelegates.this,"Request Issue",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ConnectingProfileDelegates.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
         }
         setUpToolbar();
     }

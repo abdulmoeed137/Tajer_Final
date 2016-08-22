@@ -21,8 +21,6 @@ import tawseel.com.tajertawseel.adapters.OrdeDialogueAdapter;
  * Created by AbdulMoeed on 8/18/2016.
  */
 public class dialog extends BaseActivity {
-    static public PendingIntent pendingIntent;
-    static public AlarmManager manager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -112,6 +112,7 @@ try {
             public void onClick(View v) {
                 Intent i = new Intent(DeliveryGroupActivity.this,PostNewGroupActivity.class);
                 i.putExtra("status","new");
+                finish();
                 startActivity(i);
             }
         });

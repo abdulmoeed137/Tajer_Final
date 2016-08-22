@@ -21,6 +21,7 @@ public class Tajer_Lap_Activity extends BaseActivity {
         setContentView(R.layout.activity_tajer_lap);
         newButton =(Button)findViewById(R.id.new_order_button_);
         oldButton=(Button)findViewById(R.id.old_order_button);
+        oldButton.setVisibility(View.GONE);
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -325,7 +325,8 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         continue_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(pmi==0||name.getText().toString().compareTo("")==0||email.getText().toString().compareTo("")==0||mobile.getText().toString().compareTo("")==0)
+                Toast.makeText(AddNewOrderActivity.this,"Activity Behind this is On Development. Please Save Order and Select it in OrderList",Toast.LENGTH_LONG).show();
+       /*       if(pmi==0||name.getText().toString().compareTo("")==0||email.getText().toString().compareTo("")==0||mobile.getText().toString().compareTo("")==0)
                 {
                     Toast.makeText(AddNewOrderActivity.this,"Complete all fields",Toast.LENGTH_SHORT).show();
                     return;
@@ -402,7 +403,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 catch (Exception e)
                 {
                     Toast.makeText(AddNewOrderActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
-                }
+                } */
 
             }
         });
@@ -470,11 +471,11 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                 HashMap<String, String> hashMap = new HashMap<String, String>();
                                 hashMap.put("id",HomeActivity.id);
                                 hashMap.put("hash",HASH.getHash());
-                                hashMap.put("delivery","20");
+                                hashMap.put("delivery",delivery.getText().toString());
                                 hashMap.put("pay",String.valueOf(pmi));
-                                hashMap.put("price",item_total.getText().toString());
+                                hashMap.put("price",newitem_price.getText().toString());
                                 hashMap.put("confirm","1");
-                                hashMap.put("name",name.getText().toString());
+                                hashMap.put("name",newitem_name.getText().toString());
                                 hashMap.put("email",email.getText().toString());
                                 hashMap.put("number",mobile.getText().toString());
                                 return hashMap;
@@ -554,10 +555,10 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         lp.gravity = Gravity.CENTER;
         lp.dimAmount = 0.3f;
         final EditText input=(EditText)dialog.findViewById(R.id.new_item_name_et);
-        final ExecutorService mThreadPool = Executors.newSingleThreadScheduledExecutor();
-       dialog.findViewById(R.id.OK).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                final ExecutorService mThreadPool = Executors.newSingleThreadScheduledExecutor();
+                dialog.findViewById(R.id.OK).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                 try {
                     mThreadPool.execute(new Runnable() {
                         @Override

@@ -77,6 +77,7 @@ public class HomeFragment2 extends Fragment {
                                 item.setDeligateID(jsonObj.getString("DeligateID"));
                                 item.setDeligateName(jsonObj.getString("DeligateName"));
 
+
                                 list.add(item);
                             }
                             listView.setAdapter(new DeliveredListAdapter(getActivity(),list));

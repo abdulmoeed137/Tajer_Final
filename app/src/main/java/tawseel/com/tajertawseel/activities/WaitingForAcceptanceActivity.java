@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -65,6 +66,12 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceptance_waiting);
+        findViewById(R.id.ButtonCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         Intent alarmIntent = new Intent(this, DeligateRequest.class);
 
       alarmIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);

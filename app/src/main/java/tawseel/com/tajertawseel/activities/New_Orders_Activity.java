@@ -113,7 +113,7 @@ public class New_Orders_Activity extends BaseActivity {
         }
         catch (Exception e)
         {
-            Toast.makeText(New_Orders_Activity.this,"Request Issue",Toast.LENGTH_SHORT).show();
+            Toast.makeText(New_Orders_Activity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
         }
     }
 

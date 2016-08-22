@@ -66,5 +66,5 @@ ImageView BtnCall;
         });
 
     }
-TextView moreView; ExpandablePanel panel;ListView productsList;
+TextView moreView,OrderStatusButton; ExpandablePanel panel;ListView productsList;
 }

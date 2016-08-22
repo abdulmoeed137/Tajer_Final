@@ -4,7 +4,7 @@ package tawseel.com.tajertawseel.activities;
  * Created by AbdulMoeed on 7/24/2016.
  */
 public class PostGroupData {
-private String PriceRange,PayMethod,ItemsPrice,CustomerName,CustomerEmail,CustomerPhone,OrderID,OrderProductQuantity,Latitude,Longitude,ID;
+private String PriceRange,PayMethod,ItemsPrice,CustomerName,CustomerEmail,CustomerPhone,OrderID,OrderProductQuantity,Latitude,Longitude,ID,IsConfirmed;
 
     public String getPriceRange() {
         return PriceRange;
@@ -92,5 +92,13 @@ private String PriceRange,PayMethod,ItemsPrice,CustomerName,CustomerEmail,Custom
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String getIsConfirmed() {
+        return IsConfirmed;
+    }
+
+    public void setIsConfirmed(String isConfirmed) {
+        IsConfirmed = isConfirmed;
     }
 }

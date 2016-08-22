@@ -70,11 +70,27 @@ public class PostGroupActivity extends BaseActivity implements OnMapReadyCallbac
         ButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+finish();
             }
         });
+
         TextView ButtonContinue= (TextView)findViewById(R.id.ButtonAccept);
+        ButtonContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              Intent i = new Intent(PostGroupActivity.this,WaitingForAcceptanceActivity.class);
+                i.putExtra("GroupID",getIntent().getExtras().getString("id"));
+                startActivity(i);
+                finish();
+            }
+        });
         TextView ButtonCancel= (TextView)findViewById(R.id.ButtonCancel);
+        ButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // origin= new LatLng(21.470285, 39.238547);
        LinearLayout ll = (LinearLayout)findViewById(R.id.LayoutAdd) ;
         ll.setOnClickListener(new View.OnClickListener() {

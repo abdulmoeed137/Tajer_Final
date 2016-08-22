@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -44,6 +45,10 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
        boolean CheckLogin=false;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawer);
         mDrawerLayout.openDrawer(Gravity.RIGHT);
+        TextView DeligateID2= (TextView)mDrawerLayout.findViewById(R.id.DeligateID);
+                DeligateID2.setText(LoginActivity.DeligateID);
+        TextView DeligateName= (TextView)mDrawerLayout.findViewById(R.id.DeligateName);
+        DeligateName.setText(LoginActivity.email);
 
         try {
           CheckLogin = getIntent().getExtras().getBoolean("flag");
@@ -56,7 +61,7 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             FirebaseInstanceIDService dd = new FirebaseInstanceIDService();
             String token = FirebaseInstanceId.getInstance().getToken();
             DeligateID = getIntent().getExtras().getString("DeligateID");
-
+           // Toast.makeText(getApplicationContext(),DeligateID,Toast.LENGTH_SHORT).show();
             dd.registerToken(token, DeligateID, Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID) + "");
             Intent i = new Intent(DeligateHomeActivity.this,UpdateLocation.class);
             startService(i);

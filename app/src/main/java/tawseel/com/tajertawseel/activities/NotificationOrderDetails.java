@@ -67,11 +67,12 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
             setContentView(R.layout.activity_notification_order_details);
             requestQueue = Volley.newRequestQueue(this);
             TextView ButtonSave= (TextView)findViewById(R.id.ButtonSave);
+         //   Toast.makeText(NotificationOrderDetails.this,"http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+LoginActivity.DeligateID,Toast.LENGTH_SHORT).show();
             TextView ButtonContinue= (TextView)findViewById(R.id.ButtonAccept);
             ButtonContinue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+DeligateHomeActivity.DeligateID,
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+LoginActivity.DeligateID,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
@@ -242,7 +243,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
             mMap.animateCamera(update);
 
 
-            addMarker(origin.latitude,origin.longitude,"Seller", R.drawable.destination_marker);
+            addMarker(origin.latitude,origin.longitude,"Deligate", R.drawable.car_marker);
 
 
 

@@ -163,4 +163,8 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="trader_favourite">التجّار المفضلﻴﻦ</string>
+    <string name="pending">Pending</string>
+    <string name="waiting">علي الطريق</string>
+    <string name="on_the_way">في الانتظار</string>
+
 </resources>
