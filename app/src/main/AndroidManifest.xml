@@ -85,7 +85,9 @@
         <activity android:name=".activities.NotificationOrderDetails"></activity>
         <activity android:name=".activities.dialog"></activity>
         <activity android:name=".activities.ComfirmationActivity"></activity>
+        <activity android:name=".activities.ConfirmTajerActivity"/>
         <activity android:name=".activities.DeligateNotificationData"/>
+        <activity android:name=".activities.TjerMapActivity"/>
         <receiver android:name=".activities.DeligateRequest">
             <intent-filter>
  <action android:name="android.intent.action.BOOT_COMPLETED"/>

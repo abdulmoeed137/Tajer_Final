@@ -10,6 +10,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
 
@@ -64,9 +65,9 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
 
         Double distance = SphericalUtil.computeDistanceBetween(Abbasi, goleMarket);
         NumberFormat format = new DecimalFormat("##.##");
-        mMap.addMarker(new MarkerOptions().position(Abbasi).title(""+format.format(distance/1000)+" KM away"));
+       Marker marker =  mMap.addMarker(new MarkerOptions().position(Abbasi).title(""+format.format(distance/1000)+" KM away"));
 
-
+        marker.showInfoWindow();
 
 
 

@@ -116,7 +116,8 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             startActivity(intent);
         } else if (v.getId() == R.id.confirmation){
 
-            Intent i  = new Intent(DeligateHomeActivity.this,ComfirmationActivity.class);
+            //Intent i  = new Intent(DeligateHomeActivity.this,ComfirmationActivity.class);
+            Intent i  = new Intent(DeligateHomeActivity.this,ConfirmTajerActivity.class);
             startActivity(i);
         }
 
