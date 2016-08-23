@@ -21,6 +21,7 @@ public class PickSetAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<PickSet_data> List=new ArrayList<PickSet_data>();
+    int selectedItem = -1;
 
     public PickSetAdapter (Context c,ArrayList<PickSet_data> list)
     {
@@ -49,9 +50,9 @@ public class PickSetAdapter extends BaseAdapter {
 
         ViewHolder holder;
         if (convertView == null) {
-
-            convertView= inflater.inflate(R.layout.pick_set_item, null, false);
             holder = new ViewHolder();
+            convertView= inflater.inflate(R.layout.pick_set_item, null, false);
+
             holder.gid=(TextView)convertView.findViewById(R.id.gid);
             holder. gname=(TextView)convertView.findViewById(R.id.gname);
             holder. gorders=(TextView)convertView.findViewById(R.id.gorders);
@@ -59,12 +60,31 @@ public class PickSetAdapter extends BaseAdapter {
         }
         else
             holder=(ViewHolder)convertView.getTag();
+        if(selectedItem!= -1)
+        {
+            if(position == selectedItem)
+            {
+                holder.tickVisible(true,convertView,context);
 
+            }
+            else
+            {
+                holder.tickVisible(false,convertView,context);
+            }
+        }
 
         PickSet_data data=(PickSet_data) getItem(position);
         holder. gid.setText(data.getGid());
         holder.  gname.setText(data.getGname());
         holder. gorders.setText(data.getGmembers());
         return convertView;
+    }
+    public void setSelectedItem(int selectedItem) {
+        this.selectedItem = selectedItem;
+        notifyDataSetChanged();
+    }
+    // getter for fetching the selected item position
+    public int getSelectedItem() {
+        return selectedItem;
     }
 }

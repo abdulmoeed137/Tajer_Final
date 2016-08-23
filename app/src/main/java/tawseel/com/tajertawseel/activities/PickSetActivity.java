@@ -39,11 +39,12 @@ import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.adapters.CustomerRequestAdapter;
 import tawseel.com.tajertawseel.adapters.PickSetAdapter;
+import tawseel.com.tajertawseel.adapters.pick_dummy_adapter;
 
 /**
  * Created by Junaid-Invision on 7/3/2016.
- *
- *
+ * <p/>
+ * <p/>
  * Edited by M Monis on 7/23/2016
  */
 public class PickSetActivity extends BaseActivity {
@@ -52,13 +53,13 @@ public class PickSetActivity extends BaseActivity {
     ListView mListView;
     CustomBoldTextView demandButton;
     TextView grp_count;
-    private RequestQueue requestQueue,requestQueue1;
-    private static final String URL = functions.add+"groups.php";
-    private static final String URLupdate = functions.add+"add_order_to_groups.php";
-    private StringRequest request,request1;
-    ArrayList<PickSet_data> list=new ArrayList<PickSet_data>();
-    private String orderID,groupID;
-    private boolean result=false;
+    private RequestQueue requestQueue, requestQueue1;
+    private static final String URL = functions.add + "groups.php";
+    private static final String URLupdate = functions.add + "add_order_to_groups.php";
+    private StringRequest request, request1;
+    ArrayList<PickSet_data> list = new ArrayList<PickSet_data>();
+    private String orderID, groupID;
+    private boolean result = false;
     View itert;
 
     @Override
@@ -71,21 +72,21 @@ public class PickSetActivity extends BaseActivity {
         if (extras != null) {
             orderID = extras.getString("orderID");
         }
-        Toast.makeText(PickSetActivity.this , orderID,Toast.LENGTH_SHORT).show();
-        requestQueue= Volley.newRequestQueue(this);
+        Toast.makeText(PickSetActivity.this, orderID, Toast.LENGTH_SHORT).show();
+        requestQueue = Volley.newRequestQueue(this);
         setUpToolbar();
         setUpComponents();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/groups.php?id="+HomeActivity.id+"&hash="+HASH.getHash(),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.0.100/ms/groups.php?id=" + HomeActivity.id + "&hash=" + HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
 
-                            JSONArray jsonArr=response.getJSONArray("info");
-                           grp_count.setText(jsonArr.length()+"");
-                            for(int i=0;i<jsonArr.length();i++) {
+                            JSONArray jsonArr = response.getJSONArray("info");
+                            grp_count.setText(jsonArr.length() + "");
+                            for (int i = 0; i < jsonArr.length(); i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                                PickSet_data data=new PickSet_data();
+                                PickSet_data data = new PickSet_data();
                                 data.setGid(jsonObj.getString("GroupID"));
                                 data.setGname(jsonObj.getString("name"));
                                 data.setGmembers(jsonObj.getString("members"));
@@ -93,10 +94,11 @@ public class PickSetActivity extends BaseActivity {
 
                             }
 
-                            mListView.setAdapter(new PickSetAdapter(PickSetActivity.this,list));
+                            mListView.setAdapter(new PickSetAdapter(PickSetActivity.this, list));
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        };
+                        }
+                        ;
                     }
                 },
                 new Response.ErrorListener() {
@@ -113,48 +115,45 @@ public class PickSetActivity extends BaseActivity {
     }
 
 
-    public void setUpToolbar()
-    { 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+    public void setUpToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        TextView toolbarTitle = (TextView)findViewById(R.id.title_text);
+        TextView toolbarTitle = (TextView) findViewById(R.id.title_text);
         toolbarTitle.setText(getString(R.string.pick_set));
         setSupportActionBar(toolbar);
     }
 
-    private void addGroup()
-    {
-        Toast.makeText(PickSetActivity.this,orderID+"--"+groupID+"",Toast.LENGTH_SHORT).show();
+    private void addGroup() {
+        Toast.makeText(PickSetActivity.this, orderID + "--" + groupID + "", Toast.LENGTH_SHORT).show();
     }
 
 
-    public void setUpComponents (){
-        mListView = (ListView)findViewById(R.id.pickSetListView);
-        grp_count=(TextView)findViewById(R.id.grp_count);
+    public void setUpComponents() {
+        mListView = (ListView) findViewById(R.id.pickSetListView);
+        grp_count = (TextView) findViewById(R.id.grp_count);
 
-        demandButton = (CustomBoldTextView)findViewById(R.id.add_demand_basket);
+        demandButton = (CustomBoldTextView) findViewById(R.id.add_demand_basket);
         demandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(groupID==null)
-                {
-                    Toast.makeText(PickSetActivity.this,"Select a group first.",Toast.LENGTH_SHORT).show();
+                if (groupID == null) {
+                    Toast.makeText(PickSetActivity.this, "Select a group first.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                requestQueue1= Volley.newRequestQueue(PickSetActivity.this);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"add_order_to_groups.php?orderID="+orderID+"&grpID="+groupID+"&hash="+HASH.getHash(),
+                requestQueue1 = Volley.newRequestQueue(PickSetActivity.this);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add + "add_order_to_groups.php?orderID=" + orderID + "&grpID=" + groupID + "&hash=" + HASH.getHash(),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
 
-                                    JSONArray jsonArr=response.getJSONArray("info");
-                                    for(int i=0;i<jsonArr.length();i++) {
+                                    JSONArray jsonArr = response.getJSONArray("info");
+                                    for (int i = 0; i < jsonArr.length(); i++) {
                                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
 
-                                        if (jsonObj.getString("status").equals("success")){
+                                        if (jsonObj.getString("status").equals("success")) {
 
-                                        final Dialog dialog = new Dialog(PickSetActivity.this);
+                                            final Dialog dialog = new Dialog(PickSetActivity.this);
                                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                                             dialog.setContentView(R.layout.dialogue_layout);
@@ -174,22 +173,22 @@ public class PickSetActivity extends BaseActivity {
                                                                                                                }
                                                                                                            });
                                             dialog.show();
-                                            groupID=null;
+                                            groupID = null;
 
                                          /*       for (int ij=0;ij<mListView.getCount();ij++) {
                                                 RelativeLayout container = (RelativeLayout) mListView.getChildAt(ij).findViewById(R.id.container);
                                                 container.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                             }
                                              */
-                                        }
-                                        else {
-                                            Toast.makeText(PickSetActivity.this,"Cannot add order to the group.",Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(PickSetActivity.this, "Cannot add order to the group.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                };
+                                }
+                                ;
                             }
                         },
                         new Response.ErrorListener() {
@@ -204,13 +203,14 @@ public class PickSetActivity extends BaseActivity {
                 requestQueue1.add(jsonObjectRequest);
 
 
-
             }
         });
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(itert==null)
+                groupID = list.get(position).getGid() + "";
+                ((PickSetAdapter) mListView.getAdapter()).setSelectedItem(position);
+           /*     if(itert==null)
                 {
          RelativeLayout container = (RelativeLayout) view.findViewById(R.id.container);
          container.setBackgroundColor(Color.parseColor("#CCCCCC"));
@@ -234,7 +234,7 @@ public class PickSetActivity extends BaseActivity {
                     RelativeLayout container1 = (RelativeLayout)itert.findViewById(R.id.container);
                     container1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     itert=view;
-                }
+                }*/
             }
         });
     }
