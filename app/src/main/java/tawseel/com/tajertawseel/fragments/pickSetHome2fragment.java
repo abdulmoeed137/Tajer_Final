@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import tawseel.com.tajertawseel.activities.functions;
 
 import com.android.volley.Request;
@@ -33,8 +33,6 @@ import tawseel.com.tajertawseel.activities.DeliveredNowActivity;
 import tawseel.com.tajertawseel.activities.HASH;
 import tawseel.com.tajertawseel.activities.HomeActivity;
 import tawseel.com.tajertawseel.activities.PickSet_data;
-import tawseel.com.tajertawseel.activities.WaitingForAcceptanceActivity;
-import tawseel.com.tajertawseel.adapters.DeliveredListAdapter;
 import tawseel.com.tajertawseel.adapters.pick_dummy_adapter;
 
 /**
@@ -65,7 +63,7 @@ public class pickSetHome2fragment extends Fragment {
     public void setupComponents()
     {
         requestQueue = Volley.newRequestQueue(getActivity());
-        submit=(TextView)mRootView.findViewById(R.id.BtnAddGroupHome);
+        submit=(TextView)mRootView.findViewById(R.id.ButtonConfirmationTajer);
         submit.setVisibility(View.GONE);
         submit.setEnabled(false);
         listView = (ListView) mRootView.findViewById(R.id.listView);

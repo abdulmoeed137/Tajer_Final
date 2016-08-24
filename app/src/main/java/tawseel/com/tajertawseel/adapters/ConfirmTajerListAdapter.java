@@ -10,8 +10,17 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.TooManyListenersException;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.PostGroupData;
+import tawseel.com.tajertawseel.activities.PostGroupListData;
 import tawseel.com.tajertawseel.activities.TjerMapActivity;
 
 /**
@@ -19,24 +28,26 @@ import tawseel.com.tajertawseel.activities.TjerMapActivity;
  */
 public class ConfirmTajerListAdapter extends BaseAdapter {
 
-
+    ArrayList<PostGroupData> List = new ArrayList<>();
     Context c;
     LayoutInflater inflater;
 
 
-    public ConfirmTajerListAdapter(Context context) {
+    public ConfirmTajerListAdapter(Context context , ArrayList<PostGroupData> list) {
         c = context;
         inflater = LayoutInflater.from(context);
+       List=list;
+
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return List.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return List.get(position);
     }
 
     @Override
@@ -47,43 +58,29 @@ public class ConfirmTajerListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        final  ViewHolder holder;
+         PostGroupData data = (PostGroupData) getItem(position);
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.confirm_tajer_list_item, null, false);
+           holder = new ViewHolder();
 
+            convertView= inflater.inflate(R.layout.confirm_tajer_list_item, null, false);
+
+            holder.CustomerName = (TextView) convertView.findViewById(R.id.CustomerName);
+            holder.CustomerEmail = (TextView) convertView.findViewById(R.id.Email);
+            holder.CustomerPhone = (TextView) convertView.findViewById(R.id.Phone);
+            holder.OrderProductQuantity= (TextView)convertView.findViewById(R.id.OrderProductQuantity);
+convertView.setTag(holder);
         }
+        else
+            holder=(ViewHolder) convertView.getTag();
+        holder.CustomerName.setText(data.getCustomerName());
+        holder.CustomerEmail.setText(data.getCustomerEmail());
+        holder.CustomerPhone.setText(data.getCustomerPhone());
+        holder.OrderProductQuantity.setText(data.getOrderProductQuantity());
 
-        convertView.findViewById(R.id.BtnAlert).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNotificationDialogue(c);
-            }
-        });
-        convertView.findViewById(R.id.BtnMove).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i  = new Intent(c, TjerMapActivity.class);
-                c.startActivity(i);
-            }
-        });
+
 
 
         return convertView;
-    }
-
-
-    public void showNotificationDialogue(Context c) {
-        final Dialog dialog = new Dialog(c);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.confirmation_dialogue);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        // lp.copyFrom(c.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.BOTTOM;
-        lp.dimAmount = 0.3f;
-//        ListView lv = (ListView) dialog.findViewById(R.id.ordersList);
-//        lv.setAdapter(new OrdeDialogueAdapter(c));
-        dialog.show();
     }
 }

@@ -7,7 +7,7 @@ package tawseel.com.tajertawseel.activities;
 public class PickSet_data {
     private String gid="";
     private String gmembers="";
-    private  String ConfirmationCode,StatusCode,DeligateName,ItemPrice,PriceRange,DeligateNumber,DeligateID;
+    private  String ConfirmationCode,StatusCode,DeligateName,ItemPrice,PriceRange,DeligateNumber,DeligateID,TajerLatitude,TajerLongitude;
 
     public String getGname() {
         return gname;
@@ -89,5 +89,21 @@ public class PickSet_data {
 
     public void setDeligateID(String deligateID) {
         DeligateID = deligateID;
+    }
+
+    public String getTajerLatitude() {
+        return TajerLatitude;
+    }
+
+    public void setTajerLatitude(String tajerLatitude) {
+        TajerLatitude = tajerLatitude;
+    }
+
+    public String getTajerLongitude() {
+        return TajerLongitude;
+    }
+
+    public void setTajerLongitude(String tajerLongitude) {
+        TajerLongitude = tajerLongitude;
     }
 }

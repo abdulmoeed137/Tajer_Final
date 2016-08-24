@@ -38,7 +38,7 @@ public class delegateHomeFragment1 extends Fragment {
 
 
 
-        mRootView.findViewById(R.id.BtnAddGroupHome).setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogue();

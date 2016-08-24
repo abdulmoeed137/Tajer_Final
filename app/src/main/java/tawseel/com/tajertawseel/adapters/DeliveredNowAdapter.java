@@ -116,16 +116,16 @@ public class DeliveredNowAdapter extends BaseAdapter {
 
             if (data.getIsConfirmed().equals("1")){
 
-            int sdk = android.os.Build.VERSION.SDK_INT;
-            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.OrderStatusButton.setBackgroundResource(R.drawable.blue_rectangle);
-            }
-            else
-            {
-                holder.OrderStatusButton.setBackground(context.getResources().getDrawable(R.drawable.blue_rectangle));
-            }
-                holder.OrderStatusButton.setTextColor(context.getResources().getColor(R.color.mainColorLight));
-                holder.OrderStatusButton.setText(R.string.waiting);
+                int sdk = android.os.Build.VERSION.SDK_INT;
+                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    holder.OrderStatusButton.setBackgroundResource(R.drawable.orange_rectangle);
+                }
+                else
+                {
+                    holder.OrderStatusButton.setBackground(context.getResources().getDrawable(R.drawable.orange_rectangle));
+                }
+                holder.OrderStatusButton.setTextColor(context.getResources().getColor(R.color.orange));
+                holder.OrderStatusButton.setText(R.string.on_the_way);
             } else   if (data.getIsConfirmed().equals("2")) {
                 int sdk = android.os.Build.VERSION.SDK_INT;
                 if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {

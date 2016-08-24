@@ -63,7 +63,7 @@ public class pickSetHome1fragment extends Fragment {
     public void setupComponents()
     {
         requestQueue = Volley.newRequestQueue(getActivity());
-        submit=(TextView)mRootView.findViewById(R.id.BtnAddGroupHome);
+        submit=(TextView)mRootView.findViewById(R.id.ButtonConfirmationTajer);
         listView = (ListView) mRootView.findViewById(R.id.listView);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"groups.php?id="+ HomeActivity.id+"&hash="+ HASH.getHash(),
                 new Response.Listener<JSONObject>() {

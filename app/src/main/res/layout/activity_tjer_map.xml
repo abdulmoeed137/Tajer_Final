@@ -35,7 +35,7 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:id="@+id/BtnAddGroupHome"/>
+        android:id="@+id/ButtonConfirmationTajer"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/plus_button"
@@ -86,7 +86,7 @@
 
         android:layout_marginRight="16dp"
         android:layout_marginBottom="5dp"
-        android:layout_above="@+id/BtnAddGroupHome"
+        android:layout_above="@+id/ButtonConfirmationTajer"
 
         android:layout_alignParentRight="true"
         android:tint="@android:color/background_dark"

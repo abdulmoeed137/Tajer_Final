@@ -264,6 +264,7 @@ if (Flag.equals("false"))
                                             notifyDataSetChanged();
                                             Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                                             progress.dismiss();
+
                                         } else {
                                             progress.dismiss();
                                             Toast.makeText(context, jsonObject.getString("Error while Deleting"), Toast.LENGTH_SHORT).show();

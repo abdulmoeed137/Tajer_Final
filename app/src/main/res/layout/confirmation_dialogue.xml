@@ -53,7 +53,7 @@
             android:layout_marginRight="15dp"
             android:textDirection="ltr"
             android:theme="@style/EditTextStyle"
-            android:id="@+id/new_item_name_et"
+            android:id="@+id/Code"
             android:layout_marginBottom="20dp" />
 
         <LinearLayout
@@ -64,20 +64,20 @@
             android:gravity="center_horizontal">
 
             <Button
-                android:text="OK"
+                android:text="Enter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/OK"
+                android:id="@+id/ButtonOK"
                 android:background="@color/mainColor"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginRight="10dp" />
 
             <Button
-                android:text="Cancel"
+                android:text="Cancel Order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/Cancel"
+                android:id="@+id/ButtonCancel"
                 android:background="@color/mainColor"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
