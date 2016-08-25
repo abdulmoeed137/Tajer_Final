@@ -59,8 +59,8 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             DeligateID = getIntent().getExtras().getString("DeligateID");
            // Toast.makeText(getApplicationContext(),DeligateID,Toast.LENGTH_SHORT).show();
             dd.registerToken(token, DeligateID, Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID) + "");
-            Intent i = new Intent(DeligateHomeActivity.this,UpdateLocation.class);
-            startService(i);
+//            Intent i = new Intent(DeligateHomeActivity.this,UpdateLocation.class);
+//            startService(i);
         }
 
 

@@ -1,25 +1,45 @@
 package tawseel.com.tajertawseel.fragments;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.ConfirmTajerActivity;
+import tawseel.com.tajertawseel.activities.LoginActivity;
+import tawseel.com.tajertawseel.activities.UpdateLocation;
+import tawseel.com.tajertawseel.activities.functions;
 
 /**
  * Created by Junaid-Invision on 8/16/2016.
  */
 public class delegateHomeFragment1 extends Fragment {
-
-
 
     View mRootView;
 
@@ -67,29 +87,91 @@ public class delegateHomeFragment1 extends Fragment {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.BOTTOM;
         lp.dimAmount = 0.3f;
+        dialog.findViewById(R.id.Online).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+RunVolley("1");
+                dialog.dismiss();
+                Intent i = new Intent(getActivity(),UpdateLocation.class);
+                getActivity().startService(i);
+            }
+        });
+        dialog.findViewById(R.id.Offline).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+RunVolley("0");
+                dialog.dismiss();
+                Intent i = new Intent(getActivity(),UpdateLocation.class);
+                getActivity().stopService(i);
+            }
+        });
         dialog.show();
 
-
-        dialog.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(),HomePickSetActivity.class);
-//                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.findViewById(R.id.no).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                //startActivity(new Intent(getActivity(), AddNewOrderActivity.class));
-            }
-        });
 //        dialog.findViewById(R.id.BtnNewGroup).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //               // startActivity(new Intent(getActivity(), PostNewGroupActivity.class));
 //            }
 //        });
+    }
+    void RunVolley(final String value){
+        final ProgressDialog progress ;
+
+        RequestQueue requestQueue;
+        requestQueue = Volley.newRequestQueue(getActivity());
+        StringRequest request;
+
+        progress = ProgressDialog.show(getActivity(), "Loading",
+                "Please Wait..", true);
+        request = new StringRequest(Request.Method.POST, functions.add+"DeligateOnOffLine.php", new Response.Listener<String>() {
+            //if response
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    try {
+                        if (jsonObject.names().get(0).equals("success")) {
+
+                            //if success
+                            Toast.makeText(getActivity(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                            progress.dismiss();
+
+
+                        } else {
+                            Toast.makeText(getActivity(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
+                            progress.dismiss();
+                        }
+                    } catch (JSONException e) {
+
+                        Toast.makeText(getActivity(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+
+                }
+            }// in case error
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Srvc",error.toString());
+                Toast.makeText(getActivity(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+            }
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("id", LoginActivity.DeligateID);
+                hashMap.put("hash", "CCB612R");
+                hashMap.put("Status",value);
+
+                return hashMap;
+            }
+        };
+        requestQueue.add(request);
     }
 }

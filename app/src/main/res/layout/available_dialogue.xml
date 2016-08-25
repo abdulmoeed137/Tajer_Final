@@ -53,7 +53,7 @@
 
             android:layout_marginLeft="25dp"
             android:minWidth="280dp"
-            android:id="@+id/yes"
+            android:id="@+id/Online"
             android:gravity="center"
             android:background="@drawable/green_rectangle"
 
@@ -75,7 +75,7 @@
             android:layout_height="46dp"
             android:layout_gravity="right"
             android:minWidth="280dp"
-            android:id="@+id/no"
+            android:id="@+id/Offline"
           android:layout_marginLeft="25dp"
             android:gravity="center"
             android:background="@drawable/red_rectangle"
