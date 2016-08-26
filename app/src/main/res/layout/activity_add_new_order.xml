@@ -149,7 +149,8 @@
             android:textSize="16dp"
             android:textDirection="rtl"
        android:theme="@style/EditTextStyle"
-            android:id="@+id/c_name" />
+            android:id="@+id/c_name"
+            android:inputType="textPersonName" />
 
         <tawseel.com.tajertawseel.CustomBoldTextView
             android:layout_width="wrap_content"
@@ -168,7 +169,8 @@
             android:textSize="16dp"
             android:textDirection="rtl"
             android:theme="@style/EditTextStyle"
-            android:id="@+id/c_number" />
+            android:id="@+id/c_number"
+            android:inputType="number" />
 
 
         <tawseel.com.tajertawseel.CustomBoldTextView
@@ -189,7 +191,8 @@
             android:textDirection="rtl"
             android:theme="@style/EditTextStyle"
             android:layout_marginBottom="15dp"
-            android:id="@+id/c_email" />
+            android:id="@+id/c_email"
+            android:inputType="textEmailAddress" />
 
 
 

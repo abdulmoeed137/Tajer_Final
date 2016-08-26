@@ -47,6 +47,8 @@ public class ConnectingProfileDelegates extends BaseActivity {
     TextView contact;
     TextView delivers;
     TextView reviews;
+    TextView date;
+    TextView time;
     RatingBar rating;
 
     @Override
@@ -64,10 +66,19 @@ public class ConnectingProfileDelegates extends BaseActivity {
          delivers = (TextView) findViewById(R.id.profile_delivers);
         reviews = (TextView) findViewById(R.id.profile_reviews);
         rating=(RatingBar)findViewById(R.id.profile_ratingbar);
+        date=(TextView)findViewById(R.id.pdate);
+        time=(TextView) findViewById(R.id.ptime);
 
         if (extras != null) {
+            String idt[]=extras.getString("DeligateID").split(" ");
+            if(idt[0]!=null)
+                id=idt[0];
+            else
             id=extras.getString("DeligateID");
-            Toast.makeText(ConnectingProfileDelegates.this,id,Toast.LENGTH_SHORT).show();
+            if(idt[1]!=null)
+                date.setText(idt[1]);
+            if(idt[2]!=null)
+                time.setText(idt[2]);
         }
 
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"delegates.php", new Response.Listener<String>() {

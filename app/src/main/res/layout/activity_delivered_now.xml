@@ -239,7 +239,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp"
-                    android:paddingLeft="10dp"/>
+                    android:paddingLeft="10dp"
+                    android:id="@+id/history_btn" />
             </LinearLayout>
 
         <View

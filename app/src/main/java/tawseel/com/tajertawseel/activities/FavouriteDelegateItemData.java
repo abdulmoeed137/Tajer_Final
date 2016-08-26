@@ -6,6 +6,25 @@ package tawseel.com.tajertawseel.activities;
 
 public class FavouriteDelegateItemData {
     private String name;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    private String time;
 
     public String getId() {
         return id;

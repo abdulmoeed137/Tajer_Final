@@ -75,6 +75,8 @@ private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
                         tdata.setNdelivers(jsonObj.getString("delivers"));
                         Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
                         tdata.setStars(String.valueOf(idelivers));
+                        tdata.setDate(jsonObj.getString("DeliveryDate"));
+                        tdata.setTime(jsonObj.getString("Deliverytime"));
                         data.add(tdata);
                     }
                     listview.setAdapter(new DelegatesQuestionAdapter(DelegatesQuestionActivity.this,data));
@@ -114,7 +116,7 @@ private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!longClick){
                 Intent intent = new Intent(DelegatesQuestionActivity.this,ConnectingProfileDelegates.class);
-                    intent.putExtra("DeligateID",data.get(position).getId());
+                    intent.putExtra("DeligateID",data.get(position).getId()+" "+data.get(position).getDate()+" "+data.get(position).getTime());
                 startActivity(intent);
                 }
                 else

@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class DeliveredNowActivity extends BaseActivity {
     ListView mListView ;
     String GroupID,ConfirmationCode,StatusCode,GroupName,DeligateName,ItemPrice2,PriceRange2,DeligateNumber;
     TextView NoOfCustomer;
+    Button history;
 ArrayList< PostGroupData> list = new ArrayList<>();
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +76,20 @@ ArrayList< PostGroupData> list = new ArrayList<>();
         ItemPrice2=getIntent().getExtras().getString("PriceRange");
         DeligateNumber=getIntent().getExtras().getString("DeligateNumber");
         NoOfCustomer= (TextView)findViewById(R.id.NoOfCustomers);
+
+        history=(Button)findViewById(R.id.history_btn);
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             Intent intent=new Intent(DeliveredNowActivity.this,FinancialRequestActivity.class);
+                intent.putExtra("totalitem",ItemPrice2);
+                intent.putExtra("totald",PriceRange2);
+                intent.putExtra("gid",GroupID);
+                startActivity(intent);
+            }
+        });
+
         final String DeligateID= getIntent().getExtras().getString("DeligateID");
         ImageView btnImageDeligate = (ImageView)findViewById(R.id.BtnImage) ;
         btnImageDeligate.setOnClickListener(new View.OnClickListener() {

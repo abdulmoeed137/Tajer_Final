@@ -67,6 +67,11 @@ public class DateOfConnectionsActivity extends BaseActivity {
                         final JSONObject jsonObj = jsonArr.getJSONObject(i);
                         if(i==0)
                         {
+                            DateOfConnectionsData tdata1=new DateOfConnectionsData();
+                            String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
+                            tdata1.setTitle(datearr[1]+" "+datearr[2]);
+                            data.add(tdata1);
+
                             date=jsonObj.getString("DeliveryDate");
                         DateOfConnectionsData tdata=new DateOfConnectionsData();
                         tdata.setGid(jsonObj.getString("GroupID"));
@@ -79,15 +84,16 @@ public class DateOfConnectionsActivity extends BaseActivity {
                         tdata.setStars(jsonObj.getString("delivers"));
                         data.add(tdata);
 
-                            DateOfConnectionsData tdata1=new DateOfConnectionsData();
-                            String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
-                            tdata1.setTitle(datearr[1]+" "+datearr[2]);
-                            data.add(tdata1);
                         }
                         else
                         {
                             if(date.compareTo(jsonObj.getString("DeliveryDate"))!=0)
                             {
+                                DateOfConnectionsData tdata1=new DateOfConnectionsData();
+                                String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
+                                tdata1.setTitle(datearr[1]+" "+datearr[2]);
+                                data.add(tdata1);
+
                                 date=jsonObj.getString("DeliveryDate");
                                 DateOfConnectionsData tdata=new DateOfConnectionsData();
                                 tdata.setGid(jsonObj.getString("GroupID"));
@@ -100,10 +106,6 @@ public class DateOfConnectionsActivity extends BaseActivity {
                                 tdata.setStars(jsonObj.getString("delivers"));
                                 data.add(tdata);
 
-                                DateOfConnectionsData tdata1=new DateOfConnectionsData();
-                                String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
-                                tdata1.setTitle(datearr[1]+" "+datearr[2]);
-                                data.add(tdata1);
                             }
                             else
                             {

@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="3 : "
                 android:textColor="@android:color/white"
-                android:id="@+id/NoOfCustomers" />
+                android:id="@+id/fh_NoOfCustomers" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -67,7 +67,7 @@
                 android:text="# 25482"
 
                 android:textColor="@android:color/white"
-                android:id="@+id/GroupID" />
+                android:id="@+id/fh_GroupID" />
 
 
             <tawseel.com.tajertawseel.CustomBoldTextView
@@ -126,15 +126,15 @@
             <tawseel.com.tajertawseel.CustomBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date: N/A"
+                android:text="Date:"
                 android:textSize="10dp"
                 android:layout_marginRight="5dp"/>
 
             <tawseel.com.tajertawseel.CustomBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time: N/A"
-                android:textSize="10dp"/>
+                android:textSize="10dp"
+                android:id="@+id/fh_time" />
 
 
 
@@ -167,10 +167,10 @@
             android:text="Khalid ahmed Al..."
             android:textSize="12dp"
             android:textColor="@color/mainColor"
-            android:id="@+id/DeligateName" />
+            android:id="@+id/fh_DeligateName" />
 
 
-        <RatingBar android:id="@+id/ratingbar"
+        <RatingBar android:id="@+id/fh_ratingbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"
@@ -248,7 +248,7 @@
                         android:text="60"
                         android:textSize="18dp"
                         android:layout_marginLeft="5dp"
-                        android:id="@+id/PriceRange" />
+                        android:id="@+id/fh_PriceRange" />
                 </LinearLayout>
 
 
@@ -297,7 +297,7 @@
                         android:text="800"
                         android:textSize="18dp"
                         android:layout_marginLeft="5dp"
-                        android:id="@+id/ItemPrice" />
+                        android:id="@+id/fh_ItemPrice" />
                 </LinearLayout>
 
 

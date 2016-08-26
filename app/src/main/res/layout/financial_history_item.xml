@@ -45,7 +45,7 @@
                     android:text="2"
                     android:textSize="16dp"
                     android:textColor="@color/mainColor"
-                    android:id="@+id/OrderProductQuantity" />
+                    android:id="@+id/fhl_OrderProductQuantity" />
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
                     android:layout_width="wrap_content"
@@ -68,7 +68,8 @@
                 android:textSize="20dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:id="@+id/fhl_name" />
 
 
         </RelativeLayout>
@@ -100,7 +101,8 @@
                     android:textColor="@android:color/white"
                     android:text="30"
                     android:textSize="18dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/fhl_delivery" />
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
                     android:layout_width="wrap_content"
@@ -142,7 +144,8 @@
                     android:textColor="@android:color/white"
                     android:text="500"
                     android:textSize="18dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/fhl_items" />
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
                     android:layout_width="wrap_content"
@@ -221,7 +224,8 @@
                             android:textColor="@color/mainColor"
 
                             android:textSize="35dp"
-                            android:layout_marginLeft="5dp"/>
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/fhl_final" />
 
                     </LinearLayout>
 
@@ -264,7 +268,8 @@
                             android:textColor="@color/mainColor"
                             android:text="30"
                             android:textSize="14dp"
-                            android:layout_marginLeft="5dp"/>
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/fhl_delivery1" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -298,7 +303,8 @@
                             android:textColor="@color/mainColor"
                             android:text="30"
                             android:textSize="14dp"
-                            android:layout_marginLeft="5dp"/>
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/fhl_ttprofit" />
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
