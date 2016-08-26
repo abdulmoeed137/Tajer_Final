@@ -120,6 +120,11 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             Intent i  = new Intent(DeligateHomeActivity.this,DeligateConfirmationActivity.class);
             startActivity(i);
         }
+        else if (v.getId() == R.id.option4){
+
+            Intent intent = new Intent(DeligateHomeActivity.this,TradersFavouriteActivity.class);
+            startActivity(intent);
+        }
 
     }
 }

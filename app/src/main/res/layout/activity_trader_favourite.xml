@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/mainColorLight">
+
+
+
+
+
+
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/number_delegates_question"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="18dp"
+            android:layout_marginRight="10dp"
+
+            android:id="@+id/req_countText"/>
+
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/req_countText"
+            android:id="@+id/grp_count"
+            android:text="0"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:layout_marginRight="4dp"
+            android:layout_alignBottom="@+id/req_countText"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:padding="10dp">
+
+    </ListView>
+
+
+
+
+</LinearLayout>

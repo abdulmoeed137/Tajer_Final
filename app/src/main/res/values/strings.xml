@@ -165,5 +165,24 @@
     <string name="trader_favourite">التجّار المفضلﻴﻦ</string>
     <string name="pending">Pending</string>
     <string name="on_the_way">في الانتظار</string>
+    <string name="dealer_profile">بروفايل تاجر</string>
+
+
+
+
+    <!--sample strings-->
+
+
+    <string name="sub_title_rating_screen">عدد التجّار المفضلين:</string>
+    <string name="tawseelat">توصيلات</string>
+    <string name="byaanat">بيانات المندوب</string>
+    <string name="ismm">الاسم</string>
+    <string name="desription_heading">عن التاجر</string>
+    <string name="dummy_description">المطعم تاجر حر أعمل في المطعم تاجر حر أعمل في المطعم تاجر حر أعمل
+في المطعم تاجر حر أعمل في المطعم تاجر حر أعمل في المطعم تاجر حر
+أعمل في المطعم تاجر حر أعمل في المطعم تاجر حر</string>
+
+    <string name="raqm">رقم التواصل</string>
+    <string name="person_ratings">عدد التقييﻤﺎت</string>
 
 </resources>
