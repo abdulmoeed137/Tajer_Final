@@ -78,6 +78,7 @@
 <activity android:name=".activities.NotificationOrderDetails"></activity>
         <activity android:name=".activities.dialog"></activity>
         <activity android:name=".activities.ComfirmationActivity"></activity>
+        <activity android:name=".activities.BruallDelivetyActivity"/>
         <activity android:name=".activities.DeligateNotificationData"/>
         <receiver android:name=".activities.DeligateRequest">
             <intent-filter>
