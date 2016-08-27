@@ -8,9 +8,27 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.adapters.DateOfConnectionsAdapter;
 import tawseel.com.tajertawseel.adapters.DelegatesDateOfConnectionAdapter;
 
 /**
@@ -22,6 +40,10 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
     private ImageView deleteIcon;
     private CustomBoldTextView title;
     private int selectedCount = 0;
+    private ArrayList<DateOfConnectionsData> data=new ArrayList<>();
+    private RequestQueue requestQueue;
+    String date="";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +55,103 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
 
     private void setupComponents() {
         mLisView = (ListView)findViewById(R.id.connectionsListView);
-        mLisView.setAdapter(new DelegatesDateOfConnectionAdapter(this));
+        //mLisView.setAdapter(new DelegatesDateOfConnectionAdapter(this));
+        StringRequest request = new StringRequest(Request.Method.POST,functions.add+"sdelivers.php", new Response.Listener<String>() {
+            public void onResponse(String response) {
+                try {
+                    JSONObject mainObj=new JSONObject(response);
+                    JSONArray jsonArr=mainObj.getJSONArray("info");
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                        if(i==0)
+                        {
+                            DateOfConnectionsData tdata1=new DateOfConnectionsData();
+                            String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
+                            tdata1.setTitle(datearr[1]+" "+datearr[2]);
+                            data.add(tdata1);
+
+                            date=jsonObj.getString("DeliveryDate");
+                            DateOfConnectionsData tdata=new DateOfConnectionsData();
+                            tdata.setGid(jsonObj.getString("GroupID"));
+                            tdata.setDate(jsonObj.getString("DeliveryDate"));
+                            tdata.setGname(jsonObj.getString("name"));
+                            tdata.setTime(jsonObj.getString("Deliverytime"));
+                            tdata.setTitle("");
+                            tdata.setDname(jsonObj.getString("Name"));
+                            tdata.setDelivers(jsonObj.getString("orders"));
+                            tdata.setStars(jsonObj.getString("delivers"));
+                            data.add(tdata);
+
+                        }
+                        else
+                        {
+                            if(date.compareTo(jsonObj.getString("DeliveryDate"))!=0)
+                            {
+                                DateOfConnectionsData tdata1=new DateOfConnectionsData();
+                                String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
+                                tdata1.setTitle(datearr[1]+" "+datearr[2]);
+                                data.add(tdata1);
+
+                                date=jsonObj.getString("DeliveryDate");
+                                DateOfConnectionsData tdata=new DateOfConnectionsData();
+                                tdata.setGid(jsonObj.getString("GroupID"));
+                                tdata.setDate(jsonObj.getString("DeliveryDate"));
+                                tdata.setGname(jsonObj.getString("name"));
+                                tdata.setTime(jsonObj.getString("Deliverytime"));
+                                tdata.setTitle("");
+                                tdata.setDname(jsonObj.getString("UserName"));
+                                tdata.setDelivers(jsonObj.getString("orders"));
+                                tdata.setStars(jsonObj.getString("delivers"));
+                                data.add(tdata);
+
+                            }
+                            else
+                            {
+                                DateOfConnectionsData tdata=new DateOfConnectionsData();
+                                tdata.setGid(jsonObj.getString("GroupID"));
+                                tdata.setDate(jsonObj.getString("DeliveryDate"));
+                                tdata.setGname(jsonObj.getString("name"));
+                                tdata.setTime(jsonObj.getString("Deliverytime"));
+                                tdata.setTitle("");
+                                tdata.setDname(jsonObj.getString("Name"));
+                                tdata.setDelivers(jsonObj.getString("orders"));
+                                tdata.setStars(jsonObj.getString("delivers"));
+                                data.add(tdata);
+                            }
+                        }
+                    }
+                    mLisView.setAdapter(new DelegatesDateOfConnectionAdapter(DeligateDateOfConnectionActivity.this,data));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                };
+
+            }
+
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("id",HomeActivity.id);
+                hashMap.put("hash",HASH.getHash());
+                return hashMap;
+            }
+        };
+        try{
+            requestQueue= Volley.newRequestQueue(DeligateDateOfConnectionActivity.this);
+            requestQueue.add(request);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(DeligateDateOfConnectionActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
+        }
+
+
+
         mLisView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

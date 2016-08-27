@@ -9,9 +9,27 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.adapters.DelegatesQuestionAdapter;
 import tawseel.com.tajertawseel.adapters.TradersFavouriteAdapter;
 
 /**
@@ -25,6 +43,8 @@ public class TradersFavouriteActivity extends BaseActivity {
     private ImageView deleteIcon;
     private boolean longClick  = false;
     private int ItemCount = 0;
+    private ArrayList<FavouriteSellerItemData> data=new ArrayList<FavouriteSellerItemData>();
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,8 +57,52 @@ public class TradersFavouriteActivity extends BaseActivity {
     private void setUpComponent() {
 
         listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(new TradersFavouriteAdapter(this));
+        //listView.setAdapter(new TradersFavouriteAdapter(this));
 
+        StringRequest request = new StringRequest(Request.Method.POST,functions.add+"favsellers.php", new Response.Listener<String>() {
+            public void onResponse(String response) {
+                try {
+                    JSONObject mainObj=new JSONObject(response);
+                    JSONArray jsonArr=mainObj.getJSONArray("info");
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        final JSONObject jsonObj = jsonArr.getJSONObject(i);
+                        FavouriteSellerItemData tdata=new FavouriteSellerItemData();
+                        tdata.setId(jsonObj.getString("TajerID"));
+                        tdata.setName(jsonObj.getString("UserName"));
+                        tdata.setNdelivers(jsonObj.getString("delivers"));
+                        Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
+                        tdata.setStars(String.valueOf(idelivers));
+                        data.add(tdata);
+                    }
+                    listView.setAdapter(new TradersFavouriteAdapter(TradersFavouriteActivity.this,data));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                };
+
+            }
+
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("id",HomeActivity.id);
+                hashMap.put("hash",HASH.getHash());
+                return hashMap;
+            }
+        };
+        try{
+            requestQueue= Volley.newRequestQueue(TradersFavouriteActivity.this);
+            requestQueue.add(request);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(TradersFavouriteActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

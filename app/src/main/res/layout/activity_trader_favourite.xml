@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/req_countText"
-            android:id="@+id/grp_count"
+            android:id="@+id/fs_grp_count"
             android:text="0"
             android:textColor="@android:color/white"
             android:textSize="18dp"
