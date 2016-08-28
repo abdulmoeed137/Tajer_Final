@@ -56,6 +56,7 @@ public class ConnectingProfileDelegates extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connecting_profile_delegates);
+        setUpToolbar();
         Bundle extras = getIntent().getExtras();
          main_name = (TextView) findViewById(R.id.mname);
          name = (TextView) findViewById(R.id.profile_name);
@@ -128,7 +129,7 @@ public class ConnectingProfileDelegates extends BaseActivity {
         {
             Toast.makeText(ConnectingProfileDelegates.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
         }
-        setUpToolbar();
+
     }
 
 

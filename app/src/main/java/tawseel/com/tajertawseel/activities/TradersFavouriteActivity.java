@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +46,7 @@ public class TradersFavouriteActivity extends BaseActivity {
     private int ItemCount = 0;
     private ArrayList<FavouriteSellerItemData> data=new ArrayList<FavouriteSellerItemData>();
     private RequestQueue requestQueue;
+    TextView tcount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class TradersFavouriteActivity extends BaseActivity {
 
     private void setUpComponent() {
 
+        tcount=(TextView)findViewById(R.id.fs_grp_count);
         listView = (ListView) findViewById(R.id.listView);
         //listView.setAdapter(new TradersFavouriteAdapter(this));
 
@@ -72,8 +75,11 @@ public class TradersFavouriteActivity extends BaseActivity {
                         tdata.setNdelivers(jsonObj.getString("delivers"));
                         Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
                         tdata.setStars(String.valueOf(idelivers));
+                        tdata.setDate(jsonObj.getString("DeliveryDate"));
+                        tdata.setTime(jsonObj.getString("Deliverytime"));
                         data.add(tdata);
                     }
+                    tcount.setText(data.size()+"");
                     listView.setAdapter(new TradersFavouriteAdapter(TradersFavouriteActivity.this,data));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -83,14 +89,14 @@ public class TradersFavouriteActivity extends BaseActivity {
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Internet Connection Error", Toast.LENGTH_SHORT).show();
             }
         }) {
             //send data to server using POST
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("id",HomeActivity.id);
+                hashMap.put("id",DeligateHomeActivity.DeligateID);
                 hashMap.put("hash",HASH.getHash());
                 return hashMap;
             }
@@ -110,6 +116,7 @@ public class TradersFavouriteActivity extends BaseActivity {
 
                 if(!longClick) {
                     Intent intent = new Intent(TradersFavouriteActivity.this, DealerProfileActivity.class);
+                    intent.putExtra("TajerID",data.get(position).getId()+" "+data.get(position).getDate()+" "+data.get(position).getTime());
                     startActivity(intent);
                 }
                 else

@@ -58,7 +58,7 @@
                         android:layout_toLeftOf="@+id/image_view_contacts"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        />
+                        android:id="@+id/sp_mname" />
 
                 </RelativeLayout>
 
@@ -108,7 +108,7 @@
                             android:layout_toLeftOf="@+id/image_view_contacts"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            />
+                            android:id="@+id/sp_name" />
 
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
@@ -150,13 +150,13 @@
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dummy_description"
+                        android:text="No Description"
                         android:layout_below="@+id/description_heading"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="20dp"
                         android:layout_marginLeft="25dp"
                         android:layout_toLeftOf="@+id/profile_iconImage"
-                        />
+                        android:id="@+id/sp_bio" />
                 </RelativeLayout>
 
                 <View
@@ -196,7 +196,7 @@
                         android:textColor="@android:color/black"
                         android:layout_below="@id/contacts_headings"
                         android:layout_marginRight="20dp"
-                        />
+                        android:id="@+id/sp_contact" />
 
 
                     <ImageView
@@ -231,7 +231,7 @@
                     android:paddingTop="20dp">
 
 
-                    <RatingBar android:id="@+id/ratingbar"
+                    <RatingBar android:id="@+id/sp_ratingbar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
@@ -312,13 +312,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="10:55 A.M."
-                            android:textSize="10dp"/>
+                            android:textSize="10dp"
+                            android:id="@+id/sptime" />
                         <tawseel.com.tajertawseel.CustomBoldTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:text="25/5/2015"
-                            android:textSize="10dp"/>
+                            android:textSize="10dp"
+                            android:id="@+id/spdate" />
 
                     </LinearLayout>
 
@@ -349,7 +351,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="5"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/sp_delivers" />
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:layout_width="wrap_content"

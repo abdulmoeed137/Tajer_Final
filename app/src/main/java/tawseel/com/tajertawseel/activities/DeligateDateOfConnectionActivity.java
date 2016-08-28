@@ -77,7 +77,7 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
                             tdata.setGname(jsonObj.getString("name"));
                             tdata.setTime(jsonObj.getString("Deliverytime"));
                             tdata.setTitle("");
-                            tdata.setDname(jsonObj.getString("Name"));
+                            tdata.setDname(jsonObj.getString("UserName"));
                             tdata.setDelivers(jsonObj.getString("orders"));
                             tdata.setStars(jsonObj.getString("delivers"));
                             data.add(tdata);
@@ -113,7 +113,7 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
                                 tdata.setGname(jsonObj.getString("name"));
                                 tdata.setTime(jsonObj.getString("Deliverytime"));
                                 tdata.setTitle("");
-                                tdata.setDname(jsonObj.getString("Name"));
+                                tdata.setDname(jsonObj.getString("UserName"));
                                 tdata.setDelivers(jsonObj.getString("orders"));
                                 tdata.setStars(jsonObj.getString("delivers"));
                                 data.add(tdata);
@@ -136,7 +136,7 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("id",HomeActivity.id);
+                hashMap.put("id",DeligateHomeActivity.DeligateID);
                 hashMap.put("hash",HASH.getHash());
                 return hashMap;
             }
