@@ -47,8 +47,9 @@ public class FinancialRequestActivity extends BaseActivity {
         tprice=getIntent().getExtras().getString("totalitem");
         tdelivery=getIntent().getExtras().getString("totald");
         Groupid=getIntent().getExtras().getString("gid");
-
+setUpToolbar();
         setUpComponents();
+
     }
 
     private void setUpComponents() {

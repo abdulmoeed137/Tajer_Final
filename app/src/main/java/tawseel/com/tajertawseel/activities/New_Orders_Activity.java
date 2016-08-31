@@ -80,7 +80,7 @@ public class New_Orders_Activity extends BaseActivity {
                         data.setProductID(jsonObj.getString("ProductID"));
                         data.setProductName(jsonObj.getString("Title"));
                         data.setDescription(jsonObj.getString("Description"));
-                        data.setPrice(jsonObj.getString("Price"));
+                        data.setPrice("70");
                         allproducts.add(data);
 
                         rbs[i]=new RadioButton(New_Orders_Activity.this);

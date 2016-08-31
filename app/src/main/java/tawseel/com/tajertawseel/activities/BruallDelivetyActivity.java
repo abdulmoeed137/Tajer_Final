@@ -23,6 +23,7 @@ public class BruallDelivetyActivity extends BaseActivity {
         setContentView(R.layout.activity_brual_delivery);
 
         setupComponents();
+        setUpToolbar();
 
     }
 

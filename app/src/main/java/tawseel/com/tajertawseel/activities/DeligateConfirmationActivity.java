@@ -59,7 +59,7 @@ public class DeligateConfirmationActivity extends BaseActivity {
         requestQueue = Volley.newRequestQueue(this);
         mListView = (ListView) findViewById(R.id.pickSetListView);
         grp_count = (TextView) findViewById(R.id.grp_count);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.0.100/ms/DeligateInfoGroup2.php?id=" + LoginActivity.DeligateID + "&hash=" + HASH.getHash(),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"DeligateInfoGroup2.php?id=" + LoginActivity.DeligateID + "&hash=" + HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -52,7 +52,6 @@ public class DeliveredNowActivity extends BaseActivity {
     ListView mListView ;
     String GroupID,ConfirmationCode,StatusCode,GroupName,DeligateName,ItemPrice2,PriceRange2,DeligateNumber;
     TextView NoOfCustomer;
-    Button history;
 ArrayList< PostGroupData> list = new ArrayList<>();
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,9 +76,7 @@ ArrayList< PostGroupData> list = new ArrayList<>();
         DeligateNumber=getIntent().getExtras().getString("DeligateNumber");
         NoOfCustomer= (TextView)findViewById(R.id.NoOfCustomers);
 
-        history=(Button)findViewById(R.id.history_btn);
-
-        history.setOnClickListener(new View.OnClickListener() {
+  findViewById(R.id.history_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
              Intent intent=new Intent(DeliveredNowActivity.this,FinancialRequestActivity.class);

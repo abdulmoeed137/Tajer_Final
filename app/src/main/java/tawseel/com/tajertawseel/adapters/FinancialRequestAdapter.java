@@ -45,26 +45,31 @@ public class FinancialRequestAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v= inflater.inflate(R.layout.financial_history_item,null,false);
-        TextView name=(TextView)v.findViewById(R.id.fhl_name);
-        TextView items=(TextView)v.findViewById(R.id.fhl_OrderProductQuantity);
-        TextView dprice=(TextView)v.findViewById(R.id.fhl_delivery);
-        TextView dprice1=(TextView)v.findViewById(R.id.fhl_delivery1);
-        TextView iprice=(TextView)v.findViewById(R.id.fhl_items);
-        TextView profit=(TextView)v.findViewById(R.id.fhl_ttprofit);
-        TextView finalp=(TextView)v.findViewById(R.id.fhl_final);
-
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.financial_history_item, null, false);
+            holder= new ViewHolder();
+            holder.name2 = (TextView) convertView.findViewById(R.id.fhl_name);
+            holder.items = (TextView) convertView.findViewById(R.id.fhl_OrderProductQuantity);
+            holder.dprice = (TextView) convertView.findViewById(R.id.fhl_delivery);
+            holder.dprice1 = (TextView) convertView.findViewById(R.id.fhl_delivery1);
+            holder.iprice = (TextView) convertView.findViewById(R.id.fhl_items);
+            holder.profit = (TextView) convertView.findViewById(R.id.fhl_ttprofit);
+            holder. finalp = (TextView) convertView.findViewById(R.id.fhl_final);
+            convertView.setTag(holder);
+        }
+        else
+            holder=(ViewHolder)convertView.getTag();
         FinancialHistoryData temp=(FinancialHistoryData) getItem(position);
 
-        name.setText(temp.getDname());
-        items.setText(temp.getNitems());
-        dprice.setText(temp.getDeliveryprice());
-        dprice1.setText(temp.getDeliveryprice());
-        iprice.setText(temp.getItemprice());
+        holder.items.setText(temp.getNitems());
+        holder.dprice.setText(temp.getDeliveryprice());
+        holder.dprice1.setText(temp.getDeliveryprice());
+        holder.iprice.setText(temp.getItemprice());
         double profitint=Double.parseDouble(temp.getItemprice())*0.05;
         double finalint=Double.parseDouble(temp.getItemprice())-profitint;
-        profit.setText(String.valueOf((profitint)));
-        finalp.setText(String.valueOf(finalint));
-        return v;
+        holder.profit.setText(String.valueOf((profitint)));
+        holder. finalp.setText(String.valueOf(finalint));
+        return convertView;
     }
 }

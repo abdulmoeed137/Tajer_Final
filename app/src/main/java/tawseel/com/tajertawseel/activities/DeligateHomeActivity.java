@@ -32,6 +32,7 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.button_screen);
+        DeligateID=LoginActivity.DeligateID;
         setUpContents();
         setupListeners();
     }

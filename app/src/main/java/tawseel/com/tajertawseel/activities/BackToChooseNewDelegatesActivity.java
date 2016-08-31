@@ -23,6 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,12 +40,14 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
     private GoogleMap mMap;
     TextView continuee;
     private RequestQueue requestQueue;
+    CustomBoldTextView distance;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_back_to_choose_delegates);
         requestQueue= Volley.newRequestQueue(this);
+        distance = (CustomBoldTextView)findViewById(R.id.Distance) ;
         TextView TextDeligateCarBrand= (TextView)findViewById(R.id.CarBrand);
         TextView TextDeligateCarModel= (TextView)findViewById(R.id.CarMode);
         TextView TextDeligateCarNumber= (TextView)findViewById(R.id.CarNo);
@@ -203,9 +206,12 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
        double  lat =getIntent().getExtras().getDouble("lat");
        double  lng = getIntent().getExtras().getDouble("lng");
 
+//// for knowing the distance between the two points
+        LatLng to = new LatLng(dLat, dLng);/// destination
+        LatLng from = new LatLng(lat, lng);//source point
+        Double distance2 = SphericalUtil.computeDistanceBetween(from, to); //map utils function to compute distance in meters
+        distance.setText(distance2+"");
 
-        addMarker(dLat,dLng,"Seller", R.drawable.destination_marker);
-        addMarker(lat,lng,"Deligate", R.drawable.car_marker);
 
 
         PathRequest request = new PathRequest();

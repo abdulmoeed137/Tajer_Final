@@ -150,45 +150,51 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
             Toast.makeText(DeligateDateOfConnectionActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
         }
 
+mLisView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        LinearLayout layout = (LinearLayout)view.findViewById(R.id.container);
 
+        if(layout!=null)
+        {
+            ImageView TickView = (ImageView)view.findViewById(R.id.tick_view);
+
+            if(TickView.getVisibility() == View.INVISIBLE)
+            {
+                TickView.setVisibility(View.VISIBLE);
+                layout.setBackgroundColor(getResources().getColor(R.color.grey));
+                selectedCount = selectedCount+1;
+                title.setText(""+selectedCount);
+                if(deleteIcon.getVisibility() == View.INVISIBLE)
+                {
+                    deleteIcon.setVisibility(View.VISIBLE);
+                }
+            }
+            else
+            {
+                TickView.setVisibility(View.INVISIBLE);
+                layout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                selectedCount = selectedCount-1;
+
+                title.setText(""+selectedCount);
+                if(selectedCount == 0)
+                {
+                    title.setText(getString(R.string.drawer_option3));
+                    deleteIcon.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+        }
+        return false;
+    }
+});
 
         mLisView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                LinearLayout layout = (LinearLayout)view.findViewById(R.id.container);
-
-                if(layout!=null)
-                {
-                    ImageView TickView = (ImageView)view.findViewById(R.id.tick_view);
-
-                    if(TickView.getVisibility() == View.INVISIBLE)
-                    {
-                        TickView.setVisibility(View.VISIBLE);
-                        layout.setBackgroundColor(getResources().getColor(R.color.grey));
-                        selectedCount = selectedCount+1;
-                        title.setText(""+selectedCount);
-                        if(deleteIcon.getVisibility() == View.INVISIBLE)
-                        {
-                            deleteIcon.setVisibility(View.VISIBLE);
-                        }
-                    }
-                    else
-                    {
-                        TickView.setVisibility(View.INVISIBLE);
-                        layout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        selectedCount = selectedCount-1;
-
-                        title.setText(""+selectedCount);
-                        if(selectedCount == 0)
-                        {
-                            title.setText(getString(R.string.drawer_option3));
-                            deleteIcon.setVisibility(View.INVISIBLE);
-                        }
-
-                    }
-
-                }
+;
             }
         });
     }

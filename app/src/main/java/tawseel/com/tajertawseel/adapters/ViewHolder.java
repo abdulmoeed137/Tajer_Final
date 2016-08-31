@@ -67,4 +67,6 @@ ImageView BtnCall;
 
     }
 TextView moreView,OrderStatusButton; ExpandablePanel panel;ListView productsList;
+    //financial history
+    TextView name2,items,dprice,dprice1,iprice,profit,finalp;
 }
