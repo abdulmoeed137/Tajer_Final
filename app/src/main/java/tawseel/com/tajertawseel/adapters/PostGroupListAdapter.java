@@ -253,7 +253,7 @@ if (Flag.equals("false"))
                         StringRequest request;
                         progress = ProgressDialog.show(context, "Deleting",
                                 "Please Wait..", true);
-                        request = new StringRequest(Request.Method.POST, "http://192.168.0.100/ms/DeleteOrderFromGroup.php", new Response.Listener<String>() {
+                        request = new StringRequest(Request.Method.POST, functions.add+"DeleteOrderFromGroup.php", new Response.Listener<String>() {
                             //if response
                             public void onResponse(String response) {
                                 try {

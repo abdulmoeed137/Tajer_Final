@@ -323,7 +323,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 String curl = "";
                 ItemDetails = item_ids;
                 if (oldid != -1)
-                    curl += functions.add + "changes_order_status.php";
+                    curl += functions.add + "changes_order_status";
                 else
                     curl += functions.add + "addorder.php";
 

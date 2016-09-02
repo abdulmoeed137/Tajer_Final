@@ -1,20 +1,29 @@
 package tawseel.com.tajertawseel.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import tawseel.com.tajertawseel.activities.functions;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -55,6 +64,11 @@ public class delegateHomeFragment2 extends Fragment{
     {
         requestQueue = Volley.newRequestQueue(getActivity());
         listView = (ListView)mRootView.findViewById(R.id.listView);
+      final ProgressDialog  progress = ProgressDialog.show(getActivity(), "Loading",
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"DeligateInfoGroup.php?id="+ LoginActivity.DeligateID
                 ,
                 new Response.Listener<JSONObject>() {
@@ -73,10 +87,12 @@ public class delegateHomeFragment2 extends Fragment{
                                 item.setDeligateContact(jsonObj.getString("TajerContact"));
                                 list.add(item);
                             }
+                            progress.hide();
                             listView.setAdapter(new DeliveredListAdapter(getActivity(),list));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progress.hide();
                         };
                     }
                 },
@@ -84,11 +100,27 @@ public class delegateHomeFragment2 extends Fragment{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
+                        progress.hide();
+                        if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Reload", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        getActivity().finish();
+                                        getActivity().startActivity(getActivity().getIntent());
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();}
                     }
                 });
 
         //dummy Adapter
         // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
         requestQueue.add(jsonObjectRequest);
 
 
@@ -104,5 +136,4 @@ public class delegateHomeFragment2 extends Fragment{
             }
         });
     }
-
 }

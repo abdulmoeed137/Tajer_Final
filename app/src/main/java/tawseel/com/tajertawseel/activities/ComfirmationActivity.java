@@ -1,10 +1,14 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,9 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -126,7 +132,7 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
                if (code.getText().toString().equals(getIntent().getExtras().getString("ConfirmationCode")))
                 RunVolley("2");
                 else
-                   Toast.makeText(ComfirmationActivity.this,"Wrong Code",Toast.LENGTH_SHORT).show();
+                   Toast.makeText(getApplicationContext(),"Wrong Code",Toast.LENGTH_SHORT).show();
             }
         });
         dialog.findViewById(R.id.ButtonCancel).setOnClickListener(new View.OnClickListener() {
@@ -149,10 +155,18 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf=new SimpleDateFormat("hh:mm a");
         final String formattedDate = df.format(c.getTime());
+        final String formattedTime = sdf.format(c.getTime());
       //  Toast.makeText(ComfirmationActivity.this,formattedDate,Toast.LENGTH_SHORT).show();
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
+//Toast.makeText(ComfirmationActivity.this,getIntent().getExtras().getString("GroupID")+"\n"+value+"\n"+formattedDate+"\n"+formattedTime,Toast.LENGTH_SHORT).show();
+       final ProgressDialog progress = ProgressDialog.show(ComfirmationActivity.this, "Loading",
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
 
         request = new StringRequest(Request.Method.POST, functions.add+"DeligateTajerConfirm.php", new Response.Listener<String>() {
             //if response
@@ -174,18 +188,21 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
                                 startActivity(i);
                                 finish();
                             }
-
+progress.hide();
                         } else {
                             Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
+                            progress.hide();
+
                         }
                     } catch (JSONException e) {
 
-                        Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(getApplicationContext(), "Internet Connection Error",  Toast.LENGTH_SHORT).show();
+progress.hide();
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
+progress.hide();
 
                 }
             }// in case error
@@ -193,6 +210,8 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
             public void onErrorResponse(VolleyError error) {
                 Log.d("Srvc",error.toString());
                 Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
+                progress.hide();
+
             }
         }) {
             //send data to server using POST
@@ -203,9 +222,13 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
                 hashMap.put("hash", "CCB612R");
                hashMap.put("StatusCode",value);
                 hashMap.put("Date",formattedDate);
+                hashMap.put("Time",formattedTime);
                 return hashMap;
             }
         };
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+       request.setRetryPolicy(policy);
         requestQueue.add(request);
     }
 }

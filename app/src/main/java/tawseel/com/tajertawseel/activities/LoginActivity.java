@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,7 +15,9 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,13 +26,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
@@ -106,10 +113,17 @@ public class LoginActivity extends BaseActivity implements LocationListener{
               email = email_ET.getText().toString();
                 final String pass = pass_ET.getText().toString();
                 if (functions.isEmailTrue(email, getApplicationContext()) || functions.isPasswordTrue(pass,getApplicationContext())) {
+
                     progress = ProgressDialog.show(LoginActivity.this, "Loading",
-                            "Please Wait..", true);
+                            "Please Wait..");
+                     progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+                         progress.setIndeterminate(false);
+                                        progress.setCancelable(true);
+
+
+
                    request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                        //if response
+                       //if response
                         public void onResponse(String response) {
                             JSONObject jsonObject = null;
                             try {
@@ -156,7 +170,16 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                     }, new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
                             progress.dismiss();
-                            Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Undo", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();
                         }
                     }) {
                         //send data to server using POST
@@ -170,7 +193,12 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                             return hashMap;
                         }
                     };
-                    requestQueue.add(request);}
+                    int socketTimeout = 3000;//30 seconds - change to what you want
+                    RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                    request.setRetryPolicy(policy);
+                    requestQueue.add(request);
+
+                }
 
 
 
@@ -210,4 +238,6 @@ public class LoginActivity extends BaseActivity implements LocationListener{
         Toast.makeText(this, "Location is Off!", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
+
+
 }

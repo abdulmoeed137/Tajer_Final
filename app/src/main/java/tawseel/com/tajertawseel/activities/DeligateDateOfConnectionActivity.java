@@ -1,7 +1,11 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,9 +15,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -56,6 +64,11 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
     private void setupComponents() {
         mLisView = (ListView)findViewById(R.id.connectionsListView);
         //mLisView.setAdapter(new DelegatesDateOfConnectionAdapter(this));
+        final ProgressDialog progress = ProgressDialog.show(DeligateDateOfConnectionActivity.this, "Loading",
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"sdelivers.php", new Response.Listener<String>() {
             public void onResponse(String response) {
                 try {
@@ -120,16 +133,42 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
                             }
                         }
                     }
+                    progress.hide();
                     mLisView.setAdapter(new DelegatesDateOfConnectionAdapter(DeligateDateOfConnectionActivity.this,data));
                 } catch (JSONException e) {
                     e.printStackTrace();
-                };
+                    progress.hide();
+                    if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                   Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Reload", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        finish();
+                                        startActivity(getIntent());
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();
+                };}
 
             }
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                progress.hide();
+                if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                    Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            .setAction("Reload", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                    startActivity(getIntent());
+                                }
+                            })
+                            .setActionTextColor(Color.RED)
+
+                            .show();}
             }
         }) {
             //send data to server using POST
@@ -143,11 +182,25 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
         };
         try{
             requestQueue= Volley.newRequestQueue(DeligateDateOfConnectionActivity.this);
+            int socketTimeout = 3000;//30 seconds - change to what you want
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            request.setRetryPolicy(policy);
             requestQueue.add(request);
         }
         catch (Exception e)
         {
-            Toast.makeText(DeligateDateOfConnectionActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
+            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        .setAction("Reload", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        })
+                        .setActionTextColor(Color.RED)
+
+                        .show();}
         }
 
 mLisView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

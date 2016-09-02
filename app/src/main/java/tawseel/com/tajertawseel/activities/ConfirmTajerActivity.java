@@ -1,10 +1,14 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,9 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -67,6 +75,11 @@ public class ConfirmTajerActivity extends BaseActivity {
     public void setUpComponents()
     {
         ListView = (ListView)findViewById(R.id.listView);
+        final ProgressDialog progress = ProgressDialog.show(ConfirmTajerActivity.this, "Loading",
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"GroupItem.php?id="+getIntent().getExtras().getString("GroupID"),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -88,9 +101,22 @@ public class ConfirmTajerActivity extends BaseActivity {
                                 if (jsonObj.getString("IsConfirmed").equals("1"))
                                 list.add(item);
                             }
+                            progress.hide();
                             ListView.setAdapter(new ConfirmTajerListAdapter(ConfirmTajerActivity.this,list));
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progress.hide();
+                            Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Reload", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            finish();
+                                            startActivity(getIntent());
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();
                         };
                     }
                 },
@@ -98,11 +124,28 @@ public class ConfirmTajerActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
+
+                        progress.hide();
+                        if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                        Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Reload", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        finish();
+                                        startActivity(getIntent());
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();}
                     }
                 });
 
         //dummy Adapter
         // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
         requestQueue.add(jsonObjectRequest);
         ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -142,7 +185,8 @@ RunVolley("3",position);
                 }
 
                 else
-                    Toast.makeText(ConfirmTajerActivity.this,"Wrong Code",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Wrong Code", Toast.LENGTH_SHORT).show();
+
             }
         });
         dialog.findViewById(R.id.ButtonCancel).setOnClickListener(new View.OnClickListener() {
@@ -166,7 +210,11 @@ RunVolley("3",position);
         //  Toast.makeText(ComfirmationActivity.this,formattedDate,Toast.LENGTH_SHORT).show();
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
-
+        final ProgressDialog progress = ProgressDialog.show(ConfirmTajerActivity.this, "Loading",
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
         request = new StringRequest(Request.Method.POST, functions.add+"DeligateOrderConfirm.php", new Response.Listener<String>() {
             //if response
             public void onResponse(String response) {
@@ -179,23 +227,30 @@ RunVolley("3",position);
                             //if success
                             Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                            finish();
+                            progress.hide();
 } else {
                             Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
+                            progress.hide();
                         }
                     } catch (JSONException e) {
 
-                        Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
-
+                       // Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+progress.hide();
+                        Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    progress.hide();
+                   // Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
 
                 }
             }// in case error
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
+                progress.hide();
                 Log.d("Srvc",error.toString());
+                //Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
             }
         }) {
@@ -209,6 +264,9 @@ RunVolley("3",position);
                 return hashMap;
             }
         };
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
         requestQueue.add(request);
     }
 }

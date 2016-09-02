@@ -205,7 +205,8 @@
                         android:layout_marginLeft="20dp"
                         android:padding="3dp"
                         android:src="@drawable/phone_tjr_icon"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        android:id="@+id/BtnCall" />
 
 
 

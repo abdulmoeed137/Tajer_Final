@@ -1,7 +1,10 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Toast;
 
 /**
@@ -11,7 +14,9 @@ public class functions {
     public static String add="http://192.168.0.100/ms2/";
     public static String  AvailableDeligates;
     static boolean keepRunning=true;
-  static public boolean isPasswordTrue(String name,Context context)
+    public static String bg = "#EEEDED";
+
+    static public boolean isPasswordTrue(String name,Context context)
     {
 
         if (name.isEmpty()) {
@@ -73,4 +78,5 @@ public class functions {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 
     }
+
 }

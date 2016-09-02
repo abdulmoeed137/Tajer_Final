@@ -3,9 +3,12 @@ package tawseel.com.tajertawseel.fragments;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -122,7 +125,10 @@ RunVolley("0");
         StringRequest request;
 
         progress = ProgressDialog.show(getActivity(), "Loading",
-                "Please Wait..", true);
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
         request = new StringRequest(Request.Method.POST, functions.add+"DeligateOnOffLine.php", new Response.Listener<String>() {
             //if response
             public void onResponse(String response) {
@@ -133,23 +139,59 @@ RunVolley("0");
                         if (jsonObject.names().get(0).equals("success")) {
 
                             //if success
-                            Toast.makeText(getActivity(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), jsonObject.getString("success"), Snackbar.LENGTH_LONG)
+                                    .setAction("Undo", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();
                             progress.dismiss();
 
 
                         } else {
-                            Toast.makeText(getActivity(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), jsonObject.getString("failed"), Snackbar.LENGTH_LONG)
+                                    .setAction("Undo", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();
                             progress.dismiss();
                         }
                     } catch (JSONException e) {
 
-                        Toast.makeText(getActivity(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Undo", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();
                         progress.dismiss();
 
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            .setAction("Undo", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            })
+                            .setActionTextColor(Color.RED)
+
+                            .show();
                     progress.dismiss();
 
                 }
@@ -157,7 +199,16 @@ RunVolley("0");
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Srvc",error.toString());
-                Toast.makeText(getActivity(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        .setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .setActionTextColor(Color.RED)
+
+                        .show();
                 progress.dismiss();
             }
         }) {

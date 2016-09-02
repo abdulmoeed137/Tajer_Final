@@ -1,16 +1,29 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -60,7 +73,24 @@ public class DealerProfileActivity extends BaseActivity {
         }
 
         setUpToolbar();
-
+        ImageView img = (ImageView)findViewById(R.id.BtnCall);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+contact.getText().toString()));
+                if (ActivityCompat.checkSelfPermission(DealerProfileActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(DealerProfileActivity.this,"Call Permission Required",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                startActivity(callIntent);
+            }
+        });
+        final ProgressDialog progress = ProgressDialog.show(DealerProfileActivity.this, "Loading",
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"sellers.php", new Response.Listener<String>() {
             public void onResponse(String response) {
                 try {
@@ -76,15 +106,42 @@ public class DealerProfileActivity extends BaseActivity {
                         Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
                         bar.setRating(idelivers);
                     }
+                    progress.hide();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progress.hide();
+                    if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                    Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            .setAction("Reload", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                    startActivity(getIntent());
+                                }
+                            })
+                            .setActionTextColor(Color.RED)
+
+                            .show();}
                 };
 
             }
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                progress.hide();
+                if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        .setAction("Reload", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        })
+                        .setActionTextColor(Color.RED)
+
+                        .show();}
             }
         }) {
             //send data to server using POST
@@ -103,7 +160,17 @@ public class DealerProfileActivity extends BaseActivity {
         }
         catch (Exception e)
         {
-            Toast.makeText(DealerProfileActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                    .setAction("Reload", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                            startActivity(getIntent());
+                        }
+                    })
+                    .setActionTextColor(Color.RED)
+
+                    .show();
         }
 
     }

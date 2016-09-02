@@ -83,10 +83,9 @@
         android:dividerHeight="8dp"
         android:paddingRight="5dp"
         android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:layout_above="@+id/add_demand_basket"></ListView>
-    
-    
+        android:paddingTop="5dp"></ListView>
+
+
     <tawseel.com.tajertawseel.CustomBoldTextView
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -100,7 +99,7 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:id="@+id/add_demand_basket"/>
+        android:id="@+id/add_demand_basket" />
 
 
 </RelativeLayout>

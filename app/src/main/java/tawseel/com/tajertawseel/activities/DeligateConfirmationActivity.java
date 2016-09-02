@@ -1,9 +1,13 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,9 +19,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -59,6 +67,11 @@ public class DeligateConfirmationActivity extends BaseActivity {
         requestQueue = Volley.newRequestQueue(this);
         mListView = (ListView) findViewById(R.id.pickSetListView);
         grp_count = (TextView) findViewById(R.id.grp_count);
+        final ProgressDialog progress = ProgressDialog.show(DeligateConfirmationActivity.this, "Loading",
+                "Please Wait..");
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
+        progress.setIndeterminate(false);
+        progress.setCancelable(true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"DeligateInfoGroup2.php?id=" + LoginActivity.DeligateID + "&hash=" + HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -80,10 +93,22 @@ public class DeligateConfirmationActivity extends BaseActivity {
                                 list.add(data);
 
                             }
-
+progress.hide();
                             mListView.setAdapter(new PickSetAdapter(DeligateConfirmationActivity.this, list));
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progress.hide();
+                            Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Reload", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            finish();
+                                            startActivity(getIntent());
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();
                         }
                         ;
                     }
@@ -91,12 +116,28 @@ public class DeligateConfirmationActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley", "Error");
+                        Log.e("Volley", error.toString());
+                        progress.hide();
+                        if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                        Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Reload", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        finish();
+                                      startActivity(getIntent());
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();}
                     }
                 });
 
         //dummy Adapter
         // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
         requestQueue.add(jsonObjectRequest);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,6 +165,9 @@ public class DeligateConfirmationActivity extends BaseActivity {
 
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(DeligateConfirmationActivity.this,DeligateHomeActivity.class));
+        finish();
+    }
 }
