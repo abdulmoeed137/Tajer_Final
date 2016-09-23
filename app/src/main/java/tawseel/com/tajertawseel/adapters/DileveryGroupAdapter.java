@@ -1,5 +1,6 @@
 package tawseel.com.tajertawseel.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -88,6 +89,7 @@ ViewHolder holder ;
                Intent i = new Intent(context, WaitingForAcceptanceActivity.class);
                 i.putExtra("GroupID",v.getTag()+"");
                 context.startActivity(i);
+                ((Activity)context).finish();
 
 
             }

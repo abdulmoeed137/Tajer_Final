@@ -1,8 +1,14 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -57,6 +67,13 @@ public class CustomerRequestActivity extends BaseActivity {
         setUpComponents();
         requestQueue= Volley.newRequestQueue(this);
         oCount=(TextView)findViewById(R.id.request_count);
+
+//        final ProgressDialog progress = ProgressDialog.show(new ContextThemeWrapper(CustomerRequestActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar ), "Loading",
+//                "Please Wait..");
+        final  ProgressDialog progress = new ProgressDialog(CustomerRequestActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"orders.php?id="+HomeActivity.id+"&hash="+HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -86,8 +103,21 @@ public class CustomerRequestActivity extends BaseActivity {
                             }
 
                             mListView.setAdapter(new CustomerRequestAdapter(CustomerRequestActivity.this,list));
+                            progress.hide();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progress.hide();
+                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                        .setAction("Reload", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+startActivity(getIntent());finish();
+                                            }
+                                        })
+                                        .setActionTextColor(Color.RED)
+
+                                        .show();}
                         };
                     }
                 },
@@ -95,11 +125,26 @@ public class CustomerRequestActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
+                        progress.hide();
+                        if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                            Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Reload", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            startActivity(getIntent());finish();
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();}
                     }
                 });
 
         //dummy Adapter
         // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
         requestQueue.add(jsonObjectRequest);
 
     }

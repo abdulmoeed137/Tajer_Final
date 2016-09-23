@@ -1,12 +1,15 @@
 package tawseel.com.tajertawseel.adapters;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,9 +23,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -185,7 +192,11 @@ public class DeliveredNowAdapter extends BaseAdapter {
         });
 
 
+        final ProgressDialog progress = new ProgressDialog(context, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
+        progress.setMessage("Loading...");
+        progress.show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"OrderDetails.php?id="+data.getOrderID(),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -205,8 +216,22 @@ public class DeliveredNowAdapter extends BaseAdapter {
                                 list.add(item);
                             }
                             holder.productsList.setAdapter(new DeliveredNowChildItemAdapter(context,list));
+                            progress.hide();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progress.hide();
+                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                        .setAction("Reload", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+                                                context.startActivity(((Activity)context).getIntent());  ((Activity)context).finish();
+                                            }
+                                        })
+                                        .setActionTextColor(Color.RED)
+
+                                        .show();}
                         };
                     }
                 },
@@ -214,11 +239,27 @@ public class DeliveredNowAdapter extends BaseAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
+                        progress.hide();
+                        if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                            Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Reload", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            context.startActivity(((Activity)context).getIntent());  ((Activity)context).finish();
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();}
                     }
                 });
 
         //dummy Adapter
         // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
         requestQueue.add(jsonObjectRequest);
 
 

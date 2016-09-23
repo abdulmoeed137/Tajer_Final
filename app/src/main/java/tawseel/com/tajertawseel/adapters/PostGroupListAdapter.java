@@ -1,11 +1,17 @@
 package tawseel.com.tajertawseel.adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
@@ -22,9 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -158,7 +166,10 @@ public class PostGroupListAdapter extends BaseAdapter {
                 holder.PriceRange2.setText(R.string.ryal50);
             }
             final ListView productsList = (ListView) finalConvertView.findViewById(R.id.product_list);
-
+            final  ProgressDialog progress = new ProgressDialog(context, ProgressDialog.THEME_HOLO_DARK);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setMessage("Loading...");
+            progress.show();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"OrderDetails.php?id="+data.getOrderID(),
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -178,9 +189,10 @@ public class PostGroupListAdapter extends BaseAdapter {
                                     list.add(item);
                                 }
                                 productsList.setAdapter(new ProductItemAdapter(context,list));
-
+progress.hide();
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                progress.hide();
                             };
                         }
                     },
@@ -188,6 +200,7 @@ public class PostGroupListAdapter extends BaseAdapter {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("Volley", "Error");
+                            progress.hide();
                         }
                     });
 
@@ -229,6 +242,7 @@ if (Flag.equals("false"))
             Intent i = new Intent(context, PickSetActivity.class);
               i.putExtra("orderID",v.getTag()+"");
               context.startActivity(i);
+              ((Activity)context).finish();
 
           }
       });
@@ -242,17 +256,26 @@ if (Flag.equals("false"))
                 final RequestQueue requestQueue;
 
                 requestQueue = Volley.newRequestQueue(context);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                ContextThemeWrapper themedContext;
+                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+                    themedContext = new ContextThemeWrapper( context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar );
+                }
+                else {
+                    themedContext = new ContextThemeWrapper( context, android.R.style.Theme_Light_NoTitleBar );
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(themedContext);
 
                 builder.setTitle("Are You Sure?");
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        final ProgressDialog progress;
+                        final  ProgressDialog progress = new ProgressDialog(context, ProgressDialog.THEME_HOLO_DARK);
+                        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progress.setMessage("Deleting...");
+                        progress.show();
                         StringRequest request;
-                        progress = ProgressDialog.show(context, "Deleting",
-                                "Please Wait..", true);
+
                         request = new StringRequest(Request.Method.POST, functions.add+"DeleteOrderFromGroup.php", new Response.Listener<String>() {
                             //if response
                             public void onResponse(String response) {
@@ -266,6 +289,7 @@ if (Flag.equals("false"))
                                             Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                                             progress.dismiss();
 
+
                                         } else {
                                             progress.dismiss();
                                             Toast.makeText(context, jsonObject.getString("Error while Deleting"), Toast.LENGTH_SHORT).show();
@@ -273,12 +297,33 @@ if (Flag.equals("false"))
                                         }
                                     } catch (JSONException e) {
                                         progress.dismiss();
-                                        e.printStackTrace();
+                                        if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                            Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                                    .setAction("Undo", new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+
+                                                        }
+                                                    })
+                                                    .setActionTextColor(Color.RED)
+
+                                                    .show();}
                                     }
 
                                 } catch (JSONException e) {
                                     progress.dismiss();
                                     e.printStackTrace();
+                                    if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                        Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                                .setAction("Undo", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+
+                                                    }
+                                                })
+                                                .setActionTextColor(Color.RED)
+
+                                                .show();}
                                 }
 
 
@@ -286,7 +331,17 @@ if (Flag.equals("false"))
                         }, new Response.ErrorListener() {
                             public void onErrorResponse(VolleyError error) {
                                 progress.dismiss();
-                                Toast.makeText(context, "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                                if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                                    Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                            .setAction("Undo", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+
+                                                }
+                                            })
+                                            .setActionTextColor(Color.RED)
+
+                                            .show();}
                             }
                         }) {
                             //send data to server using POST

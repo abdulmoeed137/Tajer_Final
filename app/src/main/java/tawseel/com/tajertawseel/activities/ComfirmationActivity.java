@@ -162,11 +162,11 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
 //Toast.makeText(ComfirmationActivity.this,getIntent().getExtras().getString("GroupID")+"\n"+value+"\n"+formattedDate+"\n"+formattedTime,Toast.LENGTH_SHORT).show();
-       final ProgressDialog progress = ProgressDialog.show(ComfirmationActivity.this, "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(ComfirmationActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        progress.setMessage("Loading...");
+        progress.show();
 
         request = new StringRequest(Request.Method.POST, functions.add+"DeligateTajerConfirm.php", new Response.Listener<String>() {
             //if response

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -43,6 +44,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import tawseel.com.tajertawseel.R;
 
@@ -55,7 +57,7 @@ import tawseel.com.tajertawseel.R;
 public class LoginActivity extends BaseActivity implements LocationListener{
 
     ProgressDialog progress;
-    public static String LoginID,DeligateID;
+    public static String LoginID=null,DeligateID=null;
     EditText email_ET, pass_ET;
     private RequestQueue requestQueue;
     private static final String URL = functions.add + "login.php";
@@ -71,7 +73,6 @@ public class LoginActivity extends BaseActivity implements LocationListener{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -114,12 +115,10 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                 final String pass = pass_ET.getText().toString();
                 if (functions.isEmailTrue(email, getApplicationContext()) || functions.isPasswordTrue(pass,getApplicationContext())) {
 
-                    progress = ProgressDialog.show(LoginActivity.this, "Loading",
-                            "Please Wait..");
-                     progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-                         progress.setIndeterminate(false);
-                                        progress.setCancelable(true);
-
+                    final  ProgressDialog progress = new ProgressDialog(LoginActivity.this, ProgressDialog.THEME_HOLO_DARK);
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setMessage("Loading...");
+                    progress.show();
 
 
                    request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -138,6 +137,27 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                                     uname=jsonObject.getString("uname");
                                     Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
                                     //if success
+                                    try {
+                                        SharedPreferences settings;
+                                        SharedPreferences.Editor editor;
+                                        settings =LoginActivity.this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
+                                        editor = settings.edit(); //2
+
+                                        editor.putString("id2",null); //3
+                                        editor.commit(); //4
+                                    }catch ( Exception e)
+                                    {
+
+                                    }
+                                    SharedPreferences settings;
+                                    SharedPreferences.Editor editor;
+                                    settings = LoginActivity.this.getSharedPreferences("tajer", Context.MODE_PRIVATE); //1
+                                    editor = settings.edit(); //2
+
+                                    editor.putString("id",LoginID); //3
+                                    editor.putString("email",email);
+                                    editor.putString("uname",uname);
+                                    editor.commit(); //4
                                     progress.dismiss();
                                     Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
@@ -147,6 +167,28 @@ public class LoginActivity extends BaseActivity implements LocationListener{
                                     uname=jsonObject.getString("uname");
                                     DeligateID= jsonObject.getString("deligate");
                                     //if success
+                                    try {
+                                        SharedPreferences settings2;
+                                        SharedPreferences.Editor editor2;
+
+                                        settings2 = LoginActivity.this.getSharedPreferences("tajer", Context.MODE_PRIVATE);
+                                        editor2 = settings2.edit();
+                                        editor2.putString("id", null); //3
+                                        editor2.commit();
+                                    }
+                                    catch (Exception e)
+                                    {
+
+                                    }
+                                    SharedPreferences settings;
+                                    SharedPreferences.Editor editor;
+                                    settings = LoginActivity.this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
+                                    editor = settings.edit(); //2
+
+                                    editor.putString("id2",DeligateID); //3
+                                    editor.putString("email",email);
+                                    editor.putString("Did",DeligateID);;
+                                    editor.commit(); //4
                                     progress.dismiss();
                                     Toast.makeText(getApplicationContext(), "Welcome "+uname, Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(LoginActivity.this, DeligateHomeActivity.class);

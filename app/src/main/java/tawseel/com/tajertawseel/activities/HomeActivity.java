@@ -3,11 +3,13 @@ package tawseel.com.tajertawseel.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -118,6 +120,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         setupListeners();
 
 
+
     }
 
     public void setupListeners() {
@@ -128,6 +131,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         mDrawerLayout.findViewById(R.id.option5).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option6).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option7).setOnClickListener(this);
+        mDrawerLayout.findViewById(R.id.option8).setOnClickListener(this);
         // findViewById(R.id.new_button).setOnClickListener(this);
 
     }
@@ -153,6 +157,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             Toast.makeText(HomeActivity.this, "We are Tajer Tawseel", Toast.LENGTH_SHORT).show();
         } else if (v.getId() == R.id.option7) {
             Toast.makeText(HomeActivity.this, "Send us feedback at Tajer Tawseel", Toast.LENGTH_SHORT).show();
+        }else if (v.getId() == R.id.option8) {
+            LoginActivity.LoginID= null;
+            finish();startActivity(new Intent(this,LoginActivity.class));
+            stopService(new Intent(this,UpdateLocationSeller.class));
+            SharedPreferences settings;
+            SharedPreferences.Editor editor;
+
+            settings = this.getSharedPreferences("tajer", Context.MODE_PRIVATE);
+            editor = settings.edit();
+            editor.putString("id",null); //3
+            editor.commit();
+
         }
 
 
@@ -186,6 +202,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Toast.makeText(this, "Location is Off!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
 }

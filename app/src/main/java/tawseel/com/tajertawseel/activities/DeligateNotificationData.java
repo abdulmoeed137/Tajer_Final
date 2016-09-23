@@ -1,5 +1,6 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -47,6 +48,12 @@ public class DeligateNotificationData extends BaseActivity {
             }
         });
         //noinspection ConstantConditions
+        final ProgressDialog progress = new ProgressDialog(DeligateNotificationData.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        progress.setMessage("Loading...");
+        progress.show();
+
         findViewById(R.id.Accept).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,22 +74,22 @@ public class DeligateNotificationData extends BaseActivity {
                                                 Toast.makeText(DeligateNotificationData.this,"SomeOne Already Toaken",Toast.LENGTH_SHORT).show();
                                             }
                                             else
-                                                Toast.makeText(DeligateNotificationData.this,"You Got. Check your Groups ",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(DeligateNotificationData.this,"Success. Check your Groups if its Confirmed with you ",Toast.LENGTH_SHORT).show();
                                         }else
                                         Toast.makeText(DeligateNotificationData.this,"Failed",Toast.LENGTH_SHORT).show();
 
                                     }
 finish();
-
+progress.hide();
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    e.printStackTrace();progress.hide();
                                 };
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("Volley", "Error");
+                                Log.e("Volley", "Error");progress.hide();
                             }
                         });
 

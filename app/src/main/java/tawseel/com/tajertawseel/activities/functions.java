@@ -2,7 +2,9 @@ package tawseel.com.tajertawseel.activities;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.v7.view.ContextThemeWrapper;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -11,7 +13,7 @@ import android.widget.Toast;
  * Created by AbdulMoeed on 7/13/2016.
  */
 public class functions {
-    public static String add="http://192.168.0.100/ms2/";
+    public static String add="http://roadofchange.org/BaikTajerTawseel/";
     public static String  AvailableDeligates;
     static boolean keepRunning=true;
     public static String bg = "#EEEDED";

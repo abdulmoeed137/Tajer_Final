@@ -67,11 +67,10 @@ public class DeligateConfirmationActivity extends BaseActivity {
         requestQueue = Volley.newRequestQueue(this);
         mListView = (ListView) findViewById(R.id.pickSetListView);
         grp_count = (TextView) findViewById(R.id.grp_count);
-        final ProgressDialog progress = ProgressDialog.show(DeligateConfirmationActivity.this, "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(DeligateConfirmationActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"DeligateInfoGroup2.php?id=" + LoginActivity.DeligateID + "&hash=" + HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override

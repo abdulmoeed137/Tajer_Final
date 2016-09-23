@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -28,7 +29,11 @@ import tawseel.com.tajertawseel.adapters.OrdeDialogueAdapter;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        SharedPreferences settings;
 
+        settings = this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
+      String  id = settings.getString("id2", null);
+        if (id!=null)
         showNotification(remoteMessage.getData().get("message"),remoteMessage.getData().get("GroupID"));
     }
 
@@ -43,9 +48,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setAutoCancel(true)
-                .setContentTitle("Tawseel")
+                .setContentTitle("TajerTawseel")
                 .setContentText(message)
-                .setSmallIcon(R.drawable.tjer)
+                .setSmallIcon(R.drawable.car_icon)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 

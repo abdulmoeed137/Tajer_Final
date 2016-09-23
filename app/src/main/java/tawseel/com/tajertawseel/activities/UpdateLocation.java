@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -47,7 +48,7 @@ public class UpdateLocation extends Service implements LocationListener {
     LocationManager locationManager;
     boolean flag2 = true;
     RequestQueue requestQueue;
-
+String id;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -59,6 +60,10 @@ public class UpdateLocation extends Service implements LocationListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        SharedPreferences settings;
+
+        settings = this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
+        id = settings.getString("id2", null);
     }
 
     @Override
@@ -76,6 +81,7 @@ public class UpdateLocation extends Service implements LocationListener {
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1,
                 this);
+        Toast.makeText(UpdateLocation.this, "Start Serice", Toast.LENGTH_SHORT).show();
         // Thread t = new Thread(new ThreadThis(startId));
         //       t.start();
         return START_STICKY;
@@ -216,7 +222,7 @@ public class UpdateLocation extends Service implements LocationListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("id",LoginActivity.DeligateID+"");
+                hashMap.put("id",id);
                 hashMap.put("hash", "CCB612R");
                 hashMap.put("lat",location.getLatitude()+"");
                 hashMap.put("lon",location.getLongitude()+"");

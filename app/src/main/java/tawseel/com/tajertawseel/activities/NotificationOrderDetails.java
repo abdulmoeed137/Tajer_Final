@@ -1,13 +1,17 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,9 +22,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -69,10 +77,20 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
             TextView ButtonSave= (TextView)findViewById(R.id.ButtonSave);
          //   Toast.makeText(NotificationOrderDetails.this,"http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+LoginActivity.DeligateID,Toast.LENGTH_SHORT).show();
             TextView ButtonContinue= (TextView)findViewById(R.id.ButtonAccept);
+
             ButtonContinue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  "http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+LoginActivity.DeligateID,
+                    final ProgressDialog progress = new ProgressDialog(NotificationOrderDetails.this, ProgressDialog.THEME_HOLO_DARK);
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                    progress.setMessage("Loading...");
+                    progress.show();
+                   SharedPreferences settings;
+
+                    settings = NotificationOrderDetails.this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
+                    String id  = settings.getString("id2", null);
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+id,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
@@ -95,9 +113,12 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
 
                                         }
                                         finish();
+                                        progress.hide();
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
+                                        progress.hide();
+                                        Toast.makeText(NotificationOrderDetails.this,"Failed",Toast.LENGTH_SHORT).show();
                                     };
                                 }
                             },
@@ -105,11 +126,16 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Log.e("Volley", "Error");
+                                    progress.hide();
+                                    Toast.makeText(NotificationOrderDetails.this,"Failed",Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                     //dummy Adapter
                     // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+                    int socketTimeout = 3000;//30 seconds - change to what you want
+                    RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                    jsonObjectRequest.setRetryPolicy(policy);
                     requestQueue.add(jsonObjectRequest);
                 }
             });
@@ -163,7 +189,11 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
         {
             productList = (ListView)findViewById(R.id.product_list);
             Toast.makeText(NotificationOrderDetails.this,getIntent().getExtras().getString("id"),Toast.LENGTH_SHORT).show();
+            final ProgressDialog progress = new ProgressDialog(NotificationOrderDetails.this, ProgressDialog.THEME_HOLO_DARK);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
+            progress.setMessage("Loading...");
+            progress.show();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"GroupItem.php?id="+getIntent().getExtras().getString("id"),
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -194,21 +224,49 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
                                     addMarker(Double.parseDouble(list.get(i).getLatitude()),Double.parseDouble(list.get(i).getLongitude()),"Customer", R.drawable.person_marker);
                                 }
                                 productList.setAdapter(new PostGroupListAdapter(NotificationOrderDetails.this,list,"false"));
-
+progress.hide();
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                progress.hide();
+                                if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                    Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                            .setAction("Reload", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    finish();
+                                                    startActivity(getIntent());
+                                                }
+                                            })
+                                            .setActionTextColor(Color.RED)
+
+                                            .show();}
                             };
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.e("Volley", "Error");
+                            Log.e("Volley", "Error");progress.hide();
+                            if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                        .setAction("Reload", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                finish();
+                                                startActivity(getIntent());
+                                            }
+                                        })
+                                        .setActionTextColor(Color.RED)
+
+                                        .show();}
                         }
                     });
 
             //dummy Adapter
             // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+            int socketTimeout = 3000;//30 seconds - change to what you want
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            jsonObjectRequest.setRetryPolicy(policy);
             requestQueue.add(jsonObjectRequest);
             productList.setOnTouchListener(new View.OnTouchListener() {
                 // Setting on Touch Listener for handling the touch inside ScrollView

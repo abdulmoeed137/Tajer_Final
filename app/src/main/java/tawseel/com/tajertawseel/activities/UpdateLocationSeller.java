@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -39,6 +40,7 @@ import java.util.concurrent.Executors;
 public class UpdateLocationSeller extends Service implements LocationListener {
     LocationManager locationManager;
     RequestQueue requestQueue;
+    String id;
 
     @Nullable
     @Override
@@ -51,7 +53,12 @@ public class UpdateLocationSeller extends Service implements LocationListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        super.onCreate();
+        SharedPreferences settings;
+
+        settings = this.getSharedPreferences("tajer", Context.MODE_PRIVATE); //1
+        id = settings.getString("id", null);
+
+
     }
 
     @Override
@@ -164,7 +171,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
                            // Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
 
                         } else {
-                            //Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
 
@@ -187,7 +194,7 @@ public class UpdateLocationSeller extends Service implements LocationListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("id",HomeActivity.id);
+                hashMap.put("id",id);
                 hashMap.put("hash", "CCB612R");
                 hashMap.put("lat",location.getLatitude()+"");
                 hashMap.put("lon",location.getLongitude()+"");

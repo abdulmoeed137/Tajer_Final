@@ -1,8 +1,12 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,9 +16,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -24,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +66,10 @@ public class DateOfConnectionsActivity extends BaseActivity {
     public void setupComponents()
     {
         mLisView = (ListView)findViewById(R.id.connectionsListView);
-
+        final  ProgressDialog progress = new ProgressDialog(DateOfConnectionsActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"delivers.php", new Response.Listener<String>() {
             public void onResponse(String response) {
                 try {
@@ -68,8 +80,8 @@ public class DateOfConnectionsActivity extends BaseActivity {
                         if(i==0)
                         {
                             DateOfConnectionsData tdata1=new DateOfConnectionsData();
-                            String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
-                            tdata1.setTitle(datearr[1]+" "+datearr[2]);
+
+                            tdata1.setTitle(jsonObj.getString("DeliveryDate"));
                             data.add(tdata1);
 
                             date=jsonObj.getString("DeliveryDate");
@@ -122,16 +134,40 @@ public class DateOfConnectionsActivity extends BaseActivity {
                             }
                         }
                     }
+                    progress.hide();
                     mLisView.setAdapter(new DateOfConnectionsAdapter(DateOfConnectionsActivity.this,data));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progress.hide();
+                    if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                        Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Reload", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        startActivity(getIntent());finish();
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();}
                 };
 
             }
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+                progress.hide();
+                if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                    Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            .setAction("Reload", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivity(getIntent());finish();
+                                }
+                            })
+                            .setActionTextColor(Color.RED)
+
+                            .show();}
             }
         }) {
             //send data to server using POST
@@ -145,11 +181,24 @@ public class DateOfConnectionsActivity extends BaseActivity {
         };
         try{
             requestQueue= Volley.newRequestQueue(DateOfConnectionsActivity.this);
+            int socketTimeout = 3000;//30 seconds - change to what you want
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            request.setRetryPolicy(policy);
             requestQueue.add(request);
         }
         catch (Exception e)
         {
-            Toast.makeText(DateOfConnectionsActivity.this,"Request Issue",Toast.LENGTH_SHORT).show();
+            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        .setAction("Reload", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(getIntent());finish();
+                            }
+                        })
+                        .setActionTextColor(Color.RED)
+
+                        .show();}
         }
 
         mLisView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

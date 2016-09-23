@@ -118,17 +118,15 @@ RunVolley("0");
 //        });
     }
     void RunVolley(final String value){
-        final ProgressDialog progress ;
+
 
         RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest request;
-
-        progress = ProgressDialog.show(getActivity(), "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading");
+        progress.show();
         request = new StringRequest(Request.Method.POST, functions.add+"DeligateOnOffLine.php", new Response.Listener<String>() {
             //if response
             public void onResponse(String response) {

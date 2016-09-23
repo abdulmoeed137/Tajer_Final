@@ -2,6 +2,8 @@ package tawseel.com.tajertawseel.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -10,9 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -45,8 +49,10 @@ public class PostNewGroupActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (functions.isNameTrue(name.getText().toString(),PostNewGroupActivity.this)) {
-                    progress = ProgressDialog.show(PostNewGroupActivity.this, "Loading",
-                            "Please Wait..", true);
+                    final  ProgressDialog progress = new ProgressDialog(PostNewGroupActivity.this, ProgressDialog.THEME_HOLO_DARK);
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setMessage("Loading...");
+                    progress.show();
                     request = new StringRequest(Request.Method.POST, functions.add+"AddGroup.php", new Response.Listener<String>() {
                         //if response
                         public void onResponse(String response) {
@@ -95,6 +101,9 @@ public class PostNewGroupActivity extends BaseActivity {
                             return hashMap;
                         }
                     };
+                    int socketTimeout = 3000;//30 seconds - change to what you want
+                    RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                   request.setRetryPolicy(policy);
                     requestQueue.add(request);
 
 

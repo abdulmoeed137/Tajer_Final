@@ -1,6 +1,8 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -39,6 +41,7 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
 
 
     private void setUpContents() {
+
        boolean CheckLogin=false;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawer);
         mDrawerLayout.openDrawer(Gravity.RIGHT);
@@ -83,6 +86,7 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
         homeTabLayout.getTabAt(0).setCustomView(view1);
 
 
+
         /// second tab
 
         // TabLayout.Tab tab2= homeTabLayout.getTabAt(0);
@@ -91,6 +95,7 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
         TextView text2 = (TextView) view2.findViewById(R.id.tab_text);
         text2.setText(getString(R.string.dilevered_now));
         homeTabLayout.getTabAt(1).setCustomView(view2);
+
        // setupListeners();
     }
 
@@ -102,7 +107,7 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
         mDrawerLayout.findViewById(R.id.option5).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option6).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.option7).setOnClickListener(this);
-
+        mDrawerLayout.findViewById(R.id.option9).setOnClickListener(this);
         mDrawerLayout.findViewById(R.id.confirmation).setOnClickListener(this);
         // findViewById(R.id.new_button).setOnClickListener(this);
 
@@ -127,6 +132,19 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             Intent intent = new Intent(DeligateHomeActivity.this,TradersFavouriteActivity.class);
             startActivity(intent);
         }
+        else if (v.getId() == R.id.option9){
 
+            SharedPreferences settings;
+            SharedPreferences.Editor editor;
+            settings =this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
+            editor = settings.edit(); //2
+
+            editor.putString("id2",null); //3
+            editor.commit(); //4
+            stopService(new Intent(DeligateHomeActivity.this,UpdateLocation.class));
+            finish();
+            startActivity(new Intent(DeligateHomeActivity.this,LoginActivity.class));
+
+        }
     }
 }

@@ -64,11 +64,10 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
     private void setupComponents() {
         mLisView = (ListView)findViewById(R.id.connectionsListView);
         //mLisView.setAdapter(new DelegatesDateOfConnectionAdapter(this));
-        final ProgressDialog progress = ProgressDialog.show(DeligateDateOfConnectionActivity.this, "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(DeligateDateOfConnectionActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"sdelivers.php", new Response.Listener<String>() {
             public void onResponse(String response) {
                 try {
@@ -79,8 +78,7 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
                         if(i==0)
                         {
                             DateOfConnectionsData tdata1=new DateOfConnectionsData();
-                            String[] datearr=jsonObj.getString("DeliveryDate").split(" ");
-                            tdata1.setTitle(datearr[1]+" "+datearr[2]);
+                            tdata1.setTitle(jsonObj.getString("DeliveryDate"));
                             data.add(tdata1);
 
                             date=jsonObj.getString("DeliveryDate");

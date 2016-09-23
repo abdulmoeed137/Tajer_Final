@@ -70,12 +70,10 @@ public class TradersFavouriteActivity extends BaseActivity {
         tcount=(TextView)findViewById(R.id.fs_grp_count);
         listView = (ListView) findViewById(R.id.listView);
         //listView.setAdapter(new TradersFavouriteAdapter(this));
-        final ProgressDialog progress = ProgressDialog.show(TradersFavouriteActivity
-                .this, "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(TradersFavouriteActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"favsellers.php", new Response.Listener<String>() {
             public void onResponse(String response) {
                 try {

@@ -4,9 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +17,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,9 +25,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -196,6 +204,10 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     {
          RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(WaitingForAcceptanceActivity.this);
+        final  ProgressDialog progress = new ProgressDialog(WaitingForAcceptanceActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"EligibleDeligates.php?latitude="+this.origin.latitude+"&longitude="+this.origin.longitude+"&GroupID="+GrpID,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -208,8 +220,22 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
                                 addMarker(Double.parseDouble(jsonObj.getString("Latitude")),Double.parseDouble(jsonObj.getString("Longitude")), jsonObj.getString("Name"), R.drawable.car_marker);
                             }
+                            progress.hide();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progress.hide();
+                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                        .setAction("Reload", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                manager.cancel(pendingIntent);  startActivity(getIntent());finish();
+                                            }
+                                        })
+                                        .setActionTextColor(Color.RED)
+
+                                        .show();}
+
                         };
                     }
                 },
@@ -217,11 +243,27 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
+                        progress.hide();
+                        if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                            Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Reload", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            manager.cancel(pendingIntent);  startActivity(getIntent());finish();
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();}
+
                     }
                 });
 
         //dummy Adapter
         // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
         requestQueue.add(jsonObjectRequest);
     }
     public void start() {

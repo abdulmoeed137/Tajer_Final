@@ -86,11 +86,10 @@ public class DealerProfileActivity extends BaseActivity {
                 startActivity(callIntent);
             }
         });
-        final ProgressDialog progress = ProgressDialog.show(DealerProfileActivity.this, "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(DealerProfileActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"sellers.php", new Response.Listener<String>() {
             public void onResponse(String response) {
                 try {

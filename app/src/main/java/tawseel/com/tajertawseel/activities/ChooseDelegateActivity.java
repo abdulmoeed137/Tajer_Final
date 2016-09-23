@@ -80,6 +80,7 @@ static boolean keepRunning2=false;
                 i.putExtra("CarBrand",TextDeligateCarBrand.getText().toString());i.putExtra("CarModel",TextDeligateCarModel.getText().toString());i.putExtra("CarNo",TextDeligateCarNumber.getText().toString());i.putExtra("DeligateContact",TextDeligateContact.getText().toString());
                i.putExtra("DeligateName",TextDeligateName.getText().toString());
                 startActivity(i);
+                finish();
             }
         });
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -189,7 +190,7 @@ static boolean keepRunning2=false;
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(ChooseDelegateActivity.this, "Location is Off!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//        Toast.makeText(ChooseDelegateActivity.this, "Location is Off!", Toast.LENGTH_SHORT).show();
+//        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
 }

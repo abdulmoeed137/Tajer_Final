@@ -64,11 +64,10 @@ public class delegateHomeFragment2 extends Fragment{
     {
         requestQueue = Volley.newRequestQueue(getActivity());
         listView = (ListView)mRootView.findViewById(R.id.listView);
-      final ProgressDialog  progress = ProgressDialog.show(getActivity(), "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"DeligateInfoGroup.php?id="+ LoginActivity.DeligateID
                 ,
                 new Response.Listener<JSONObject>() {
@@ -93,6 +92,18 @@ public class delegateHomeFragment2 extends Fragment{
                         } catch (JSONException e) {
                             e.printStackTrace();
                             progress.hide();
+                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                        .setAction("Reload", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                getActivity().finish();
+                                                getActivity().startActivity(getActivity().getIntent());
+                                            }
+                                        })
+                                        .setActionTextColor(Color.RED)
+
+                                        .show();}
                         };
                     }
                 },

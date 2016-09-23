@@ -75,11 +75,10 @@ public class ConfirmTajerActivity extends BaseActivity {
     public void setUpComponents()
     {
         ListView = (ListView)findViewById(R.id.listView);
-        final ProgressDialog progress = ProgressDialog.show(ConfirmTajerActivity.this, "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(ConfirmTajerActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"GroupItem.php?id="+getIntent().getExtras().getString("GroupID"),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -210,11 +209,10 @@ RunVolley("3",position);
         //  Toast.makeText(ComfirmationActivity.this,formattedDate,Toast.LENGTH_SHORT).show();
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
-        final ProgressDialog progress = ProgressDialog.show(ConfirmTajerActivity.this, "Loading",
-                "Please Wait..");
-        progress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(functions.bg)));
-        progress.setIndeterminate(false);
-        progress.setCancelable(true);
+        final  ProgressDialog progress = new ProgressDialog(ConfirmTajerActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         request = new StringRequest(Request.Method.POST, functions.add+"DeligateOrderConfirm.php", new Response.Listener<String>() {
             //if response
             public void onResponse(String response) {

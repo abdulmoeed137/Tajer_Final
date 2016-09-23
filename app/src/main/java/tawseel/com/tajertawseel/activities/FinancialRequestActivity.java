@@ -1,17 +1,25 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -63,6 +71,11 @@ setUpToolbar();
         deliveryprice=(TextView)findViewById(R.id.fh_PriceRange);
         dname=(TextView)findViewById(R.id.fh_DeligateName);
         drating=(RatingBar)findViewById(R.id.fh_ratingbar);
+        final ProgressDialog progress = new ProgressDialog(FinancialRequestActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        progress.setMessage("Loading...");
+        progress.show();
 
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"financialhistory.php", new Response.Listener<String>() {
             public void onResponse(String response) {
@@ -84,16 +97,42 @@ setUpToolbar();
                     itemprice.setText(tprice);
                     deliveryprice.setText(tdelivery);
                     mListView.setAdapter(new FinancialRequestAdapter(FinancialRequestActivity.this,data));
-
+progress.hide();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progress.hide();
+                    if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                        Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Reload", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        finish();
+                                        startActivity(getIntent());
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();}
                 };
 
             }
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),"Internet Connection Error", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Internet Connection Error", Toast.LENGTH_SHORT).show();
+                progress.hide();
+                if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                    Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            .setAction("Reload", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                    startActivity(getIntent());
+                                }
+                            })
+                            .setActionTextColor(Color.RED)
+
+                            .show();}
             }
         }) {
             //send data to server using POST
@@ -108,11 +147,26 @@ setUpToolbar();
         };
         try{
             requestQueue= Volley.newRequestQueue(FinancialRequestActivity.this);
+            int socketTimeout = 3000;//30 seconds - change to what you want
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            request.setRetryPolicy(policy);
             requestQueue.add(request);
         }
-        catch (Exception e)
+        catch (Exception error)
         {
-            Toast.makeText(FinancialRequestActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
+           // Toast.makeText(FinancialRequestActivity.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
+            if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        .setAction("Reload", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        })
+                        .setActionTextColor(Color.RED)
+
+                        .show();}
         }
         setUpToolbar();
     }

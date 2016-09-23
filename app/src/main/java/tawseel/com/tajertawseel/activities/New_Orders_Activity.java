@@ -80,7 +80,7 @@ public class New_Orders_Activity extends BaseActivity {
                         data.setProductID(jsonObj.getString("ProductID"));
                         data.setProductName(jsonObj.getString("Title"));
                         data.setDescription(jsonObj.getString("Description"));
-                        data.setPrice("70");
+                        data.setPrice(jsonObj.getString("Price"));
                         allproducts.add(data);
 
                         rbs[i]=new RadioButton(New_Orders_Activity.this);
@@ -171,6 +171,7 @@ public class New_Orders_Activity extends BaseActivity {
                 }
                 allproducts.get(index).setQuantity(quantity_et.getText().toString());
                 pList.add(allproducts.get(index));
+
                 Toast.makeText(New_Orders_Activity.this,"Product added to Order",Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

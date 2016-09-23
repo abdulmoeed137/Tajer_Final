@@ -1,17 +1,24 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -70,7 +77,7 @@ public class ConnectingProfileDelegates extends BaseActivity {
         date=(TextView)findViewById(R.id.pdate);
         time=(TextView) findViewById(R.id.ptime);
 
-        if (extras != null) {
+        try {if (extras != null) {
             String idt[]=extras.getString("DeligateID").split(" ");
             if(idt[0]!=null)
                 id=idt[0];
@@ -80,9 +87,17 @@ public class ConnectingProfileDelegates extends BaseActivity {
                 date.setText(idt[1]);
             if(idt[2]!=null)
                 time.setText(idt[2]);
+        }}
+        catch (Exception e )
+        {
+            id=getIntent().getExtras().getString("DeligateID");
         }
-
+        final  ProgressDialog progress = new ProgressDialog(ConnectingProfileDelegates.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         StringRequest request = new StringRequest(Request.Method.POST,functions.add+"delegates.php", new Response.Listener<String>() {
+
             public void onResponse(String response) {
                 try {
                     JSONObject mainObj=new JSONObject(response);
@@ -99,16 +114,44 @@ public class ConnectingProfileDelegates extends BaseActivity {
                         reviews.setText(jsonObj.getString("delivers"));
                         Float idelivers= Float.parseFloat(jsonObj.getString("delivers"));
                         rating.setRating(idelivers);
+
                     }
+                    progress
+                            .hide();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progress
+                            .hide();
+                    if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                        Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Reload", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        startActivity(getIntent());finish();
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();}
                 };
 
             }
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                progress
+                        .hide();
+                if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                    Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            .setAction("Reload", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivity(getIntent());finish();
+                                }
+                            })
+                            .setActionTextColor(Color.RED)
+
+                            .show();}
             }
         }) {
             //send data to server using POST
@@ -127,7 +170,17 @@ public class ConnectingProfileDelegates extends BaseActivity {
         }
         catch (Exception e)
         {
-            Toast.makeText(ConnectingProfileDelegates.this,"Internet Connection Error",Toast.LENGTH_SHORT).show();
+            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        .setAction("Reload", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(getIntent());finish();
+                            }
+                        })
+                        .setActionTextColor(Color.RED)
+
+                        .show();}
         }
 
     }
