@@ -63,8 +63,7 @@ String id;
         SharedPreferences settings;
 
         settings = this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
-        id = settings.getString("id2", null);
-    }
+        id = settings.getString("id2", null);}
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
