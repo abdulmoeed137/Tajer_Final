@@ -60,6 +60,13 @@ public class DeligateConfirmationActivity extends BaseActivity {
         TextView toolbarTitle = (TextView) findViewById(R.id.title_text);
         toolbarTitle.setText(getString(R.string.pick_set));
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
     }
     public void setUpComponents() {
   findViewById(R.id.add_demand_basket).setVisibility(View.GONE);

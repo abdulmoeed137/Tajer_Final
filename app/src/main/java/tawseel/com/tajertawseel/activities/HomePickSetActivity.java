@@ -1,5 +1,6 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -41,6 +42,13 @@ ViewPager pager;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
 
     }
 
@@ -62,5 +70,11 @@ ViewPager pager;
        Title2.setText("طلبات");
         tabs.getTabAt(1).setCustomView(view2);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(HomePickSetActivity.this,HomeActivity.class));
     }
 }

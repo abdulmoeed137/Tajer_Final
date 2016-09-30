@@ -120,6 +120,7 @@ ArrayList< PostGroupData> list = new ArrayList<>();
                             for(int i=0;i<jsonArr.length();i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
                                 PostGroupData item= new PostGroupData();
+                                item.setConfirmationCode(jsonObj.getString("ConfirmationCode"));
                                 item.setPriceRange(jsonObj.getString("PriceRange"));
                                 item.setCustomerEmail(jsonObj.getString("Email"));
                                 item.setCustomerName(jsonObj.getString("UserName"));
@@ -308,5 +309,12 @@ ArrayList< PostGroupData> list = new ArrayList<>();
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
     }
 }

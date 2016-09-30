@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,17 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
        boolean CheckLogin=false;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawer);
         mDrawerLayout.openDrawer(Gravity.RIGHT);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.findViewById(R.id.drawerIcon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+                    mDrawerLayout.closeDrawer(Gravity.RIGHT);
+                else
+                    mDrawerLayout.openDrawer(Gravity.RIGHT);
+
+            }
+        });
         TextView DeligateID2= (TextView)mDrawerLayout.findViewById(R.id.DeligateID);
                 DeligateID2.setText(LoginActivity.DeligateID);
         TextView DeligateName= (TextView)mDrawerLayout.findViewById(R.id.DeligateName);

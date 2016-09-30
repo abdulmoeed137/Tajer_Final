@@ -93,6 +93,7 @@ public class DeliveredNowAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView  = inflater.inflate(R.layout.delivered_now_list_item,null,false);
             holder = new ViewHolder();
+            holder.ConfrmatonCode= (TextView) convertView.findViewById(R.id.CustomerConfirmation);
             holder.CustomerName = (TextView) convertView.findViewById(R.id.CustomerName);
             holder.CustomerEmail = (TextView) convertView.findViewById(R.id.CustomerEmail);
             holder.CustomerPhone = (TextView) convertView.findViewById(R.id.CustomerPhone);
@@ -164,7 +165,7 @@ public class DeliveredNowAdapter extends BaseAdapter {
         }
 
 
-
+            holder.ConfrmatonCode.setText(data.getConfirmationCode());
             holder.CustomerName.setText(data.getCustomerName());
             holder.CustomerEmail.setText(data.getCustomerEmail());
             holder.CustomerPhone.setText(data.getCustomerPhone());

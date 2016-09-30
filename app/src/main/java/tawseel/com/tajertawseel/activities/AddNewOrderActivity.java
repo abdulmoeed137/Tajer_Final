@@ -158,6 +158,14 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
+
     }
 
 
@@ -266,7 +274,7 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                 progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progress.setMessage("Loading...");
                 progress.show();
-                StringRequest request = new StringRequest(Request.Method.POST, functions.add + "addorder.php?itemlist=" + item_ids, new Response.Listener<String>() {
+                StringRequest request = new StringRequest(Request.Method.POST, functions.add + "addorder.php", new Response.Listener<String>() {
                     public void onResponse(String response) {
                         try {
                             if (response.toString().compareTo("-1") != 0) {

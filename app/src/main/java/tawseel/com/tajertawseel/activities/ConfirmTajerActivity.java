@@ -167,6 +167,13 @@ public class ConfirmTajerActivity extends BaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         //title.setText("تأكيد");
         // deleteIcon = (ImageView)toolbar.findViewById(R.id.delete_icon);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
     }
     public void showNotificationDialogue(Context c, final int position) {
         final Dialog dialog = new Dialog(c);
@@ -266,5 +273,10 @@ progress.hide();
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request.setRetryPolicy(policy);
         requestQueue.add(request);
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ConfirmTajerActivity.this,DeligateHomeActivity.class));
+        finish();
     }
 }

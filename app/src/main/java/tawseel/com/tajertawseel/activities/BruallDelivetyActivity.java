@@ -3,6 +3,7 @@ package tawseel.com.tajertawseel.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,5 +45,12 @@ public class BruallDelivetyActivity extends BaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         title.setText(R.string.bruall_dilevery);
         // deleteIcon = (ImageView)toolbar.findViewById(R.id.delete_icon);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
     }
 }

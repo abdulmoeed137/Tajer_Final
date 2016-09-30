@@ -1,6 +1,7 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,8 +14,10 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,15 +42,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     public static String id;
     private ViewPager homePager;
     private TabLayout homeTabLayout;
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -71,9 +76,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             Toast.makeText(this, "No Old Location Saved", Toast.LENGTH_SHORT).show();
         }
 //// for knowing the distance between the two points
-        LatLng to = new LatLng(24.92, 67.0297);/// destination
-        LatLng from = new LatLng(24.9231, 67.0204);//source point
-        Double distance = SphericalUtil.computeDistanceBetween(from, to); //map utils function to compute distance in meters
+//        LatLng to = new LatLng(24.92, 67.0297);/// destination
+//        LatLng from = new LatLng(24.9231, 67.0204);//source point
+//        Double distance = SphericalUtil.computeDistanceBetween(from, to); //map utils function to compute distance in meters
 
 
        // Toast.makeText(this, "" + distance / 1000 + "KM", Toast.LENGTH_SHORT).show();
@@ -81,10 +86,22 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void setupContents() {
+
         Intent i = new Intent(HomeActivity.this, UpdateLocationSeller.class);
         startService(i);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawer);
-        mDrawerLayout.openDrawer(Gravity.RIGHT);
+      //  mDrawerLayout.openDrawer(Gravity.RIGHT);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.findViewById(R.id.drawerIcon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+                    mDrawerLayout.closeDrawer(Gravity.RIGHT);
+                else
+                    mDrawerLayout.openDrawer(Gravity.RIGHT);
+
+            }
+        });
         uname = LoginActivity.uname;
         email = LoginActivity.email;
         id = LoginActivity.LoginID;
@@ -188,6 +205,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         }
         LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
         LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
+
     }
 
     @Override

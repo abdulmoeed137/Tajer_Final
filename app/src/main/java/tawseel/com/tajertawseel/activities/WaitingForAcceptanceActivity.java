@@ -121,8 +121,6 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
     }
 
     public void setUpToolbar() {
@@ -133,6 +131,13 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
     }
 
     @Override

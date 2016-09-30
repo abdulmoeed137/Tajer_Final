@@ -89,6 +89,13 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
         getSupportActionBar().setHomeButtonEnabled(true);
         title.setText("تأكيد");
         // deleteIcon = (ImageView)toolbar.findViewById(R.id.delete_icon);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               onBackPressed();
+
+            }
+        });
     }
 
     @Override
@@ -230,5 +237,10 @@ progress.hide();
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
        request.setRetryPolicy(policy);
         requestQueue.add(request);
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ComfirmationActivity.this,DeligateHomeActivity.class));
+        finish();
     }
 }

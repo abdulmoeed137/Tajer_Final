@@ -159,6 +159,13 @@ public class PickSetActivity extends BaseActivity {
         TextView toolbarTitle = (TextView) findViewById(R.id.title_text);
         toolbarTitle.setText(getString(R.string.pick_set));
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
     }
 
     private void addGroup() {

@@ -223,6 +223,12 @@ private ArrayList<FavouriteDelegateItemData> data=new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         deleteIcon = (ImageView)toolbar.findViewById(R.id.delete_icon);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
 
+            }
+        });
     }
 }

@@ -128,6 +128,13 @@
                         android:text="Customer@tajerlab.com"
                         android:id="@+id/CustomerEmail" />
 
+                    <tawseel.com.tajertawseel.CustomBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/CustomerConfirmation"
+                        android:text="Customer Code"
+                        android:textColor="#f20404"
+                        android:textSize="12dp" />
 
 
                 </LinearLayout>
