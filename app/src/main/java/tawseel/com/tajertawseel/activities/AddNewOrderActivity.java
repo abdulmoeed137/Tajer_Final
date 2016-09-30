@@ -401,6 +401,7 @@ progress.hide();
                                 startActivity(i);
                                 finish();
                                 progress.hide();
+
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
