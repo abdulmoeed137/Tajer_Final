@@ -204,21 +204,21 @@ progress.dismiss();
                                 startActivity(i);
                                 finish();
                             }
-                            progress.hide();
+                            progress.dismiss();
                         } else {
                             Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
-                            progress.hide();
+                            progress.dismiss();
 
                         }
                     } catch (JSONException e) {
 
                         Toast.makeText(getApplicationContext(), "Internet Connection Error",  Toast.LENGTH_SHORT).show();
-                        progress.hide();
+                        progress.dismiss();
                     }
 
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
-                    progress.hide();
+                    progress.dismiss();
 
                 }
             }// in case error
@@ -226,7 +226,7 @@ progress.dismiss();
             public void onErrorResponse(VolleyError error) {
                 Log.d("Srvc",error.toString());
                 Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
-                progress.hide();
+                progress.dismiss();
 
             }
         }) {

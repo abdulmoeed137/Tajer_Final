@@ -100,13 +100,13 @@ public class PickSetActivity extends BaseActivity {
                                 data.setGname(jsonObj.getString("name"));
                                 data.setGmembers(jsonObj.getString("members"));
                                 list.add(data);
-                        progress.hide();
+                                progress.dismiss();
                             }
 
                             mListView.setAdapter(new PickSetAdapter(PickSetActivity.this, list));
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Reload", new View.OnClickListener() {
@@ -127,7 +127,7 @@ public class PickSetActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
-                        progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                             Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Reload", new View.OnClickListener() {
@@ -219,7 +219,7 @@ public class PickSetActivity extends BaseActivity {
 
 
                                                                                                                    finish();
-                                                                                                                   progress.hide();
+                                                                                                                   progress.dismiss();
                                                                                                                }
                                                                                                            });
                                             dialog.show();
@@ -232,13 +232,13 @@ public class PickSetActivity extends BaseActivity {
                                              */
                                         } else {
                                             Toast.makeText(PickSetActivity.this, "Cannot add order to the group.", Toast.LENGTH_SHORT).show();
-                                       progress.hide();
+                                            progress.dismiss();
                                         }
                                     }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    progress.hide();
+                                    progress.dismiss();
                                     if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                         Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                                 .setAction("Undo", new View.OnClickListener() {
@@ -258,7 +258,7 @@ public class PickSetActivity extends BaseActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.e("Volley", "Error");
-                                progress.hide();
+                                progress.dismiss();
                                 if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                                     Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                             .setAction("Undo", new View.OnClickListener() {

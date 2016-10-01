@@ -134,17 +134,17 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
                                             j.putExtra("GroupID",WaitingForAcceptanceActivity.GrpID);
                                             startActivity(j);
                                             finish();
-                                            progress.hide();
+                                            progress.dismiss();
                                         }
                                         else {
                                             Toast.makeText(BackToChooseNewDelegatesActivity.this,"Service Busy..",Toast.LENGTH_SHORT).show();
-                                            progress.hide();
+                                            progress.dismiss();
                                         }
                                     }
 
                                 } catch (JSONException error) {
                                     error.printStackTrace();
-                                    progress.hide();
+                                    progress.dismiss();
                                     if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                                         Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                                 .setAction("Undo", new View.OnClickListener() {
@@ -163,7 +163,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.e("Volley", "Error");
-                                progress.hide();
+                                progress.dismiss();
                                 if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                                     Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                             .setAction("Undo", new View.OnClickListener() {

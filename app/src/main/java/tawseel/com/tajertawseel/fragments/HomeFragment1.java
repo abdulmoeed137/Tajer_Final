@@ -182,10 +182,10 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
                                 addMarker(Double.parseDouble(jsonObj.getString("Latitude")),Double.parseDouble(jsonObj.getString("Longitude")), (jsonObj.getString("Name")+"KM Away"), R.drawable.car_marker);
                             }
-                            progress.hide();
+                            progress.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Undo", new View.OnClickListener() {
@@ -218,7 +218,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
 
                                     .show();
                         }
-                        progress.hide();
+                        progress.dismiss();
 
                     }
                 });

@@ -217,10 +217,10 @@ public class DeliveredNowAdapter extends BaseAdapter {
                                 list.add(item);
                             }
                             holder.productsList.setAdapter(new DeliveredNowChildItemAdapter(context,list));
-                            progress.hide();
+                            progress.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Reload", new View.OnClickListener() {
@@ -240,7 +240,7 @@ public class DeliveredNowAdapter extends BaseAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
-                        progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                             Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Reload", new View.OnClickListener() {

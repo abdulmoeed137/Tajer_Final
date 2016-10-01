@@ -100,11 +100,11 @@ public class ConfirmTajerActivity extends BaseActivity {
                                 if (jsonObj.getString("IsConfirmed").equals("1"))
                                 list.add(item);
                             }
-                            progress.hide();
+                            progress.dismiss();
                             ListView.setAdapter(new ConfirmTajerListAdapter(ConfirmTajerActivity.this,list));
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Reload", new View.OnClickListener() {
                                         @Override
@@ -124,7 +124,7 @@ public class ConfirmTajerActivity extends BaseActivity {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
 
-                        progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                         Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Reload", new View.OnClickListener() {
@@ -233,20 +233,20 @@ RunVolley("3",position);
                             Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                            finish();
                             startActivity(new Intent(ConfirmTajerActivity.this,DeligateHomeActivity.class));
-                            progress.hide();
+                            progress.dismiss();
 } else {
                             Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
-                            progress.hide();
+                            progress.dismiss();
                         }
                     } catch (JSONException e) {
 
                        // Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
-progress.hide();
+                        progress.dismiss();
                         Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
-                    progress.hide();
+                    progress.dismiss();
                    // Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
 
@@ -254,7 +254,7 @@ progress.hide();
             }// in case error
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                progress.hide();
+                progress.dismiss();
                 Log.d("Srvc",error.toString());
                 //Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();

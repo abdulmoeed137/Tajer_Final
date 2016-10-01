@@ -137,9 +137,10 @@ ArrayList< PostGroupData> list = new ArrayList<>();
                                 list.add(item);
                             }
                             mListView.setAdapter(new DeliveredNowAdapter(DeliveredNowActivity.this,list,StatusCode));
-                            progress.hide();
+                            progress.dismiss();
                         } catch (JSONException e) {
-                            e.printStackTrace();progress.hide();
+                            e.printStackTrace();
+                            progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Reload", new View.OnClickListener() {
@@ -157,7 +158,8 @@ ArrayList< PostGroupData> list = new ArrayList<>();
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley", "Error");progress.hide();
+                        Log.e("Volley", "Error");
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                             Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Reload", new View.OnClickListener() {

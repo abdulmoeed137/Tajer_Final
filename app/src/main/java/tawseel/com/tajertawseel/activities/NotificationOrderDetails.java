@@ -113,11 +113,11 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
 
                                         }
                                         finish();
-                                        progress.hide();
+                                        progress.dismiss();
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                        progress.hide();
+                                        progress.dismiss();
                                         Toast.makeText(NotificationOrderDetails.this,"Failed",Toast.LENGTH_SHORT).show();
                                     };
                                 }
@@ -126,7 +126,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Log.e("Volley", "Error");
-                                    progress.hide();
+                                    progress.dismiss();
                                     Toast.makeText(NotificationOrderDetails.this,"Failed",Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -224,10 +224,10 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
                                     addMarker(Double.parseDouble(list.get(i).getLatitude()),Double.parseDouble(list.get(i).getLongitude()),"Customer", R.drawable.person_marker);
                                 }
                                 productList.setAdapter(new PostGroupListAdapter(NotificationOrderDetails.this,list,"false"));
-progress.hide();
+                                progress.dismiss();
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                progress.hide();
+                                progress.dismiss();
                                 if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                     Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                             .setAction("Reload", new View.OnClickListener() {
@@ -246,7 +246,8 @@ progress.hide();
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.e("Volley", "Error");progress.hide();
+                            Log.e("Volley", "Error");
+                            progress.dismiss();
                             if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Reload", new View.OnClickListener() {

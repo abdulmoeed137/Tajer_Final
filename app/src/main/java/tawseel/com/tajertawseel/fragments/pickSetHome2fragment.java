@@ -106,10 +106,11 @@ public class pickSetHome2fragment extends Fragment {
 
                             }
                             listView.setAdapter(new pick_dummy_adapter(getActivity(),list));
-                            progress.hide();
+                            progress.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progress.hide(); if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                            progress.dismiss();
+                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Reload", new View.OnClickListener() {
                                             @Override
@@ -127,7 +128,7 @@ public class pickSetHome2fragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
-                        progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                             Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Reload", new View.OnClickListener() {

@@ -283,12 +283,12 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                 Intent i = new Intent(AddNewOrderActivity.this, AddNewOrderActivity.class);
                                 startActivity(i);
                                 finish();
-progress.hide();
+progress.dismiss();
 
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Undo", new View.OnClickListener() {
@@ -305,7 +305,7 @@ progress.hide();
                     }// in case error
                 }, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                       progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                             Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Undo", new View.OnClickListener() {
@@ -346,7 +346,7 @@ progress.hide();
                     request.setRetryPolicy(policy);
                     requestQueue.add(request);
                 } catch (Exception e) {
-                    progress.hide();
+                    progress.dismiss();
                     if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                         Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Undo", new View.OnClickListener() {
@@ -400,12 +400,12 @@ progress.hide();
                                 i.putExtra("orderID", resp);
                                 startActivity(i);
                                 finish();
-                                progress.hide();
+                                progress.dismiss();
 
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Undo", new View.OnClickListener() {
@@ -421,7 +421,7 @@ progress.hide();
                     }// in case error
                 }, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                       progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                             Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Undo", new View.OnClickListener() {
@@ -467,7 +467,7 @@ progress.hide();
                    request.setRetryPolicy(policy);
                     requestQueue.add(request);
                 } catch (Exception e) {
-                    progress.hide();
+                    progress.dismiss();
                     if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                         Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Undo", new View.OnClickListener() {

@@ -97,10 +97,10 @@ setUpToolbar();
                     itemprice.setText(tprice);
                     deliveryprice.setText(tdelivery);
                     mListView.setAdapter(new FinancialRequestAdapter(FinancialRequestActivity.this,data));
-progress.hide();
+                    progress.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    progress.hide();
+                    progress.dismiss();
                     if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                         Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Reload", new View.OnClickListener() {
@@ -120,7 +120,7 @@ progress.hide();
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 //Toast.makeText(getApplicationContext(),"Internet Connection Error", Toast.LENGTH_SHORT).show();
-                progress.hide();
+                progress.dismiss();
                 if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                     Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                             .setAction("Reload", new View.OnClickListener() {

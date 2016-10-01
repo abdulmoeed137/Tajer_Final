@@ -92,11 +92,11 @@ public class TradersFavouriteActivity extends BaseActivity {
                         data.add(tdata);
                     }
                     tcount.setText(data.size()+"");
-                    progress.hide();
+                    progress.dismiss();
                     listView.setAdapter(new TradersFavouriteAdapter(TradersFavouriteActivity.this,data));
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    progress.hide();
+                    progress.dismiss();
                     if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                     Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                             .setAction("Reload", new View.OnClickListener() {
@@ -115,7 +115,7 @@ public class TradersFavouriteActivity extends BaseActivity {
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                progress.hide();
+                progress.dismiss();
                 Log.d("Volley",error.toString());
                 if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                     Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)

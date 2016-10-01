@@ -189,10 +189,10 @@ public class PostGroupListAdapter extends BaseAdapter {
                                     list.add(item);
                                 }
                                 productsList.setAdapter(new ProductItemAdapter(context,list));
-progress.hide();
+                                progress.dismiss();
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                progress.hide();
+                                progress.dismiss();
                             };
                         }
                     },
@@ -200,7 +200,7 @@ progress.hide();
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("Volley", "Error");
-                            progress.hide();
+                            progress.dismiss();
                         }
                     });
 

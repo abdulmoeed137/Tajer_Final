@@ -1,7 +1,6 @@
 package tawseel.com.tajertawseel.activities;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;

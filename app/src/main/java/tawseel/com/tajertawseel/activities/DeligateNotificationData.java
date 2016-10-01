@@ -79,17 +79,19 @@ public class DeligateNotificationData extends BaseActivity {
                                         Toast.makeText(DeligateNotificationData.this,"Failed",Toast.LENGTH_SHORT).show();
 
                                     }
-finish();
-progress.hide();
+                                     finish();
+                                    progress.dismiss();
                                 } catch (JSONException e) {
-                                    e.printStackTrace();progress.hide();
+                                    e.printStackTrace();
+                                    progress.dismiss();
                                 };
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("Volley", "Error");progress.hide();
+                                Log.e("Volley", "Error");
+                                progress.dismiss();
                             }
                         });
 

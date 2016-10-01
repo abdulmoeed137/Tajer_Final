@@ -131,11 +131,11 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
                             }
                         }
                     }
-                    progress.hide();
+                    progress.dismiss();
                     mLisView.setAdapter(new DelegatesDateOfConnectionAdapter(DeligateDateOfConnectionActivity.this,data));
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    progress.hide();
+                    progress.dismiss();
                     if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                    Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Reload", new View.OnClickListener() {
@@ -154,7 +154,7 @@ public class DeligateDateOfConnectionActivity extends BaseActivity {
 
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                progress.hide();
+                progress.dismiss();
                 if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                     Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                             .setAction("Reload", new View.OnClickListener() {
