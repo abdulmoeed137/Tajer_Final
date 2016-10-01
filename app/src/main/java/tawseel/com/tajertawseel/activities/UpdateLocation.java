@@ -78,7 +78,7 @@ String id;
             return 0;
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1,
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1,
                 this);
         Toast.makeText(UpdateLocation.this, "Start Serice", Toast.LENGTH_SHORT).show();
         // Thread t = new Thread(new ThreadThis(startId));

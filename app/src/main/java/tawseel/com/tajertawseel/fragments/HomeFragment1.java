@@ -160,6 +160,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
 
     public void GetDeligates ()
     {    mMap.clear();
+        origin = new LatLng(LocationManage.Lat,LocationManage.Long);
         LatLng positionUpdate = origin;
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate, 12);
         mMap.animateCamera(update);

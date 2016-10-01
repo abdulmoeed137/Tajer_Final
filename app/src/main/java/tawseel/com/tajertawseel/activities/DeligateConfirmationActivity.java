@@ -99,11 +99,11 @@ public class DeligateConfirmationActivity extends BaseActivity {
                                 list.add(data);
 
                             }
-progress.hide();
+                            progress.dismiss();
                             mListView.setAdapter(new PickSetAdapter(DeligateConfirmationActivity.this, list));
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Reload", new View.OnClickListener() {
                                         @Override
@@ -123,7 +123,7 @@ progress.hide();
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", error.toString());
-                        progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                         Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Reload", new View.OnClickListener() {

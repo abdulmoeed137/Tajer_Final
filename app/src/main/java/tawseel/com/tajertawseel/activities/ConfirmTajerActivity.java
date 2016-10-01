@@ -232,6 +232,7 @@ RunVolley("3",position);
                             //if success
                             Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                            finish();
+                            startActivity(new Intent(ConfirmTajerActivity.this,DeligateHomeActivity.class));
                             progress.hide();
 } else {
                             Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();

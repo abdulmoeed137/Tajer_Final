@@ -68,6 +68,7 @@ public class delegateHomeFragment2 extends Fragment{
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
         progress.show();
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"DeligateInfoGroup.php?id="+ LoginActivity.DeligateID
                 ,
                 new Response.Listener<JSONObject>() {
@@ -86,12 +87,12 @@ public class delegateHomeFragment2 extends Fragment{
                                 item.setDeligateContact(jsonObj.getString("TajerContact"));
                                 list.add(item);
                             }
-                            progress.hide();
+                            progress.dismiss();
                             listView.setAdapter(new DeliveredListAdapter(getActivity(),list));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progress.hide();
+                            progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
                                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Reload", new View.OnClickListener() {
@@ -111,7 +112,7 @@ public class delegateHomeFragment2 extends Fragment{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Error");
-                        progress.hide();
+                        progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
                         Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Reload", new View.OnClickListener() {

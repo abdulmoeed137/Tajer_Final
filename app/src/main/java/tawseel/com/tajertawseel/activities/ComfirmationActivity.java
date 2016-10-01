@@ -46,6 +46,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
@@ -56,7 +58,7 @@ import tawseel.com.tajertawseel.utils.PathRequest;
  */
 public class ComfirmationActivity extends BaseActivity implements OnMapReadyCallback {
     RequestQueue requestQueue;
-
+LatLng From,To;
     private GoogleMap mMap;
 
     @Override
@@ -70,6 +72,9 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
         findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +97,7 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onBackPressed();
+                onBackPressed();
 
             }
         });
@@ -100,28 +105,32 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        final  ProgressDialog progress = new ProgressDialog(ComfirmationActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
         double TajerLatitude,TajerLongitude;
         TajerLatitude = Double.parseDouble(getIntent().getExtras().getString("TajerLatitude"));
         TajerLongitude=Double.parseDouble(getIntent().getExtras().getString("TajerLongitude"));
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng From = new LatLng(TajerLatitude,TajerLongitude);
-        LatLng To = new LatLng(LocationManage.Lat,LocationManage.Long);
+         From = new LatLng(TajerLatitude,TajerLongitude);
+       To = new LatLng(LocationManage.Lat,LocationManage.Long);
 
         Double distance = SphericalUtil.computeDistanceBetween(From, To);
         NumberFormat format = new DecimalFormat("##.##");
-       Marker marker =  mMap.addMarker(new MarkerOptions().position(From).title("Tajer : "+format.format(distance/1000)+" KM away"));
+        Marker marker =  mMap.addMarker(new MarkerOptions().position(From).title("Tajer : "+format.format(distance/1000)+" KM away"));
 
         marker.showInfoWindow();
 
-     mMap.addMarker(new MarkerOptions().position(To).title("You"));
+        mMap.addMarker(new MarkerOptions().position(To).title("You"));
 
         new PathRequest().makeUrl(From.latitude,From.longitude,To.latitude,To.longitude,ComfirmationActivity.this,mMap);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(From));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(From,15));
-
+progress.dismiss();
 
 
 
@@ -136,16 +145,16 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                 EditText code = (EditText)dialog.findViewById(R.id.Code);
-               if (code.getText().toString().equals(getIntent().getExtras().getString("ConfirmationCode")))
-                RunVolley("2");
+                if (code.getText().toString().equals(getIntent().getExtras().getString("ConfirmationCode")))
+                    RunVolley("2");
                 else
-                   Toast.makeText(getApplicationContext(),"Wrong Code",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Wrong Code",Toast.LENGTH_SHORT).show();
             }
         });
         dialog.findViewById(R.id.ButtonCancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-    RunVolley("0");
+                RunVolley("0");
             }
         });
         // lp.copyFrom(c.getWindow().getAttributes());
@@ -165,7 +174,7 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
         SimpleDateFormat sdf=new SimpleDateFormat("hh:mm a");
         final String formattedDate = df.format(c.getTime());
         final String formattedTime = sdf.format(c.getTime());
-      //  Toast.makeText(ComfirmationActivity.this,formattedDate,Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(ComfirmationActivity.this,formattedDate,Toast.LENGTH_SHORT).show();
         requestQueue = Volley.newRequestQueue(this);
         StringRequest request;
 //Toast.makeText(ComfirmationActivity.this,getIntent().getExtras().getString("GroupID")+"\n"+value+"\n"+formattedDate+"\n"+formattedTime,Toast.LENGTH_SHORT).show();
@@ -184,10 +193,10 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
                     try {
                         if (jsonObject.names().get(0).equals("success")) {
 
-                           //if success
-                             Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                            //if success
+                            Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                             if (value.equals("0"))
-                            finish();
+                                finish();
                             else
                             {
                                 Intent i = new Intent(ComfirmationActivity.this,ConfirmTajerActivity.class);
@@ -195,7 +204,7 @@ public class ComfirmationActivity extends BaseActivity implements OnMapReadyCall
                                 startActivity(i);
                                 finish();
                             }
-progress.hide();
+                            progress.hide();
                         } else {
                             Toast.makeText(getApplicationContext(),jsonObject.getString("failed"),Toast.LENGTH_SHORT).show();
                             progress.hide();
@@ -204,12 +213,12 @@ progress.hide();
                     } catch (JSONException e) {
 
                         Toast.makeText(getApplicationContext(), "Internet Connection Error",  Toast.LENGTH_SHORT).show();
-progress.hide();
+                        progress.hide();
                     }
 
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(),"Internet Connection Error",Toast.LENGTH_SHORT).show();
-progress.hide();
+                    progress.hide();
 
                 }
             }// in case error
@@ -227,7 +236,7 @@ progress.hide();
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("id",getIntent().getExtras().getString("GroupID"));
                 hashMap.put("hash", "CCB612R");
-               hashMap.put("StatusCode",value);
+                hashMap.put("StatusCode",value);
                 hashMap.put("Date",formattedDate);
                 hashMap.put("Time",formattedTime);
                 return hashMap;
@@ -235,7 +244,7 @@ progress.hide();
         };
         int socketTimeout = 3000;//30 seconds - change to what you want
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-       request.setRetryPolicy(policy);
+        request.setRetryPolicy(policy);
         requestQueue.add(request);
     }
     @Override
