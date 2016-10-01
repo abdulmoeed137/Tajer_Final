@@ -66,8 +66,7 @@ import tawseel.com.tajertawseel.activities.functions;
 /**
  * Created by Junaid-Invision on 8/2/2016.
  */
-public class HomeFragment1 extends Fragment implements OnMapReadyCallback,LocationListener {
-
+public class HomeFragment1 extends Fragment implements OnMapReadyCallback, LocationListener {
 
 
     View mRootView;
@@ -77,7 +76,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES =1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
     LatLng origin;
 
 
@@ -100,7 +99,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
             @Override
             public void onClick(View v) {
                 try {
-                    origin = new LatLng(LocationManage.Lat,LocationManage.Long);
+                    origin = new LatLng(LocationManage.Lat, LocationManage.Long);
                 } catch (Exception e) {
 
                     Toast.makeText(getActivity(), "No Old Location Saved", Toast.LENGTH_SHORT).show();
@@ -110,14 +109,14 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
 
             }
         });
-       FloatingActionButton minus= (FloatingActionButton) mRootView.findViewById(R.id.minus_button);
+        FloatingActionButton minus = (FloatingActionButton) mRootView.findViewById(R.id.minus_button);
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         });
-       FloatingActionButton plus = (FloatingActionButton)mRootView.findViewById(R.id.plus_button);
+        FloatingActionButton plus = (FloatingActionButton) mRootView.findViewById(R.id.plus_button);
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,54 +138,53 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
                 this);
         try {
-            origin = new LatLng(LocationManage.Lat,LocationManage.Long);
+            origin = new LatLng(LocationManage.Lat, LocationManage.Long);
         } catch (Exception e) {
 
             Toast.makeText(getActivity(), "No Old Location Saved", Toast.LENGTH_SHORT).show();
         }
 
 
-
         mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogue();
-               // showNotificationDialogue();
+                // showNotificationDialogue();
             }
         });
 
 
     }
 
-    public void GetDeligates ()
-    {    mMap.clear();
-        origin = new LatLng(LocationManage.Lat,LocationManage.Long);
+    public void GetDeligates() {
+        mMap.clear();
+        origin = new LatLng(LocationManage.Lat, LocationManage.Long);
         LatLng positionUpdate = origin;
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate, 12);
         mMap.animateCamera(update);
-        addMarker(origin.latitude,origin.longitude, "Seller", R.drawable.destination_marker);
+        addMarker(origin.latitude, origin.longitude, "Seller", R.drawable.destination_marker);
         RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(getActivity());
         final ProgressDialog progress = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_DARK);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
         progress.show();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add+"AllDeligate.php?latitude="+LocationManage.Lat+"&longitude="+LocationManage.Long,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, functions.add + "AllDeligate.php?latitude=" + LocationManage.Lat + "&longitude=" + LocationManage.Long,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArr=response.getJSONArray("info");
-                            functions.AvailableDeligates=jsonArr.length()+"";
-                            for(int i=0;i<jsonArr.length();i++) {
+                            JSONArray jsonArr = response.getJSONArray("info");
+                            functions.AvailableDeligates = jsonArr.length() + "";
+                            for (int i = 0; i < jsonArr.length(); i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                                addMarker(Double.parseDouble(jsonObj.getString("Latitude")),Double.parseDouble(jsonObj.getString("Longitude")), (jsonObj.getString("Name")+"KM Away"), R.drawable.car_marker);
+                                addMarker(Double.parseDouble(jsonObj.getString("Latitude")), Double.parseDouble(jsonObj.getString("Longitude")), (jsonObj.getString("Name") + "KM Away"), R.drawable.car_marker);
                             }
                             progress.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             progress.dismiss();
-                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)) {
                                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Undo", new View.OnClickListener() {
                                             @Override
@@ -200,13 +198,14 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
                             }
 
 
-                        };
+                        }
+                        ;
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError e) {
-                        if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                        if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)) {
                             Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Undo", new View.OnClickListener() {
                                         @Override
@@ -238,8 +237,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
 //    }
 
 
-    public void showDialogue()
-    {
+    public void showDialogue() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -256,9 +254,9 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
         dialog.findViewById(R.id.option3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),HomePickSetActivity.class);
+                Intent intent = new Intent(getActivity(), HomePickSetActivity.class);
                 startActivity(intent);
-                getActivity().finish();
+
             }
         });
         dialog.findViewById(R.id.BtnNewOrder).setOnClickListener(new View.OnClickListener() {
@@ -274,9 +272,10 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
             }
         });
     }
+
     private void setupMap() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -289,10 +288,9 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
         mMap = googleMap;
 
 
-
-
         GetDeligates();
     }
+
     private void addMarker(double lat, double lng, String title, int markericon) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions
@@ -312,6 +310,15 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
 
     @Override
     public void onLocationChanged(Location location) {
+
+        LocationManage.Lat = location.getLatitude();
+        LocationManage.Long = location.getLongitude();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -322,9 +329,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback,Locati
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
-        LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
-
+        locationManager.removeUpdates(this);
     }
 
     @Override

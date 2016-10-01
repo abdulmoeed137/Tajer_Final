@@ -75,6 +75,6 @@ ViewPager pager;
     @Override
     public void onBackPressed() {
         finish();
-        startActivity(new Intent(HomePickSetActivity.this,HomeActivity.class));
+       // startActivity(new Intent(HomePickSetActivity.this,HomeActivity.class));
     }
 }

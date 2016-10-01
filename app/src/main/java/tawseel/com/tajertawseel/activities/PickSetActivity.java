@@ -220,6 +220,7 @@ public class PickSetActivity extends BaseActivity {
 
                                                                                                                    finish();
                                                                                                                    progress.dismiss();
+                                                                                                                   dialog.dismiss();
                                                                                                                }
                                                                                                            });
                                             dialog.show();

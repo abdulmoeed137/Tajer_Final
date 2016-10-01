@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import tawseel.com.tajertawseel.activities.functions;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -58,6 +60,7 @@ public class delegateHomeFragment2 extends Fragment{
         setupContentView();
         return mRootView;
     }
+
 
 
     public void setupContentView()

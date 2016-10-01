@@ -65,6 +65,7 @@ LatLng From,To;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
+Toast.makeText(ComfirmationActivity.this,"Getting Your Location. Please Wait",Toast.LENGTH_LONG).show();
 
         setUpToolbar();
 
@@ -105,10 +106,7 @@ LatLng From,To;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        final  ProgressDialog progress = new ProgressDialog(ComfirmationActivity.this, ProgressDialog.THEME_HOLO_DARK);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setMessage("Loading...");
-        progress.show();
+
         double TajerLatitude,TajerLongitude;
         TajerLatitude = Double.parseDouble(getIntent().getExtras().getString("TajerLatitude"));
         TajerLongitude=Double.parseDouble(getIntent().getExtras().getString("TajerLongitude"));
@@ -130,7 +128,7 @@ LatLng From,To;
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(From));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(From,15));
-progress.dismiss();
+
 
 
 
