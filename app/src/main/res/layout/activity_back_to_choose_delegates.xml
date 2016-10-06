@@ -97,7 +97,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/mainColor"
-                    android:text="1H , 2M"/>
+                    android:text="1H , 2M"
+                    android:id="@+id/duration" />
             </LinearLayout>
 
 

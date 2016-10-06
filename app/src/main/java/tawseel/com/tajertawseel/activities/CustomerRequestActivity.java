@@ -67,6 +67,7 @@ public class CustomerRequestActivity extends BaseActivity {
         setUpComponents();
         requestQueue= Volley.newRequestQueue(this);
         oCount=(TextView)findViewById(R.id.request_count);
+        
 
 //        final ProgressDialog progress = ProgressDialog.show(new ContextThemeWrapper(CustomerRequestActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar ), "Loading",
 //                "Please Wait..");
@@ -182,10 +183,23 @@ startActivity(getIntent());finish();
 
 
                 Intent i  = new Intent (CustomerRequestActivity.this, AddNewOrderActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 finish();
                 startActivity(i);
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+              mListView= null;
+                postRequestButton=null;
+                 oCount=null;
+              requestQueue=null;
+                 request=null;
+                list=null;
+                System.gc();
     }
 }

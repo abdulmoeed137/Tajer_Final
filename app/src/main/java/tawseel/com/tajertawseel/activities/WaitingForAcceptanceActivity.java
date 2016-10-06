@@ -56,15 +56,10 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
 /**
  * Created by Junaid-Invision on 7/16/2016.
  */
-public class WaitingForAcceptanceActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
+public class WaitingForAcceptanceActivity extends AppCompatActivity implements OnMapReadyCallback {
     static PendingIntent pendingIntent;
     static AlarmManager manager;
-    LocationManager locationManager;
-    // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
-    // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     LatLng origin;
     private GoogleMap mMap;
     static    int i=0;
@@ -74,6 +69,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceptance_waiting);
+        origin= new LatLng(LocationManage.Lat,LocationManage.Long);
         findViewById(R.id.ButtonCancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,27 +85,8 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
         GrpID=getIntent().getExtras().getString("GroupID");
 
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(WaitingForAcceptanceActivity.this, "Location Permission Required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                this);
-        try {
-            origin = new LatLng(LocationManage.Lat,LocationManage.Long);
-        } catch (Exception e) {
 
-            Toast.makeText(WaitingForAcceptanceActivity.this, "No Old Location Saved", Toast.LENGTH_SHORT).show();
-        }
-        start();
+
 
        setUpToolbar();
         setupMap();
@@ -173,38 +150,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
-        LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
 
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(WaitingForAcceptanceActivity.this, "Location is Off!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-    }
     public void GetDeligates (LatLng origin)
     {
          RequestQueue requestQueue;
@@ -226,6 +172,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
                                 addMarker(Double.parseDouble(jsonObj.getString("Latitude")),Double.parseDouble(jsonObj.getString("Longitude")), jsonObj.getString("Name"), R.drawable.car_marker);
                             }
                             progress.dismiss();
+                            start();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             progress.dismiss();
@@ -274,7 +221,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     public void start() {
    //     Toast.makeText(WaitingForAcceptanceActivity.this,"yes1",Toast.LENGTH_SHORT).show();
         manager= (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 2000;
+        int interval = 20000;
 
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);

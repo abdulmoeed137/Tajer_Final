@@ -57,16 +57,22 @@ public class delegateHomeFragment2 extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_home2,null,false);
 
-        setupContentView();
+       // setupContentView();
         return mRootView;
     }
 
-
+    @Override
+    public void onResume() {
+super.onResume();
+        setupContentView();
+    }
 
     public void setupContentView()
     {
+        list.clear();
         requestQueue = Volley.newRequestQueue(getActivity());
         listView = (ListView)mRootView.findViewById(R.id.listView);
+        listView.setAdapter(new DeliveredListAdapter(getActivity(),list));
         final  ProgressDialog progress = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_DARK);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");

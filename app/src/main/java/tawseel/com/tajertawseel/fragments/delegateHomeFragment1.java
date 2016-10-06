@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -59,24 +60,23 @@ import tawseel.com.tajertawseel.activities.functions;
 /**
  * Created by Junaid-Invision on 8/16/2016.
  */
-public class delegateHomeFragment1 extends Fragment implements OnMapReadyCallback,LocationListener {
+public class delegateHomeFragment1 extends Fragment implements OnMapReadyCallback {
 
     View mRootView;
     private GoogleMap mMap;
-    LocationManager locationManager;
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
 
-    // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES =1; // 1 minute
     LatLng origin;
+    RelativeLayout rl;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_delegates_home1, null, false);
+        origin= new LatLng(LocationManage.Lat,LocationManage.Long);
         setupComponents();
         setupMap();
+        rl=(RelativeLayout)mRootView.findViewById(R.id.rlayout);
         return mRootView;
 
     }
@@ -117,29 +117,6 @@ public class delegateHomeFragment1 extends Fragment implements OnMapReadyCallbac
                 mMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(getActivity(), "Location Permission Required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                this);
-        try {
-            origin = new LatLng(LocationManage.Lat,LocationManage.Long);
-        } catch (Exception e) {
-
-            Toast.makeText(getActivity(), "No Old Location Saved", Toast.LENGTH_SHORT).show();
-        }
-
-
-
 
         mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,7 +222,7 @@ RunVolley("0");
                         }
                     } catch (JSONException e) {
 
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        Snackbar.make(rl, "Internet Connection Error", Snackbar.LENGTH_LONG)
                                 .setAction("Undo", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -260,7 +237,7 @@ RunVolley("0");
                     }
 
                 } catch (JSONException e) {
-                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                    Snackbar.make(rl, "Internet Connection Error", Snackbar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -277,7 +254,7 @@ RunVolley("0");
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Srvc",error.toString());
-                Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                Snackbar.make(rl, "Internet Connection Error", Snackbar.LENGTH_LONG)
                         .setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -337,25 +314,4 @@ RunVolley("0");
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-        LocationManage.Lat = location.getLatitude();
-        LocationManage.Long=location.getLongitude();
     }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-}

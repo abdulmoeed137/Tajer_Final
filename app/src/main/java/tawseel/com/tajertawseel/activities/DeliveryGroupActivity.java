@@ -150,6 +150,8 @@ try {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DeliveryGroupActivity.this,PostNewGroupActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 i.putExtra("status","new");
                 finish();
                 startActivity(i);
@@ -169,6 +171,7 @@ try {
 
                if(!longClick){
                Intent i = new Intent(DeliveryGroupActivity.this,PostGroupActivity.class);
+                   i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 i.putExtra("id",list.get(position).getGrpID()+"");
                    i.putExtra("flag","true");

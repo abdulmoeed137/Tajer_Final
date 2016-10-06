@@ -240,14 +240,14 @@ Toast.makeText(ComfirmationActivity.this,"Getting Your Location. Please Wait",To
                 return hashMap;
             }
         };
-        int socketTimeout = 3000;//30 seconds - change to what you want
+        int socketTimeout = 30000;//30 seconds - change to what you want
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request.setRetryPolicy(policy);
         requestQueue.add(request);
     }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ComfirmationActivity.this,DeligateHomeActivity.class));
+       // startActivity(new Intent(ComfirmationActivity.this,DeligateHomeActivity.class));
         finish();
     }
 }

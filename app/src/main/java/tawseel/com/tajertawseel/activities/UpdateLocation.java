@@ -9,14 +9,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
@@ -38,14 +37,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 import tawseel.com.tajertawseel.R;
 
 /**
  * Created by AbdulMoeed on 8/15/2016.
  */
-public class UpdateLocation extends Service implements LocationListener {
-    LocationManager locationManager;
+public class UpdateLocation extends Service implements com.google.android.gms.location.LocationListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    Location mLastLocation;
     boolean flag2 = true;
     RequestQueue requestQueue;
 String id;
@@ -55,50 +62,39 @@ String id;
         return null;
     }
 
+    synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+
+    }
     @Override
     public void onCreate() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         SharedPreferences settings;
 
         settings = this.getSharedPreferences("deligate", Context.MODE_PRIVATE); //1
-        id = settings.getString("id2", null);}
+        id = settings.getString("id2", null);
+        buildGoogleApiClient();}
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return 0;
-        }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1,
-                this);
         Toast.makeText(UpdateLocation.this, "Start Serice", Toast.LENGTH_SHORT).show();
         // Thread t = new Thread(new ThreadThis(startId));
         //       t.start();
+        mGoogleApiClient.connect();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.removeUpdates(this);
+        mGoogleApiClient.disconnect();
         super.onDestroy();
     }
 
@@ -107,19 +103,8 @@ String id;
 
     @Override
     public void onLocationChanged(Location location) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
-        LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
-        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        LocationManage.Lat = location.getLatitude();
+        LocationManage.Long = location.getLongitude();
         if(flag){
             flag=false;
             final Location finalLocation = location;
@@ -139,21 +124,6 @@ String id;
         }
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Location is Off!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-    }
     public void UpdateDeligateLocation(final Location location)
     {
 
@@ -231,4 +201,42 @@ String id;
         requestQueue.add(request);
 }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationRequest.setInterval((60000*10)); // Update location every second
+        mLocationRequest.setFastestInterval((60000*10));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
+
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            LocationManage.Lat = mLastLocation.getLatitude();
+            LocationManage.Long= mLastLocation.getLongitude();
+            UpdateDeligateLocation(mLastLocation );
+
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        buildGoogleApiClient();
+    }
 }

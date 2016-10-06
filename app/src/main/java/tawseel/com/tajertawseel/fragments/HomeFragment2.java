@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import tawseel.com.tajertawseel.activities.functions;
 
@@ -45,12 +46,13 @@ public class HomeFragment2 extends Fragment {
     private ListView listView;
     private View mRootView;private RequestQueue requestQueue;
     ArrayList<HomeFragment2Data> list = new ArrayList<>();;
+    LinearLayout ll;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_home2,null,false);
-
+ll=(LinearLayout) mRootView.findViewById(R.id.llayout);
         //setupContentView();
     return mRootView;
     }
@@ -107,7 +109,7 @@ public class HomeFragment2 extends Fragment {
                             e.printStackTrace();
                             progress.dismiss();
                             if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
-                                Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                Snackbar.make(ll, "Internet Connection Error", Snackbar.LENGTH_LONG)
                                         .setAction("Reload", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -115,7 +117,6 @@ public class HomeFragment2 extends Fragment {
                                             }
                                         })
                                         .setActionTextColor(Color.RED)
-
                                         .show();}
                         };
                     }
@@ -126,7 +127,7 @@ public class HomeFragment2 extends Fragment {
                         Log.e("Volley", "Error");
                         progress.dismiss();
                         if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            Snackbar.make(ll, "Internet Connection Error", Snackbar.LENGTH_LONG)
                                     .setAction("Reload", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {

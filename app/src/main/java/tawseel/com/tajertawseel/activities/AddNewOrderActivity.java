@@ -249,6 +249,8 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
             public void onClick(View view) {
                 New_Orders_Activity.pList.clear();
                 Intent i = new Intent(AddNewOrderActivity.this, CustomerRequestActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivity(i);
             }
         });
@@ -281,6 +283,8 @@ public class AddNewOrderActivity extends BaseActivity implements View.OnClickLis
                                 New_Orders_Activity.pList.clear();
                                 Toast.makeText(AddNewOrderActivity.this, "Order saved ", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(AddNewOrderActivity.this, AddNewOrderActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                                 startActivity(i);
                                 finish();
 progress.dismiss();
@@ -396,6 +400,8 @@ progress.dismiss();
                                     oldid = -1;
                                 New_Orders_Activity.pList.clear();
                                 Intent i = new Intent(AddNewOrderActivity.this, PickSetActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                                 String resp = response.toString().replaceAll("[\n\r]", "");
                                 i.putExtra("orderID", resp);
                                 startActivity(i);
@@ -490,6 +496,8 @@ progress.dismiss();
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AddNewOrderActivity.this, Tajer_Lap_Activity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivity(i);
             }
         });

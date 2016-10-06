@@ -13,10 +13,12 @@ import android.widget.Toast;
  * Created by AbdulMoeed on 7/13/2016.
  */
 public class functions {
+    public static String duration;
     public static String add="http://roadofchange.org/BaikTajerTawseel/";
     public static String  AvailableDeligates;
     static boolean keepRunning=true;
     public static String bg = "#EEEDED";
+    public static String distance;
 
     static public boolean isPasswordTrue(String name,Context context)
     {

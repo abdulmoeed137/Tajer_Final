@@ -3,6 +3,7 @@ package tawseel.com.tajertawseel.utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,13 +14,17 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import tawseel.com.tajertawseel.activities.functions;
 
 /**
  * Created by Junaid-Invision on 7/20/2016.
@@ -28,7 +33,7 @@ public class PathRequest {
 
 
 
-
+public static JSONObject job;
         private String url;
         private RequestQueue queue;
         private JsonObjectRequest request;
@@ -80,13 +85,13 @@ public class PathRequest {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-
+job= jsonObject;
                 try {
                     Log.d("Map Params Returned",""+jsonObject.get("routes"));
+
                     PathJSONParser parser = new PathJSONParser();
                     routes = parser.parse(jsonObject);
-
-
+                    getDistance(jsonObject);
                     PolylineOptions pathLine  =     makeMarkerOptions(routes);
 //                    map.addPolyline(pathLine);
 //                    paths.addAll(pathLine.getPoints());
@@ -158,6 +163,15 @@ public class PathRequest {
         return polyLineOptions;
 
     }
+public void getDistance (JSONObject jsonObject) throws JSONException {
+    JSONArray jRoutes = jsonObject.getJSONArray("routes");
+   JSONArray jLegs = ((JSONObject) jRoutes.get(0)).getJSONArray("legs");
+JSONObject one= jLegs.getJSONObject(1);
+ functions.duration=   one.getJSONObject("duration").getString("text");
+    functions.distance= one.getJSONObject("distance").getString("text");
+
+}
+
 
 }
 

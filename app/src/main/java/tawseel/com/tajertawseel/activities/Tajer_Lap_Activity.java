@@ -26,6 +26,8 @@ public class Tajer_Lap_Activity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent i  = new Intent (Tajer_Lap_Activity.this, New_Orders_Activity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivity(i);
                 finish();
             }

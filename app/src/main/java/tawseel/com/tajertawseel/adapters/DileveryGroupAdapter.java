@@ -87,6 +87,8 @@ ViewHolder holder ;
 
 
                Intent i = new Intent(context, WaitingForAcceptanceActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 i.putExtra("GroupID",v.getTag()+"");
                 context.startActivity(i);
                 ((Activity)context).finish();

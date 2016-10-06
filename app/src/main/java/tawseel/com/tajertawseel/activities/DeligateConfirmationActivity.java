@@ -173,7 +173,7 @@ public class DeligateConfirmationActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(DeligateConfirmationActivity.this,DeligateHomeActivity.class));
+       // startActivity(new Intent(DeligateConfirmationActivity.this,DeligateHomeActivity.class));
         finish();
     }
 }

@@ -58,25 +58,22 @@ import java.util.concurrent.TimeUnit;
 
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.AddNewOrderActivity;
+import tawseel.com.tajertawseel.activities.HomeActivity;
 import tawseel.com.tajertawseel.activities.HomePickSetActivity;
 import tawseel.com.tajertawseel.activities.LocationManage;
 import tawseel.com.tajertawseel.activities.PostNewGroupActivity;
 import tawseel.com.tajertawseel.activities.functions;
 
+
 /**
  * Created by Junaid-Invision on 8/2/2016.
  */
-public class HomeFragment1 extends Fragment implements OnMapReadyCallback, LocationListener {
+public class HomeFragment1 extends Fragment implements OnMapReadyCallback{
 
 
     View mRootView;
     private GoogleMap mMap;
-    LocationManager locationManager;
-    // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
 
-    // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
     LatLng origin;
 
 
@@ -91,6 +88,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback, Locat
     }
 
     public void setupComponents() {
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -123,26 +121,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback, Locat
                 mMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(getActivity(), "Location Permission Required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                this);
-        try {
-            origin = new LatLng(LocationManage.Lat, LocationManage.Long);
-        } catch (Exception e) {
 
-            Toast.makeText(getActivity(), "No Old Location Saved", Toast.LENGTH_SHORT).show();
-        }
 
 
         mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
@@ -255,6 +234,8 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback, Locat
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HomePickSetActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivity(intent);
 
             }
@@ -308,13 +289,6 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback, Locat
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-        LocationManage.Lat = location.getLatitude();
-        LocationManage.Long = location.getLongitude();
-
-    }
 
     @Override
     public void onDestroy() {
@@ -329,21 +303,7 @@ public class HomeFragment1 extends Fragment implements OnMapReadyCallback, Locat
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.removeUpdates(this);
+        //locationManager.removeUpdates(this);
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
 }

@@ -53,7 +53,6 @@ public class CustomerRequestAdapter extends BaseAdapter {
     ArrayList<Customer_request_item_data> List;
 
     private RequestQueue requestQueue;
-
     public CustomerRequestAdapter (Context c, ArrayList<Customer_request_item_data> list)
     {
         List=list;
@@ -94,6 +93,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
 
 
             convertView.setTag(holder);
+
         }
         else
             holder=(ViewHolder) convertView.getTag();
@@ -244,5 +244,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
             }
         });
         return convertView;
+
     }
+
    }

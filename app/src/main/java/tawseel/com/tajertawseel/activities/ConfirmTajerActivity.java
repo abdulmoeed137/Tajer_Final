@@ -277,7 +277,7 @@ RunVolley("3",position);
     }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ConfirmTajerActivity.this,DeligateHomeActivity.class));
+       // startActivity(new Intent(ConfirmTajerActivity.this,DeligateHomeActivity.class));
         finish();
     }
 }

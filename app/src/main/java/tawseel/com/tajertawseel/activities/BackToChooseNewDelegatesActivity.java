@@ -48,7 +48,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
     private GoogleMap mMap;
     TextView continuee;
     private RequestQueue requestQueue;
-    CustomBoldTextView distance;
+    CustomBoldTextView distance,duration;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
         setContentView(R.layout.activity_back_to_choose_delegates);
         requestQueue= Volley.newRequestQueue(this);
         distance = (CustomBoldTextView)findViewById(R.id.Distance) ;
+        duration= (CustomBoldTextView)findViewById(R.id.duration) ;
         TextView TextDeligateCarBrand= (TextView)findViewById(R.id.CarBrand);
         TextView TextDeligateCarModel= (TextView)findViewById(R.id.CarMode);
         TextView TextDeligateCarNumber= (TextView)findViewById(R.id.CarNo);
@@ -82,7 +83,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
 
                                         if (jsonObj.getString("status").equals("success")){
 
-                                            startActivity( new Intent(BackToChooseNewDelegatesActivity.this,HomeActivity.class));
+
                                             finish();
 
                                         }
@@ -255,18 +256,27 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
         addMarker(lat,lng,"Deligate", R.drawable.car_marker);
 
 
-//// for knowing the distance between the two points
-        LatLng to = new LatLng(dLat, dLng);/// destination
-        LatLng from = new LatLng(lat, lng);//source point
-        Double distance2 = SphericalUtil.computeDistanceBetween(from, to); //map utils function to compute distance in meters
+////// for knowing the distance between the two points
+//        LatLng to = new LatLng(dLat, dLng);/// destination
+//        LatLng from = new LatLng(lat, lng);//source point
+//        Double distance2 = SphericalUtil.computeDistanceBetween(from, to); //map utils function to compute distance in meters
+//
+//        distance2=Double.parseDouble(String.format("%.2f", distance2));
+//        distance2= distance2/500;
+//        distance2=Double.parseDouble(String.format("%.2f", distance2));
 
-        distance2=Double.parseDouble(String.format("%.2f", distance2));
-        distance.setText(distance2+"");
 
 
 
         PathRequest request = new PathRequest();
         request.makeUrl(dLat,dLng,lat,lng,this,mMap);
+        try {
+            request.getDistance(PathRequest.job);
+            duration.setText(functions.duration+"");
+            distance.setText(functions.distance+"");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }

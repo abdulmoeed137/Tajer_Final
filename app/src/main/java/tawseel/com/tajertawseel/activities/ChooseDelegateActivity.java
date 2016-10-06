@@ -34,14 +34,8 @@ import tawseel.com.tajertawseel.utils.PathRequest;
 /**
  * Created by Junaid-Invision on 7/20/2016.
  */
-public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCallback,LocationListener {
+public class ChooseDelegateActivity extends BaseActivity implements OnMapReadyCallback {
 
-    LocationManager locationManager;
-    // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
-
-    // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     LatLng origin;
     private GoogleMap mMap;
     double dLat ;
@@ -55,6 +49,7 @@ static boolean keepRunning2=false;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_delegate);
+    origin= new LatLng(LocationManage.Lat,LocationManage.Long);
         TextView TextAvailableDeligates= (TextView)findViewById(R.id.TextAvailableDelegates);
         final TextView TextDeligateCarBrand= (TextView)findViewById(R.id.TextDeligateCarBrand);
         final TextView TextDeligateCarModel= (TextView)findViewById(R.id.TextDeligateCarModel);
@@ -85,27 +80,7 @@ static boolean keepRunning2=false;
         });
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(ChooseDelegateActivity.this, "Location Permission Required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                this);
-        try {
-            origin = new LatLng(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(), locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude());
 
-        } catch (Exception e) {
-
-            Toast.makeText(ChooseDelegateActivity.this, "No Old Location Saved", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
@@ -175,29 +150,5 @@ static boolean keepRunning2=false;
         PathRequest request = new PathRequest();
         request.makeUrl(dLat,dLng,lat,lng,this,mMap);
 
-    }
-
-
-    @Override
-    public void onLocationChanged(Location location) {
-        origin = new LatLng(location.getLatitude(), location.getLongitude());
-
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-//        Toast.makeText(ChooseDelegateActivity.this, "Location is Off!", Toast.LENGTH_SHORT).show();
-//        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
 }
