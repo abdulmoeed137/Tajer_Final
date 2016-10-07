@@ -54,7 +54,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
     /**
      * Created by Junaid-Invision on 7/12/2016.
      */
-    public class NotificationOrderDetails extends BaseActivity implements OnMapReadyCallback, android.location.LocationListener{
+    public class NotificationOrderDetails extends BaseActivity implements OnMapReadyCallback{
 
         ListView productList;
         private RequestQueue requestQueue;
@@ -62,18 +62,17 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
         private TextView total_orders;
         private GoogleMap mMap=null;
         LatLng origin ;
-        LocationManager locationManager;
-        // The minimum distance to change Updates in meters
-        private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
-        // The minimum time between updates in milliseconds
-        private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             setContentView(R.layout.activity_notification_order_details);
             requestQueue = Volley.newRequestQueue(this);
+
+            origin= new LatLng(LocationManage.Lat,LocationManage.Long);
+
+
             TextView ButtonSave= (TextView)findViewById(R.id.ButtonSave);
          //   Toast.makeText(NotificationOrderDetails.this,"http://192.168.0.100/ms/DeligateAcceptRequest.php?id="+getIntent().getExtras().getString("id")+"&hash=CCB612R&DeligateID="+LoginActivity.DeligateID,Toast.LENGTH_SHORT).show();
             TextView ButtonContinue= (TextView)findViewById(R.id.ButtonAccept);
@@ -152,30 +151,6 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
             ButtonSave.setVisibility(View.GONE);
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                Toast.makeText(this, "Location Permission Required", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                    this);
-            try
-            {
-                origin= new LatLng(LocationManage.Lat,LocationManage.Long);
-            }
-            catch (Exception e)
-            {
-
-                Toast.makeText(this,"No Old Location Saved",Toast.LENGTH_SHORT).show();
-            }
-
 
             total_orders = (TextView)findViewById(R.id.request_count);
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -307,12 +282,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
             LatLng positionUpdate = new LatLng(origin.latitude,origin.longitude);
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate,13);
             mMap.animateCamera(update);
-
-
             addMarker(origin.latitude,origin.longitude,"Deligate", R.drawable.car_marker);
-
-
-
         }
 
         private void addMarker(double lat, double lng, String title,int markericon) {
@@ -321,44 +291,7 @@ import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
                     .position(new LatLng(lat, lng))
                     .title(title)
                     .anchor(.5f, 1f).icon(BitmapDescriptorFactory.fromResource(markericon));
-
-
-
-
             mMap.addMarker(markerOptions);
-
-        }
-
-        @Override
-        public void onLocationChanged(Location location) {
-
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            LocationManage.Lat = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLatitude();
-            LocationManage.Long=locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER).getLongitude();
-
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
 
         }
     }
