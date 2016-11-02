@@ -34,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
@@ -99,7 +101,14 @@ try {
                                list.add(item);
                             }
                          groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
-    progress.dismiss();
+    ExecutorService mThreadPool = Executors.newSingleThreadScheduledExecutor();
+    mThreadPool.execute(new Runnable() {
+        @Override
+        public void run() {
+            progress.dismiss();
+        }
+    });
+
                         } catch (JSONException e) {
                             e.printStackTrace();
     progress.dismiss();

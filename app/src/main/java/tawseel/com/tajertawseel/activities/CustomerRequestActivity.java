@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.view.ContextThemeWrapper;
@@ -37,6 +38,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
@@ -75,6 +78,7 @@ public class CustomerRequestActivity extends BaseActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
         progress.show();
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"orders.php?id="+HomeActivity.id+"&hash="+HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -102,9 +106,17 @@ public class CustomerRequestActivity extends BaseActivity {
                                 list.add(item);
 
                             }
-
                             mListView.setAdapter(new CustomerRequestAdapter(CustomerRequestActivity.this,list));
-                            progress.dismiss();
+                            ExecutorService mThreadPool = Executors.newSingleThreadScheduledExecutor();
+                            mThreadPool.execute(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    progress.dismiss();
+
+                                }
+                            });
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             progress.dismiss();
