@@ -14,7 +14,6 @@
         android:id="@+id/BtnNewOrder"
         android:gravity="center_vertical"
 
-
         android:text="@string/new_application"
         android:textColor="@color/mainColor"
         android:layout_marginTop="10dp"
