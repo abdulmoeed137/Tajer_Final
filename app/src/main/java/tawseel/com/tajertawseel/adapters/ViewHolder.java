@@ -1,12 +1,16 @@
 package tawseel.com.tajertawseel.adapters;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.activities.ConfirmationTab;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
 
 /**
@@ -23,7 +28,7 @@ public class ViewHolder {
     //DeliverGroupAdapter
     TextView name, noOfOrders, btn, grpID, ItemPrice, PriceRange;
     //PostGroupAdapter
-    TextView PriceRange2, PayMethod, ItemsPrice, CustomerName, CustomerEmail, CustomerPhone, OrderID, PriceRangeText, TotalPrice, OrderProductQuantity;
+    TextView PriceRange2, PayMethod,BtnCode, BtnStatus, ItemsPrice, CustomerName, CustomerEmail,Price, CustomerPhone, OrderID, PriceRangeText, TotalPrice, OrderProductQuantity;
     View PriceRangeIcon;
     ImageView OrderMoveButton, OrderDeleteButton;
     //product GroupList
@@ -33,6 +38,8 @@ public class ViewHolder {
 
     //PickSetAdapter
     TextView gid, gname, gorders;
+    public ImageView BtnLoc;
+
 
     public void tickVisible(boolean visible, View view, Context c) {
         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.container);

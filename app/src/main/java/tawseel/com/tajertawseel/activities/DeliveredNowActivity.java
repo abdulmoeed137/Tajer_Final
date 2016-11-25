@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,7 +44,6 @@ import java.util.Map;
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.adapters.DeliveredNowAdapter;
-import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
 
 /**
  * Created by Junaid-Invision on 8/9/2016.
@@ -184,7 +181,7 @@ ArrayList< PostGroupData> list = new ArrayList<>();
         TextView header = (TextView)findViewById(R.id.header);
         TextView groupid = (TextView)findViewById(R.id.GroupID);
         TextView StatusBox = (TextView)findViewById(R.id.BtnStatus) ;
-        TextView DeligateNameTextField= (TextView)findViewById(R.id.DeligateName) ;
+        TextView DeligateNameTextField= (TextView)findViewById(R.id.TajerName) ;
         TextView ConfirmCode = (TextView)findViewById(R.id.StatusText);
         TextView PriceRange = (TextView)findViewById(R.id.PriceRange) ;
         TextView ItemPrice = (TextView)findViewById(R.id.ItemPrice) ;

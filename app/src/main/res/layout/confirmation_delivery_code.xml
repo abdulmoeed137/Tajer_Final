@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="10dp">
+
+
+    <tawseel.com.tajertawseel.CustomBoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:minWidth="280dp"
+
+
+        android:text="@string/enterconfirmationcode"
+        android:textColor="@color/mainColor"
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+
+
+        android:layout_marginTop="5dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccc"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        />
+
+
+
+    <tawseel.com.tajertawseel.CustomBoldTextView
+        android:text="@string/thisisfromcustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="4dp" />
+
+    <tawseel.com.tajertawseel.CustomBoldTextView
+        android:text="@string/entercode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:textSize="15sp"
+        android:textColor="@color/mainColor"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="left"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp">
+
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:text="@string/check"
+            android:id="@+id/BtnVerify"
+            android:background="@drawable/eclipse_grey"
+            android:layout_width="70dp"
+            android:gravity="center"
+            android:layout_height="30dp"
+            android:visibility="invisible" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/CurrentCode"
+            android:inputType="number"
+            android:hint="@string/entercodehere"
+            android:gravity="right" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccc"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="right"
+        >
+
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:textColor="@color/red"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:text="@string/btncancel"
+                android:textSize="12sp"
+                android:layout_height="32dp"
+                android:layout_width="77dp"
+                android:id="@+id/cancel" />
+
+            <Button
+                android:text="@string/okay"
+                android:layout_width="77dp"
+                android:layout_height="31dp"
+                android:background="@color/common_plus_signin_btn_text_dark_disabled"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:id="@+id/ok" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

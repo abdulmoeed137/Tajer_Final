@@ -1,36 +1,23 @@
 package tawseel.com.tajertawseel.fragments;
 
-import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import tawseel.com.tajertawseel.activities.DeliveryGroupActivity;
+import tawseel.com.tajertawseel.activities.PostGroupActivity;
+import tawseel.com.tajertawseel.activities.functions;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NoConnectionError;
@@ -50,39 +37,38 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import tawseel.com.tajertawseel.R;
-import tawseel.com.tajertawseel.activities.AddNewOrderActivity;
+import tawseel.com.tajertawseel.activities.DeliveredNowActivity;
 import tawseel.com.tajertawseel.activities.HomeActivity;
-import tawseel.com.tajertawseel.activities.HomePickSetActivity;
-import tawseel.com.tajertawseel.activities.PostGroupActivity;
-import tawseel.com.tajertawseel.activities.PostNewGroupActivity;
-import tawseel.com.tajertawseel.activities.functions;
+import tawseel.com.tajertawseel.adapters.DeliveredListAdapter;
 import tawseel.com.tajertawseel.adapters.DeliveryGroupAdapter2Home;
-
 
 /**
  * Created by Junaid-Invision on 8/2/2016.
  */
-public class HomeFragment1 extends Fragment {
-
-
+public class HomeFragment3 extends Fragment {
 
     private ListView listView;
     private View mRootView;private RequestQueue requestQueue;
     ArrayList<HomeFragment3Data> list = new ArrayList<>();;
     LinearLayout ll;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_home1, null, false);
-        setupComponents();
-
+        mRootView = inflater.inflate(R.layout.fragment_home2,null,false);
+        ll=(LinearLayout) mRootView.findViewById(R.id.llayout);
+        //setupContentView();
         return mRootView;
-
     }
 
-    public void setupComponents() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupContentView();
+    }
 
-        list.clear();
+    public void setupContentView()
+    {      list.clear();
         requestQueue = Volley.newRequestQueue(getActivity());
         listView = (ListView)mRootView.findViewById(R.id.listView);
 
@@ -172,84 +158,7 @@ public class HomeFragment1 extends Fragment {
                 startActivity(i);
             }
         });
-
-
-
-
-        mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogue();
-                // showNotificationDialogue();
-            }
-        });
-
-        TextView b = (TextView) mRootView.findViewById(R.id.ButtonConfirmationTajer);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogue();
-            }
-        });
-
     }
 
-
-//
-//    else if(v.getId() == R.id.new_button)
-//    {
-//        showDialogue();
-//    }
-
-
-    public void showDialogue() {
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.new_button_dialogue);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(getActivity().getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.BOTTOM;
-        lp.dimAmount = 0.3f;
-        dialog.show();
-
-
-        dialog.findViewById(R.id.option3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HomePickSetActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                startActivity(intent);
-
-            }
-        });
-        dialog.findViewById(R.id.BtnNewOrder).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddNewOrderActivity.class));
-            }
-        });
-        dialog.findViewById(R.id.BtnNewGroup).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PostNewGroupActivity.class));
-            }
-        });
-    }
-
-
-
-
-
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-    }
 
 }

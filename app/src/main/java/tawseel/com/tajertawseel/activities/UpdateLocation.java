@@ -85,7 +85,7 @@ String id;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Toast.makeText(UpdateLocation.this, "Start Serice", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(UpdateLocation.this, "Start Serice", Toast.LENGTH_SHORT).show();
         // Thread t = new Thread(new ThreadThis(startId));
         //       t.start();
         mGoogleApiClient.connect();

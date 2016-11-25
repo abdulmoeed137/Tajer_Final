@@ -3,7 +3,6 @@ package tawseel.com.tajertawseel.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -31,7 +30,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,7 +59,7 @@ public class BackToChooseNewDelegatesActivity extends BaseActivity  implements O
         TextView TextDeligateCarModel= (TextView)findViewById(R.id.CarMode);
         TextView TextDeligateCarNumber= (TextView)findViewById(R.id.CarNo);
         TextView TextDeligateContact= (TextView)findViewById(R.id.DeligateContact);
-        TextView TextDeligateName= (TextView)findViewById(R.id.DeligateName);
+        TextView TextDeligateName= (TextView)findViewById(R.id.TajerName);
         TextDeligateCarBrand.setText(getIntent().getExtras().getString("CarBrand"));
         TextDeligateCarModel.setText(getIntent().getExtras().getString("CarModel"));
         TextDeligateCarNumber.setText(getIntent().getExtras().getString("CarNo"));

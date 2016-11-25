@@ -1,24 +1,39 @@
 package tawseel.com.tajertawseel.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -31,6 +46,10 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.adapters.DelegatesHomeAdapter;
@@ -52,6 +71,8 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.button_screen);
         System.gc();
+        Intent i = new Intent(this, UpdateLocation.class);
+        startService(i);
         DeligateID=LoginActivity.DeligateID;
         setUpContents();
         setupListeners();
@@ -87,7 +108,7 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
         });
         TextView DeligateID2= (TextView)mDrawerLayout.findViewById(R.id.DeligateID);
                 DeligateID2.setText(LoginActivity.DeligateID);
-        TextView DeligateName= (TextView)mDrawerLayout.findViewById(R.id.DeligateName);
+        TextView DeligateName= (TextView)mDrawerLayout.findViewById(R.id.TajerName);
         DeligateName.setText(LoginActivity.email);
 
         try {
@@ -161,10 +182,10 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             Intent intent = new Intent(DeligateHomeActivity.this, DeligateDateOfConnectionActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.confirmation){
-
+RunVolley();
             //Intent i  = new Intent(DeligateHomeActivity.this,ComfirmationActivity.class);
-            Intent i  = new Intent(DeligateHomeActivity.this,DeligateConfirmationActivity.class);
-            startActivity(i);
+//            Intent i  = new Intent(DeligateHomeActivity.this,ConfirmationTab.class);
+//            startActivity(i);
            // finish();
         }
         else if (v.getId() == R.id.option4){
@@ -256,4 +277,111 @@ public class DeligateHomeActivity extends BaseActivity implements View.OnClickLi
             }
 
         }}
+
+
+    void RunVolley(){
+
+
+        RequestQueue requestQueue;
+        requestQueue = Volley.newRequestQueue(DeligateHomeActivity.this);
+        StringRequest request;
+        final ProgressDialog progress = new ProgressDialog(DeligateHomeActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading");
+        progress.show();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"InfoGroupConfirmation.php?id="+DeligateID,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONArray jsonArr=response.getJSONArray("info");
+                           final JSONObject jsonObj = jsonArr.getJSONObject(0);
+                            if (jsonObj.getString("name").equals("test786w")){
+                                Toast.makeText(DeligateHomeActivity.this,"You have no pending Delivery",Toast.LENGTH_SHORT).show();
+
+                            }
+                            else {
+
+                                Intent i  = new Intent(DeligateHomeActivity.this,ConfirmationTab.class);
+                                i.putExtra("ConfirmationCode",jsonObj.getString("ConfirmationCode"));
+                                i.putExtra("GroupID",jsonObj.getString("GroupID"));
+                                i.putExtra("TajerID",jsonObj.getString("TajerID"));
+                                i.putExtra("ItemsPrice",jsonObj.getString("ItemsPrice"));
+                                i.putExtra("PriceRange",jsonObj.getString("PriceRange"));
+                                i.putExtra("TajerContact",jsonObj.getString("TajerContact"));
+                                i.putExtra("StatusCode",jsonObj.getString("StatusCode"));
+                                i.putExtra("TajerName",jsonObj.getString("TajerName"));
+                                i.putExtra("TajerLat",jsonObj.getString("TajerLat"));
+                                i.putExtra("TajerLng",jsonObj.getString("TajerLng"));
+                                startActivity(i);
+                            }
+
+
+
+
+//                                final JSONObject jsonObj = jsonArr.getJSONObject(0);
+//
+//                                Customer_request_item_data item = new Customer_request_item_data();
+//                                item.setPriceRange(jsonObj.getString("PriceRange"));
+//                                item.setCustomerEmail(jsonObj.getString("Email"));
+//                                item.setCustomerName(jsonObj.getString("UserName"));
+//                                item.setCustomerPhone(jsonObj.getString("Mobile"));
+//
+//                                item.setItemsPrice(jsonObj.getString("ItemsPrice"));
+//                                item.setPayMethod(jsonObj.getString("PayMethod"));
+//                                item.setOrderProductQuantity(jsonObj.getString("OrderMember"));
+//                                item.setOrderID(jsonObj.getString("OrderID");
+//                                item.setLatitude(jsonObj.getString("Latitude"));
+//                                item.setLongitude(jsonObj.getString("Longitude"));
+//                                item.setID(jsonObj.getString("ID"));
+
+progress.dismiss();
+
+
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                            progress.dismiss();
+                            if ((e.getClass().equals(TimeoutError.class)) || e.getClass().equals(NoConnectionError.class)){
+                                Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                        .setAction("Undo", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+                        }
+                    })
+                            .setActionTextColor(Color.RED)
+
+                    .show();}
+                        };
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                        progress.dismiss();
+                        if ((error.getClass().equals(TimeoutError.class)) || error.getClass().equals(NoConnectionError.class)){
+                            Snackbar.make(findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Undo", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();}
+                    }
+                });
+
+        //dummy Adapter
+        // groupListView.setAdapter(new DileveryGroupAdapter(DeliveryGroupActivity.this,list));
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
+        requestQueue.add(jsonObjectRequest);
+    }
+
 }

@@ -69,6 +69,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceptance_waiting);
+        manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         origin= new LatLng(LocationManage.Lat,LocationManage.Long);
         findViewById(R.id.ButtonCancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,7 +221,7 @@ public class WaitingForAcceptanceActivity extends AppCompatActivity implements O
     }
     public void start() {
    //     Toast.makeText(WaitingForAcceptanceActivity.this,"yes1",Toast.LENGTH_SHORT).show();
-        manager= (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
         int interval = 20000;
 
 

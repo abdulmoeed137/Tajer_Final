@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/tools"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:layout_below="@+id/toolbar"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="tawseel.com.tajertawseel.activities.HomeActivity" />
-
+        android:id="@+id/listView" />
 
 
     <tawseel.com.tajertawseel.CustomBoldTextView
@@ -35,46 +29,6 @@
         android:id="@+id/ButtonConfirmationTajer"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/plus_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        fab:fabSize="mini"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-
-        android:src="@drawable/black_add"
-
-
-        app:backgroundTint="#d3efda"
-        android:layout_above="@+id/minus_button"
-        android:layout_alignRight="@+id/minus_button"
-        android:layout_alignEnd="@+id/minus_button" />
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/minus_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        fab:fabSize="mini"
-        android:layout_marginRight="25dp"
-        android:src="@drawable/munis"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-
-        android:layout_above="@+id/myLocation"
-        android:layout_alignParentRight="true"
-        app:backgroundTint="#d3efda"
-        />
-
-
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/myLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,7 +41,8 @@
 
         android:layout_alignParentRight="true"
         android:tint="@android:color/background_dark"
-        android:src="@android:drawable/ic_menu_mylocation"
-        app:backgroundTint="#d3efda"/>
+        app:backgroundTint="@color/mainColor"
+        app2:backgroundTint="@color/mainColor"
+        android:src="@drawable/black_add" />
 
 </RelativeLayout>

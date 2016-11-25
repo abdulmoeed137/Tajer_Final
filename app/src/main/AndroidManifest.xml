@@ -21,7 +21,11 @@
         android:theme="@style/AppTheme"
         android:largeHeap="true">
         <activity android:name=".activities.SplashScreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             </activity>
 
         <activity android:name=".activities.HomeActivity" />
@@ -32,12 +36,7 @@
         <activity android:name=".activities.Tajer_Lap_Activity" />
         <activity android:name=".activities.Old_Orders_Activity" />
         <activity android:name=".activities.New_Orders_Activity" />
-        <activity android:name=".activities.DeliveredNowActivity2">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        <activity android:name=".activities.ConfirmationTab">
 
          </activity>
 
@@ -117,7 +116,9 @@
         <activity android:name=".activities.ConfirmTajerActivity"></activity>
         <activity android:name=".activities.TradersFavouriteActivity"></activity>
         <activity android:name=".activities.DealerProfileActivity"/>
-        <activity android:name=".activities.feedback_to_delegate" />
+        <activity android:name=".activities.feedback_to_delegate">
+
+ </activity>
     </application>
 
 </manifest>

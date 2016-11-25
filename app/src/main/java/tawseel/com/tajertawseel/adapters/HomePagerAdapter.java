@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import tawseel.com.tajertawseel.fragments.HomeFragment1;
 import tawseel.com.tajertawseel.fragments.HomeFragment2;
+import tawseel.com.tajertawseel.fragments.HomeFragment3;
 
 /**
  * Created by Junaid-Invision on 8/2/2016.
@@ -20,7 +21,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 
         if(position ==1)
         {
-            return new HomeFragment2();
+            return new HomeFragment3();
         }
         return new HomeFragment1();
     }

@@ -8,17 +8,35 @@
     android:id="@+id/rlayout">
 
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:layout_below="@+id/toolbar"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="tawseel.com.tajertawseel.activities.HomeActivity" />
+        android:background="@color/common_action_bar_splitter"
+        android:weightSum="1"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/ButtonConfirmationTajer"
+        android:layout_alignEnd="@+id/ButtonConfirmationTajer">
 
+        <ImageView
+            fab:srcCompat="@drawable/mainlogo"
+            android:id="@+id/imageView"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="20dp" />
 
+        <tawseel.com.tajertawseel.CustomBoldTextView
+            android:text="The is no Group to Deliver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/cardview_dark_background" />
+
+    </LinearLayout>
 
     <tawseel.com.tajertawseel.CustomBoldTextView
         android:layout_width="match_parent"
@@ -30,65 +48,11 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:text="@string/available"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/ButtonConfirmationTajer"/>
+        android:layout_marginBottom="15dp"
+        android:id="@+id/ButtonConfirmationTajer"
+        android:gravity="center"
+        android:layout_weight="1" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/plus_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        fab:fabSize="mini"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-
-        android:src="@drawable/black_add"
-
-
-        app:backgroundTint="#d3efda"
-        android:layout_above="@+id/minus_button"
-        android:layout_alignRight="@+id/minus_button"
-        android:layout_alignEnd="@+id/minus_button" />
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/minus_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        fab:fabSize="mini"
-        android:layout_marginRight="25dp"
-        android:src="@drawable/munis"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-
-        android:layout_above="@+id/myLocation"
-        android:layout_alignParentRight="true"
-        app:backgroundTint="#d3efda"
-        />
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/myLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginLeft="16dp"
-
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="5dp"
-        android:layout_above="@+id/ButtonConfirmationTajer"
-
-        android:layout_alignParentRight="true"
-        android:tint="@android:color/background_dark"
-        android:src="@android:drawable/ic_menu_mylocation"
-        app:backgroundTint="#d3efda"/>
 
 </RelativeLayout>

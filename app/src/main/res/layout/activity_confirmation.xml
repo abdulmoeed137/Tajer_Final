@@ -10,18 +10,6 @@
         android:id="@+id/toolbar"/>
 
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:layout_below="@+id/toolbar"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="tawseel.com.tajertawseel.activities.HomeActivity" />
-
-
-
     <tawseel.com.tajertawseel.CustomBoldTextView
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -35,7 +23,8 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:id="@+id/ButtonConfirmationTajer"/>
+        android:id="@+id/ButtonConfirmationTajer"
+        android:visibility="invisible" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/plus_button"
@@ -92,5 +81,15 @@
         android:tint="@android:color/background_dark"
         android:src="@android:drawable/ic_menu_mylocation"
         app:backgroundTint="#d3efda"/>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:context="tawseel.com.tajertawseel.activities.HomeActivity"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -60,10 +60,10 @@ import tawseel.com.tajertawseel.activities.functions;
 /**
  * Created by Junaid-Invision on 8/16/2016.
  */
-public class delegateHomeFragment1 extends Fragment implements OnMapReadyCallback {
+public class delegateHomeFragment1 extends Fragment {
 
     View mRootView;
-    private GoogleMap mMap;
+
     // The minimum distance to change Updates in meters
 
     LatLng origin;
@@ -73,9 +73,8 @@ public class delegateHomeFragment1 extends Fragment implements OnMapReadyCallbac
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_delegates_home1, null, false);
-        origin= new LatLng(LocationManage.Lat,LocationManage.Long);
+
         setupComponents();
-        setupMap();
         rl=(RelativeLayout)mRootView.findViewById(R.id.rlayout);
         return mRootView;
 
@@ -85,38 +84,6 @@ public class delegateHomeFragment1 extends Fragment implements OnMapReadyCallbac
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        FloatingActionButton b = (FloatingActionButton) mRootView.findViewById(R.id.myLocation);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    origin = new LatLng(LocationManage.Lat,LocationManage.Long);
-                } catch (Exception e) {
-
-                    Toast.makeText(getActivity(), "No Old Location Saved", Toast.LENGTH_SHORT).show();
-                }
-                mMap.clear();
-                LatLng positionUpdate = origin;
-                CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate, 12);
-                mMap.animateCamera(update);
-                addMarker(origin.latitude,origin.longitude, "Deligate", R.drawable.destination_marker);
-
-            }
-        });
-        FloatingActionButton minus= (FloatingActionButton) mRootView.findViewById(R.id.minus_button);
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMap.animateCamera(CameraUpdateFactory.zoomOut());
-            }
-        });
-        FloatingActionButton plus = (FloatingActionButton)mRootView.findViewById(R.id.plus_button);
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMap.animateCamera(CameraUpdateFactory.zoomIn());
-            }
-        });
 
         mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +114,7 @@ public class delegateHomeFragment1 extends Fragment implements OnMapReadyCallbac
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.BOTTOM;
         lp.dimAmount = 0.3f;
+        CheckStatus(dialog);
         dialog.findViewById(R.id.Online).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,6 +175,10 @@ RunVolley("0");
                             progress.dismiss();
 
 
+                        }else if (jsonObject.names().get(0).equals("used"))
+                        {
+                            Toast.makeText(getActivity(),jsonObject.getString("used"),Toast.LENGTH_LONG).show();
+                            progress.dismiss();
                         } else {
                             Snackbar.make(getActivity().findViewById(android.R.id.content), jsonObject.getString("failed"), Snackbar.LENGTH_LONG)
                                     .setAction("Undo", new View.OnClickListener() {
@@ -280,38 +252,111 @@ RunVolley("0");
         };
         requestQueue.add(request);
     }
-    private void setupMap() {
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
 
+
+    void CheckStatus(final Dialog d){
+
+
+        RequestQueue requestQueue;
+        requestQueue = Volley.newRequestQueue(getActivity());
+        StringRequest request;
+        final  ProgressDialog progress = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading");
+        progress.show();
+        request = new StringRequest(Request.Method.POST, functions.add+"CheckOnOffStatus.php", new Response.Listener<String>() {
+            //if response
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    try {
+                        if (jsonObject.names().get(0).equals("success")) {
+
+                            //if success
+                            if (jsonObject.getString("success").equals("0"))
+                            {
+d.findViewById(R.id.Online).setEnabled(false);
+                                d.findViewById(R.id.Offline).setEnabled(false);
+                            }
+
+progress.dismiss();
+
+                        }else {
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                    .setAction("Undo", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    })
+                                    .setActionTextColor(Color.RED)
+
+                                    .show();
+                            progress.dismiss();
+                        }
+                    } catch (JSONException e) {
+
+                        Snackbar.make(rl, "Internet Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Undo", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                    }
+                                })
+                                .setActionTextColor(Color.RED)
+
+                                .show();
+                        progress.dismiss();
+
+                    }
+
+                } catch (JSONException e) {
+                    Snackbar.make(rl, "Internet Connection Error", Snackbar.LENGTH_LONG)
+                            .setAction("Undo", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            })
+                            .setActionTextColor(Color.RED)
+
+                            .show();
+                    progress.dismiss();
+
+                }
+            }// in case error
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Srvc",error.toString());
+                Snackbar.make(rl, "Internet Connection Error", Snackbar.LENGTH_LONG)
+                        .setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .setActionTextColor(Color.RED)
+
+                        .show();
+                progress.dismiss();
+            }
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("id", LoginActivity.DeligateID);
+                hashMap.put("hash", "CCB612R");
+
+
+                return hashMap;
+            }
+        };
+        requestQueue.add(request);
     }
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng positionUpdate = origin;
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate, 12);
-        mMap.animateCamera(update);
-        addMarker(origin.latitude,origin.longitude, "Deligate", R.drawable.destination_marker);
-
-    }
-    private void addMarker(double lat, double lng, String title, int markericon) {
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions
-                .position(new LatLng(lat, lng))
-                .title(title)
-                .anchor(.5f, 1f).icon(BitmapDescriptorFactory.fromResource(markericon));
 
 
-        mMap.addMarker(markerOptions);
-
-
-//        LatLng latLng = new LatLng(lat,lng);
-//        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, Application.DEFAULT_ZOOM);
-//        mMap.animateCamera(update);
-
-    }
 
     }

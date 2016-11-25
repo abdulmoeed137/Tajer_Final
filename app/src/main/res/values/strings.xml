@@ -185,5 +185,15 @@
     <string name="raqm">رقم التواصل</string>
     <string name="person_ratings">عدد التقييﻤﺎت</string>
     <string name="bruall_dilevery">بروافيل طلب التوصيل</string>
-
+<string name="enterconfirmationcode">إدخال كود تسليم الطلب</string>
+    <string name="thisisfromcustomer">حصل على كود تسليم الطلب من العميل
+لإقفال الطلب</string>
+    <string name="entercode">أدخل الكود</string>
+    <string name="entercodehere">ادخل الرمز</string>
+    <string name="btncancel">إلغاء</string>
+    <string name="okay">إدخال</string>
+    <string name="delivered2">تم توصيل الطلب</string>
+    <string name="tryagain">أعد التحقق</string>
+    <string name="check">تحقق</string>
+    <string name="correct">تم التحقق</string>
 </resources>

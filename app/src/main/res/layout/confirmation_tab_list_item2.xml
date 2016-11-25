@@ -118,7 +118,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/BtnStatus"
                         android:layout_marginLeft="1dp"
-                        android:id="@+id/BtnDeligateCall2"
+                        android:id="@+id/BtnDeligateLoc2"
                         android:layout_weight="1"
                         android:layout_width="40dp"
                         android:layout_height="30dp" />
@@ -161,8 +161,6 @@
                 android:padding="15dp">
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/recieved_delegate"
                     android:textColor="@color/purplee"
                     android:background="@drawable/eclipse_purple"
@@ -173,12 +171,14 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:id="@+id/BtnStatus"
-                    />
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:textSize="9sp"
+                    android:layout_width="90dp" />
 
                 <tawseel.com.tajertawseel.CustomBoldTextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="123421"
+                    android:text="@string/entercode"
                     android:textColor="@android:color/black"
                     android:background="@drawable/eclipse_grey"
                     android:layout_centerVertical="true"
@@ -187,8 +187,10 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:id="@+id/BtnStatus2"
-                    />
+                    android:id="@+id/BtnCode"
+                    android:layout_width="60dp"
+                    android:gravity="center"
+                    android:textSize="9sp" />
 
                 <LinearLayout
                     android:layout_height="30dp"
@@ -215,13 +217,14 @@
                         android:textSize="13sp"
                         android:layout_marginTop="-5dp"
                         android:layout_width="match_parent"
-                        android:padding="2dp" />
+                        android:padding="2dp"
+                        android:id="@+id/customBoldTextView" />
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:text="SR  22"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView3"
+                        android:id="@+id/Price"
                         android:textColor="@color/mainColor"
                         android:textSize="12sp" />
 
