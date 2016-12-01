@@ -1,22 +1,13 @@
 package tawseel.com.tajertawseel.fragments;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,14 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,8 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import tawseel.com.tajertawseel.R;
-import tawseel.com.tajertawseel.activities.ConfirmTajerActivity;
-import tawseel.com.tajertawseel.activities.LocationManage;
 import tawseel.com.tajertawseel.activities.LoginActivity;
 import tawseel.com.tajertawseel.activities.UpdateLocation;
 import tawseel.com.tajertawseel.activities.functions;
@@ -85,7 +67,7 @@ public class delegateHomeFragment1 extends Fragment {
         StrictMode.setThreadPolicy(policy);
 
 
-        mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.BtnNext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogue();

@@ -3,7 +3,6 @@ package tawseel.com.tajertawseel.fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -71,7 +70,7 @@ public class pickSetHome1fragment extends Fragment {
     public void setupComponents()
     {
         requestQueue = Volley.newRequestQueue(getActivity());
-        submit=(TextView)mRootView.findViewById(R.id.ButtonConfirmationTajer);
+        submit=(TextView)mRootView.findViewById(R.id.BtnNext);
         listView = (ListView) mRootView.findViewById(R.id.listView);
         final  ProgressDialog progress = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_DARK);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);

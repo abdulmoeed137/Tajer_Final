@@ -56,7 +56,7 @@
         tools:context="tawseel.com.tajertawseel.activities.WaitingForAcceptanceActivity" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/myLocation"
+        android:id="@+id/MyGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

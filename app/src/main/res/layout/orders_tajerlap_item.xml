@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false">
 
 <android.support.v7.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="false">
 
 
         <tawseel.com.tajertawseel.customviews.ExpandablePanel
@@ -18,38 +25,13 @@
             app:animationDuration="500"
             app:content="@+id/expandt"
             app:handle="@+id/moreButton2"
+            android:clickable="false"
             android:id="@+id/expandableLayout">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:id="@+id/visibleContent"
+                android:id="@+id/container"
                 >
-
-
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
-                    android:background="@color/mainColor"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/BtnMove"
-                    android:src="@drawable/back_arrow"
-                    android:padding="6dp"/>
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
-                    android:background="@color/mainColor"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/delete_icon"
-                    android:padding="6dp"
-                    android:layout_toRightOf="@+id/BtnMove"
-                    android:id="@+id/BtnDelete"/>
-
-
-
 
 
                 <LinearLayout
@@ -72,7 +54,7 @@
                         android:text="2"
                         android:textSize="16dp"
                         android:textColor="@color/mainColor"
-                        android:id="@+id/OrderProductQuantity" />
+                        android:id="@+id/co_nitems" />
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:layout_width="wrap_content"
@@ -81,6 +63,15 @@
                         android:text="@string/products"
                         android:textSize="16dp"
                         android:textColor="@color/mainColor"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:src="@drawable/dialog_tick_icon"
+                        android:layout_alignTop="@id/products_container"
+                        android:id="@+id/tick_view"
+                        android:visibility="gone"
+                        android:layout_marginLeft="15dp" />
 
 
                 </LinearLayout>
@@ -102,7 +93,7 @@
                         android:layout_gravity="right"
                         android:textDirection="rtl"
                         android:text="Majed Ali"
-                        android:id="@+id/CustomerName" />
+                        android:id="@+id/co_name" />
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
                         android:layout_width="wrap_content"
@@ -111,7 +102,7 @@
                         android:textSize="12dp"
                         android:layout_gravity="right"
                         android:text="050 000 0000"
-                        android:id="@+id/Phone" />
+                        android:id="@+id/co_number" />
 
 
                     <tawseel.com.tajertawseel.CustomBoldTextView
@@ -120,13 +111,37 @@
                         android:textColor="@android:color/black"
                         android:textSize="12dp"
                         android:text="Customer@tajerlab.com"
-                        android:id="@+id/Email" />
+                        android:id="@+id/co_email" />
 
 
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/moreButton2"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
 
+                    <ImageView
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:layout_centerVertical="true"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:id="@+id/moreButton"
+                        android:paddingLeft="10dp"
+                        android:background="@drawable/down_arrow"
+                        android:layout_height="18dp"
+                        android:clickable="false"
+                        android:layout_weight="1"
+                        android:layout_width="30dp" />
+                </LinearLayout>
 
 
             </RelativeLayout>
@@ -143,31 +158,14 @@
                 />
 
 
-
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#cccccc"/>
 
 
-
-
-
-            <tawseel.com.tajertawseel.CustomBoldTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/more"
-                android:id="@+id/moreButton2"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/mainColor"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-
-
-
         </tawseel.com.tajertawseel.customviews.ExpandablePanel>
     </LinearLayout>
 </android.support.v7.widget.CardView>
 
+</RelativeLayout>

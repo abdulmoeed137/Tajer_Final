@@ -19,7 +19,7 @@
             app:collapsedHeight="3dp"
             app:animationDuration="500"
             app:content="@+id/expandt"
-            app:handle="@+id/moreButton"
+            app:handle="@+id/moreButton2"
             android:id="@+id/expandableLayout">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/more"
-                android:id="@+id/moreButton"
+                android:id="@+id/moreButton2"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/mainColor"
                 android:layout_marginTop="5dp"

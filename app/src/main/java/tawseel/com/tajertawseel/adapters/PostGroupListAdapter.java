@@ -7,23 +7,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.view.ContextThemeWrapper;
-import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,13 +38,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import tawseel.com.tajertawseel.R;
-import tawseel.com.tajertawseel.activities.DeliveryGroupData;
 import tawseel.com.tajertawseel.activities.HASH;
-import tawseel.com.tajertawseel.activities.LoginActivity;
 import tawseel.com.tajertawseel.activities.PickSetActivity;
 import tawseel.com.tajertawseel.activities.PostGroupData;
 import tawseel.com.tajertawseel.activities.PostGroupListData;
@@ -124,7 +115,7 @@ public class PostGroupListAdapter extends BaseAdapter {
         holder.OrderDeleteButton.setTag(data.getID());
        holder.OrderMoveButton.setTag(data.getID());
 
-         final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton);
+         final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton2);
         ExpandablePanel panel = (ExpandablePanel) convertView.findViewById(R.id.expandableLayout);
 
 

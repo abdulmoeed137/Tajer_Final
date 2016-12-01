@@ -23,7 +23,7 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:id="@+id/ButtonConfirmationTajer"
+        android:id="@+id/BtnNext"
         android:visibility="invisible" />
 
     <android.support.design.widget.FloatingActionButton
@@ -59,7 +59,7 @@
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
 
-        android:layout_above="@+id/myLocation"
+        android:layout_above="@+id/MyGroup"
         android:layout_alignParentRight="true"
         app:backgroundTint="#d3efda"
         />
@@ -67,7 +67,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/myLocation"
+        android:id="@+id/MyGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -75,7 +75,7 @@
 
         android:layout_marginRight="16dp"
         android:layout_marginBottom="5dp"
-        android:layout_above="@+id/ButtonConfirmationTajer"
+        android:layout_above="@+id/BtnNext"
 
         android:layout_alignParentRight="true"
         android:tint="@android:color/background_dark"

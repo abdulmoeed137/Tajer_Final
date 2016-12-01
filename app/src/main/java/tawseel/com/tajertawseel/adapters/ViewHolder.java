@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import tawseel.com.tajertawseel.R;
 import tawseel.com.tajertawseel.activities.ConfirmationTab;
 import tawseel.com.tajertawseel.customviews.ExpandablePanel;
@@ -39,12 +41,15 @@ public class ViewHolder {
     //PickSetAdapter
     TextView gid, gname, gorders;
     public ImageView BtnLoc;
-
+    public ImageView moreView2;
+    RelativeLayout rl;
+    public static ArrayList<Integer> list;
 
     public void tickVisible(boolean visible, View view, Context c) {
         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.container);
         ImageView tickView = (ImageView) layout.findViewById(R.id.tick_view);
         if (visible) {
+            view.setSelected(true);
             tickView.setVisibility(View.VISIBLE);
             layout.setBackgroundColor(c.getResources().getColor(R.color.grey));
         } else {
@@ -52,8 +57,6 @@ public class ViewHolder {
             layout.setBackgroundColor(c.getResources().getColor(android.R.color.transparent));
         }
     }
-
-    //
     TextView Name, Member, GroupID, StatusCode, ConfrmatonCode, DeliveryCode;
 ImageView BtnCall;
    public void CallDeligate(final Context c, View vb) {

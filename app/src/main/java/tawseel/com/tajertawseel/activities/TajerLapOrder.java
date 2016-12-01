@@ -1,29 +1,29 @@
 package tawseel.com.tajertawseel.activities;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.provider.Settings;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -33,132 +33,73 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import tawseel.com.tajertawseel.CustomBoldTextView;
 import tawseel.com.tajertawseel.R;
+import tawseel.com.tajertawseel.adapters.CustomerRequestAdapter;
 import tawseel.com.tajertawseel.adapters.PostGroupListAdapter;
+import tawseel.com.tajertawseel.adapters.TajerLapOrderAdapter;
+import tawseel.com.tajertawseel.adapters.ViewHolder;
+import tawseel.com.tajertawseel.adapters.pick_dummy_adapter;
+import android.widget.AdapterView.OnItemClickListener;
 
-/**
- * Created by Junaid-Invision on 7/12/2016.
- */
-public class PostGroupActivity extends BaseActivity implements OnMapReadyCallback{
+public class TajerLapOrder extends BaseActivity {
 
-    ListView productList;
+    ListView mListView;
     private RequestQueue requestQueue;
-    ArrayList<PostGroupData> list = new ArrayList<>();;
-    private TextView total_orders;
-    private GoogleMap mMap=null;
-    LatLng origin ;
+    String GroupID=null;
+    boolean flag=false;
+    private StringRequest request;
+    ArrayList<Customer_request_item_data> list=new ArrayList<Customer_request_item_data>();
+    RequestQueue requestQueue2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_post_group);
-        TextView ButtonSave= (TextView)findViewById(R.id.ButtonSave);
-        ButtonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-finish();
-            }
-        });
-
-        TextView ButtonContinue= (TextView)findViewById(R.id.ButtonAccept);
-        ButtonContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              Intent i = new Intent(PostGroupActivity.this,WaitingForAcceptanceActivity.class);
-                i.putExtra("GroupID",getIntent().getExtras().getString("id"));
-                startActivity(i);
-                finish();
-            }
-        });
-        TextView ButtonCancel= (TextView)findViewById(R.id.ButtonCancel);
-        ButtonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        // origin= new LatLng(21.470285, 39.238547);
-       LinearLayout ll = (LinearLayout)findViewById(R.id.LayoutAdd) ;
-        ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(PostGroupActivity.this,AddNewOrderActivity.class));
-                finish();
-            }
-        });
-        if (getIntent().getExtras().getString("flag").equals("false"))
-        {
-
-            ll.setVisibility(View.GONE);
-            ButtonCancel.setVisibility(View.GONE);
-            ButtonCancel.setVisibility(View.GONE);
-            ButtonSave.setVisibility(View.GONE);
-            ButtonContinue.setVisibility(View.GONE);
-        }
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        try
-        {
-           origin= new LatLng(LocationManage.Lat,LocationManage.Long);
-        }
-        catch (Exception e)
-        {
-
-            Toast.makeText(PostGroupActivity.this,"No Old Location Saved",Toast.LENGTH_SHORT).show();
-        }
-
-        requestQueue = Volley.newRequestQueue(this);
-        total_orders = (TextView)findViewById(R.id.request_count);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        setContentView(R.layout.activity_tajer_lap_order);
         setUpToolbar();
         setUpComponents();
+        requestQueue= Volley.newRequestQueue(this);
 
-    }
-    public void setUpComponents ()
-    {
-        productList = (ListView)findViewById(R.id.product_list);
-        Toast.makeText(PostGroupActivity.this,getIntent().getExtras().getString("id"),Toast.LENGTH_SHORT).show();
-        final  ProgressDialog progress = new ProgressDialog(PostGroupActivity.this, ProgressDialog.THEME_HOLO_DARK);
+        requestQueue2= Volley.newRequestQueue(this);
+
+
+//        final ProgressDialog progress = ProgressDialog.show(new ContextThemeWrapper(CustomerRequestActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar ), "Loading",
+//                "Please Wait..");
+        final  ProgressDialog progress = new ProgressDialog(TajerLapOrder.this, ProgressDialog.THEME_HOLO_DARK);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
         progress.show();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"GroupItem.php?id="+getIntent().getExtras().getString("id"),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"order_tajerlap.php?id="+HomeActivity.id+"&hash="+HASH.getHash(),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
 
                             JSONArray jsonArr=response.getJSONArray("info");
-                            total_orders.setText(jsonArr.length()+"");
+
                             for(int i=0;i<jsonArr.length();i++) {
                                 final JSONObject jsonObj = jsonArr.getJSONObject(i);
-                                PostGroupData item= new PostGroupData();
+
+                                Customer_request_item_data item = new Customer_request_item_data();
                                 item.setPriceRange(jsonObj.getString("PriceRange"));
                                 item.setCustomerEmail(jsonObj.getString("Email"));
                                 item.setCustomerName(jsonObj.getString("UserName"));
                                 item.setCustomerPhone(jsonObj.getString("Mobile"));
+
                                 item.setItemsPrice(jsonObj.getString("ItemsPrice"));
                                 item.setPayMethod(jsonObj.getString("PayMethod"));
                                 item.setOrderProductQuantity(jsonObj.getString("OrderMember"));
@@ -166,15 +107,19 @@ finish();
                                 item.setLatitude(jsonObj.getString("Latitude"));
                                 item.setLongitude(jsonObj.getString("Longitude"));
                                 item.setID(jsonObj.getString("ID"));
-
                                 list.add(item);
+
                             }
-                            progress.dismiss();
-                            for (int i=0;i<list.size();i++)
-                            {
-                                addMarker(Double.parseDouble(list.get(i).getLatitude()),Double.parseDouble(list.get(i).getLongitude()),"Customer", R.drawable.person_marker);
-                            }
-                            productList.setAdapter(new PostGroupListAdapter(PostGroupActivity.this,list,getIntent().getExtras().getString("flag")));
+                            mListView.setAdapter(new TajerLapOrderAdapter(TajerLapOrder.this,list));
+                            ExecutorService mThreadPool = Executors.newSingleThreadScheduledExecutor();
+                            mThreadPool.execute(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    progress.dismiss();
+
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -190,7 +135,6 @@ finish();
                                         .setActionTextColor(Color.RED)
 
                                         .show();}
-
                         };
                     }
                 },
@@ -219,24 +163,77 @@ finish();
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         jsonObjectRequest.setRetryPolicy(policy);
         requestQueue.add(jsonObjectRequest);
-         productList.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
+mListView.setOnItemClickListener(new OnItemClickListener() {
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+        //Toast.makeText(TajerLapOrder.this,getIntent().getStringExtra("GroupID")+"Order id : "+list.get(i).getOrderID(),Toast.LENGTH_SHORT ).show();
+        final  ProgressDialog progress = new ProgressDialog(TajerLapOrder.this, ProgressDialog.THEME_HOLO_DARK);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading...");
+        progress.show();
+        request = new StringRequest(Request.Method.POST, functions.add+"TajerLapAddOrderGroup.php", new Response.Listener<String>() {
+            //if response
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    try {
+                        if (jsonObject.names().get(0).equals("success")) {
+
+                            progress.dismiss();
+                            Toast.makeText(getApplicationContext(), "Order Added to Group", Toast.LENGTH_SHORT).show();
+                            ((TajerLapOrderAdapter)mListView.getAdapter()).updateList(i);
+
+
+                        } else {
+                            progress.dismiss();
+                            Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        progress.dismiss();
+                        e.printStackTrace();
+                    }
+
+                } catch (JSONException e) {
+                    progress.dismiss();
+                    e.printStackTrace();
+                }
+
+
+            }// in case error
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                progress.dismiss();
+                Toast.makeText(getApplicationContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
             }
-        });
+        }) {
+            //send data to server using POST
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+
+                hashMap.put("GroupID",getIntent().getStringExtra("GroupID"));
+                hashMap.put("OrderID", list.get(i).getOrderID()+"");
+                hashMap.put("hash",HASH.getHash());
+                return hashMap;
+            }
+        };
+        int socketTimeout = 3000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
+        requestQueue.add(request);
+    }
+});
 
     }
 
-
-    public void setUpToolbar()
+    private void setUpToolbar ()
     {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         CustomBoldTextView title = (CustomBoldTextView)toolbar.findViewById(R.id.title_text);
-        title.setText(getString(R.string.create_new_group));
+        title.setText(getString(R.string.drawer_option1));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -250,34 +247,25 @@ finish();
         });
     }
 
+    public void setUpComponents()
+    {
+        mListView = (ListView)this.findViewById(R.id.customer_request_listView);
+    findViewById(R.id.BtnNext).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+            startActivity(new Intent(TajerLapOrder.this,PostOrderAddGroupActivity.class));
+        }
+    });
+    }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng positionUpdate = new LatLng(origin.latitude,origin.longitude);
-     CameraUpdate update = CameraUpdateFactory.newLatLngZoom(positionUpdate,14);
-        mMap.animateCamera(update);
-
-
-        addMarker(origin.latitude,origin.longitude,"Seller", R.drawable.destination_marker);
-
-
-
+    protected void onDestroy() {
+        super.onDestroy();
+        mListView= null;
+        requestQueue=null;
+        request=null;
+        list=null;
+        System.gc();
     }
-
-    private void addMarker(double lat, double lng, String title,int markericon) {
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions
-                .position(new LatLng(lat, lng))
-                .title(title)
-                .anchor(.5f, 1f).icon(BitmapDescriptorFactory.fromResource(markericon));
-
-
-
-
-        mMap.addMarker(markerOptions);
-
-    }
-
-
 }

@@ -3,13 +3,10 @@ package tawseel.com.tajertawseel.fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +70,7 @@ public class pickSetHome2fragment extends Fragment {
     public void setupComponents()
     {
         requestQueue = Volley.newRequestQueue(getActivity());
-        submit=(TextView)mRootView.findViewById(R.id.ButtonConfirmationTajer);
+        submit=(TextView)mRootView.findViewById(R.id.BtnNext);
         submit.setVisibility(View.GONE);
         submit.setEnabled(false);
         listView = (ListView) mRootView.findViewById(R.id.listView);

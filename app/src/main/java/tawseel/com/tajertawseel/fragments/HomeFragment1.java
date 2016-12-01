@@ -1,22 +1,12 @@
 package tawseel.com.tajertawseel.fragments;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,11 +16,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NoConnectionError;
@@ -55,6 +42,7 @@ import tawseel.com.tajertawseel.activities.HomeActivity;
 import tawseel.com.tajertawseel.activities.HomePickSetActivity;
 import tawseel.com.tajertawseel.activities.PostGroupActivity;
 import tawseel.com.tajertawseel.activities.PostNewGroupActivity;
+import tawseel.com.tajertawseel.activities.PostNewGroupTajerLapActivity;
 import tawseel.com.tajertawseel.activities.functions;
 import tawseel.com.tajertawseel.adapters.DeliveryGroupAdapter2Home;
 
@@ -69,7 +57,7 @@ public class HomeFragment1 extends Fragment {
     private ListView listView;
     private View mRootView;private RequestQueue requestQueue;
     ArrayList<HomeFragment3Data> list = new ArrayList<>();;
-    LinearLayout ll;
+    RelativeLayout ll;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,17 +69,29 @@ public class HomeFragment1 extends Fragment {
     }
 
     public void setupComponents() {
-
+ll = (RelativeLayout)mRootView.findViewById(R.id.ll);
         list.clear();
         requestQueue = Volley.newRequestQueue(getActivity());
         listView = (ListView)mRootView.findViewById(R.id.listView);
-
+        mRootView.findViewById(R.id.BtnNext).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogue();
+                // showNotificationDialogue();
+            }
+        });
+        mRootView.findViewById(R.id.MyGroup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogugFloatingButton();
+            }
+        });
         listView.setAdapter(new DeliveryGroupAdapter2Home(getActivity(),list));
         final ProgressDialog progress = new ProgressDialog(getActivity(), ProgressDialog.THEME_HOLO_DARK);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
         progress.show();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"TajerHomeFragment3.php?id="+HomeActivity.id
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"TajerHomeFragment1.php?id="+HomeActivity.id
                 ,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -176,21 +176,8 @@ public class HomeFragment1 extends Fragment {
 
 
 
-        mRootView.findViewById(R.id.ButtonConfirmationTajer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogue();
-                // showNotificationDialogue();
-            }
-        });
 
-        TextView b = (TextView) mRootView.findViewById(R.id.ButtonConfirmationTajer);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogue();
-            }
-        });
+
 
     }
 
@@ -239,17 +226,47 @@ public class HomeFragment1 extends Fragment {
             }
         });
     }
+    public void showDialogugFloatingButton() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.new_group_dialog);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(getActivity().getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.BOTTOM;
+        lp.dimAmount = 0.3f;
+        dialog.show();
 
 
+        dialog.findViewById(R.id.tl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PostNewGroupTajerLapActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
+                startActivity(intent);
 
+            }
+        });
+        dialog.findViewById(R.id.tt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddNewOrderActivity.class));
+            }
+        });
 
-
-
-    @Override
+    }
+@Override
     public void onDestroy() {
         super.onDestroy();
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupComponents();
+    }
 }

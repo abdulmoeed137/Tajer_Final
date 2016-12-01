@@ -53,7 +53,7 @@ public class BruaalDileveryAdapter extends BaseAdapter {
 
         final ListView productsList = (ListView) convertView.findViewById(R.id.product_list);
 
-        final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton);
+        final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton2);
 
         ExpandablePanel panel = (ExpandablePanel) convertView.findViewById(R.id.expandableLayout);
 

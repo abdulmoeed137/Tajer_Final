@@ -20,7 +20,7 @@
             app:collapsedHeight="3dp"
             app:animationDuration="500"
             app:content="@+id/expandt"
-            app:handle="@+id/moreButton"
+            app:handle="@+id/moreButton2"
             android:id="@+id/expandableLayout">
 
             <RelativeLayout
@@ -157,7 +157,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/moreButton"
+                android:id="@+id/moreButton2"
                 android:padding="15dp">
 
                 <tawseel.com.tajertawseel.CustomBoldTextView

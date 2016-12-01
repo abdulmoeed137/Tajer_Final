@@ -196,4 +196,15 @@
     <string name="tryagain">أعد التحقق</string>
     <string name="check">تحقق</string>
     <string name="correct">تم التحقق</string>
+    <string name="addgrouptajerlap">انشاء سلة توصيل - تاجر لاب</string>
+    <string name="tajerlapdesc">سيتم بعد اختيار هذا الخيار انشاء سلة توصيل
+جديدة خاصة بطلبات موقع - تاجرلاب</string>
+    <string name="addgrouptajertawseel">انشاء سلة توصيل - فوري
+</string>
+    <string name="tajertawseeldesc">سيتم بعد اختيار هذا الخيار انشاء سلة توصيل
+        جديدة خاصة بالطلبات الفورية</string>
+    <string name="next">متابعة
+</string>
+    <string name="tajerlapgroup">سلال طلبات تاجر لاب</string>
+    <string name="tajertawseelgroup">سلال الطلبات اليدوية</string>
 </resources>

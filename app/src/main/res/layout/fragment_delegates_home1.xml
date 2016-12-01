@@ -16,8 +16,8 @@
         android:weightSum="1"
         android:gravity="center"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/ButtonConfirmationTajer"
-        android:layout_alignEnd="@+id/ButtonConfirmationTajer">
+        android:layout_alignRight="@+id/BtnNext"
+        android:layout_alignEnd="@+id/BtnNext">
 
         <ImageView
             fab:srcCompat="@drawable/mainlogo"
@@ -50,7 +50,7 @@
         android:text="@string/available"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
-        android:id="@+id/ButtonConfirmationTajer"
+        android:id="@+id/BtnNext"
         android:gravity="center"
         android:layout_weight="1" />
 

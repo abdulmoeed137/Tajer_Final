@@ -116,9 +116,10 @@
         <activity android:name=".activities.ConfirmTajerActivity"></activity>
         <activity android:name=".activities.TradersFavouriteActivity"></activity>
         <activity android:name=".activities.DealerProfileActivity"/>
-        <activity android:name=".activities.feedback_to_delegate">
-
- </activity>
+        <activity android:name=".activities.feedback_to_delegate"/>
+        <activity android:name=".activities.TajerLapOrder"/>
+        <activity android:name=".activities.PostNewGroupTajerLapActivity"/>
+        <activity android:name=".activities.PostOrderAddGroupActivity"/>
     </application>
 
 </manifest>

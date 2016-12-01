@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
@@ -19,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,7 +97,7 @@ public class DeliveredNowAdapter extends BaseAdapter {
             holder.CustomerPhone = (TextView) convertView.findViewById(R.id.CustomerPhone);
             holder.OrderProductQuantity= (TextView)convertView.findViewById(R.id.OrderProductQuantity);
             holder.BtnCall = (ImageView) convertView.findViewById(R.id.BtnCustomerContact);
-           holder. moreView = (TextView) convertView.findViewById(R.id.moreButton);
+           holder. moreView = (TextView) convertView.findViewById(R.id.moreButton2);
             holder. panel = (ExpandablePanel)convertView.findViewById(R.id.expandableLayout);
             holder. productsList = (ListView) convertView.findViewById(R.id.product_list);
             holder.OrderStatusButton = (TextView)convertView.findViewById(R.id.start_delivery_button);

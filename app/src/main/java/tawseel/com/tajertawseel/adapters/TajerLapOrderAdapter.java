@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,17 +48,17 @@ import tawseel.com.tajertawseel.customviews.ExpandablePanel;
  * Created by Junaid-Invision on 7/3/2016.
  * Edit: M Monis
  */
-public class CustomerRequestAdapter extends BaseAdapter {
+public class TajerLapOrderAdapter extends BaseAdapter {
+
 
     Context context;
     LayoutInflater inflater;
-    ArrayList<Customer_request_item_data> List;
+  ArrayList<Customer_request_item_data> List;
 
     private RequestQueue requestQueue;
-    public CustomerRequestAdapter (Context c, ArrayList<Customer_request_item_data> list)
+    public TajerLapOrderAdapter(Context c, ArrayList<Customer_request_item_data> list)
     {
         List=list;
-
         context = c;
         inflater = LayoutInflater.from(c);
         requestQueue = Volley.newRequestQueue(context);
@@ -78,17 +81,19 @@ public class CustomerRequestAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         final  ViewHolder holder;
         final Customer_request_item_data data=(Customer_request_item_data)getItem(position);
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView  = inflater.inflate(R.layout.customer_request_item,null,false);
+            convertView  = inflater.inflate(R.layout.orders_tajerlap_item,null,false);
             holder.CustomerName=(TextView)convertView.findViewById(R.id.co_name);
             holder.CustomerPhone=(TextView)convertView.findViewById(R.id.co_number);
             holder.CustomerEmail=(TextView)convertView.findViewById(R.id.co_email);
             holder.OrderProductQuantity=(TextView)convertView.findViewById(R.id.co_nitems);
+            holder.rl= (RelativeLayout)convertView.findViewById(R.id.container) ;
+holder.moreView2 = (ImageView)convertView.findViewById(R.id.moreButton);
 
 
             convertView.setTag(holder);
@@ -97,20 +102,25 @@ public class CustomerRequestAdapter extends BaseAdapter {
         else
             holder=(ViewHolder) convertView.getTag();
 
-        final TextView moreView = (TextView) convertView.findViewById(R.id.moreButton2);
-
+//      holder.rl.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                        ai.add(Integer.parseInt(data.getOrderID()));
+//                        setSelectedItem(position);
+//
+//            }
+//        });
         holder.CustomerName.setText(data.getCustomerName());
         holder.CustomerPhone.setText(data.getCustomerPhone());
         holder.CustomerEmail.setText(data.getCustomerEmail());
         holder.OrderProductQuantity.setText(data.getOrderProductQuantity());
         ExpandablePanel panel = (ExpandablePanel)convertView.findViewById(R.id.expandableLayout);
-        final CustomBoldTextView textView = (CustomBoldTextView) convertView.findViewById(R.id.start_delivery_button);
-        textView.setTag(data.getID()+"");
         final View finalConvertView=convertView;
         panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             @Override
             public void onExpand(View handle, final View content) {
 
+                holder.moreView2.setBackgroundResource(R.drawable.arrow_up);
                 holder.PriceRangeIcon = (View) content.findViewById(R.id.PriceMark);
                 holder.PriceRange2 = (TextView) content.findViewById(R.id.riyalPrice);
                 holder.ItemsPrice = (TextView) content.findViewById(R.id.ItemsPrice);
@@ -120,7 +130,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
 
                 holder.ItemsPrice.setText(data.getItemsPrice());
                 holder.PriceRangeText.setText(data.getPriceRange());
-                holder.TotalPrice.setText(Integer.parseInt(data.getItemsPrice()) + (Integer.parseInt(data.getPriceRange())) + "");
+                holder.TotalPrice.setText(Double.parseDouble(data.getItemsPrice())+Double.parseDouble(data.getPriceRange())+"");
                 if (data.getPayMethod().equals("1"))
                 {
                     holder.PayMethod.setText(R.string.wire_transfer);
@@ -149,7 +159,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
                 progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progress.setMessage("Loading...");
                 progress.show();
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"OrderDetails.php?id="+data.getID(),
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  functions.add+"OrderItem.php?id="+data.getID(),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -204,7 +214,7 @@ public class CustomerRequestAdapter extends BaseAdapter {
                                             .setActionTextColor(Color.RED)
 
                                             .show();}
-                                
+
                             }
                         });
 
@@ -224,26 +234,21 @@ public class CustomerRequestAdapter extends BaseAdapter {
                         return false;
                     }
                 });
-                }
+            }
 
             @Override
             public void onCollapse(View handle, View content) {
-                moreView.setText(content.getResources().getString(R.string.more));
-            }
-        });
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, PickSetActivity.class);
-                intent.putExtra("orderID",v.getTag()+"");
-                Toast.makeText(context,v.getTag()+"",Toast.LENGTH_SHORT).show();
-                context.startActivity(intent);
-                ((Activity)context).finish();
 
+                holder.moreView2.setBackgroundResource(R.drawable.down_arrow);
             }
         });
+       
         return convertView;
 
     }
-
-   }
+public void updateList (int position)
+{
+ List.remove(position);
+    notifyDataSetChanged();
+}
+}
